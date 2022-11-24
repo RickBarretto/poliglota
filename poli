@@ -27,7 +27,7 @@ case $1 in
 
     ## Plugins
 
-    ## Erros
+    ## Errors
     *)
         usage
 
