@@ -12,27 +12,28 @@ is released.
 ### New command
 Inits a new project
 
-- [ ] Description
+- [x] Description
 
 |Features           | Options     | Usage | Documented |
 |:------------------|:------------|:-----:|:----------:|
-|custom script      | --custom -c |       |            |
-|create empty repo  | --empty  -e |       |            |
-|output redirection | --output -o |       |            |
-|input redirection  | --templ  -t |       |            |
+|custom script      | --custom -c |   x   |            |
+|create empty repo  | --empty  -e |   x   |            |
+|output redirection | --repo   -r |   x   |            |
+|input redirection  | --templ  -t |   x   |            |
 
 ### Add implementation command
 Add a specific implementation to a project
 
-- [ ] Description
+- [x] Description
 
-|Features           | Options      | Usage | Documented |
-|:------------------|:-------------|:-----:|:----------:|
-|custom script      | --custom  -c |       |            |
-|create empty repo  | --empty   -e |       |            |
-|output redirection | --output  -o |       |            |
-|input redirection  | --templ   -t |       |            |
-|latest project     | --lastest -l |       |            |
+|Features              | Options      | Usage | Documented |
+|:---------------------|:-------------|:-----:|:----------:|
+|new name              | --as  -a     |   x   |            |
+|custom script         | --custom  -c |   x   |            |
+|create empty repo     | --empty   -e |   x   |            |
+|repo folder output    | --repo    -r |   x   |            |
+|template folder input | --templ   -t |   x   |            |
+|latest project        | --lastest -l |       |            |
 
 ### Fill implementations
 Adds missing implementations
