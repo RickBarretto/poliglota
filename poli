@@ -1,0 +1,34 @@
+#! /bin/bash
+
+commands=("proj")
+plugins=()
+
+usage() {
+    echo "Usage: poli COMMANDS ARGS [OPTIONS]                       "
+    echo "                                                          "
+    echo "COMMANDS                                                  "
+    echo "                                                          "
+
+    for command in ${commands[@]}; do
+        .poliglota/scripts/$command.sh --description
+    done
+
+}
+
+## Parsing arguments
+case $1 in
+
+    ## Commands
+    proj)
+        shift
+        .poliglota/scripts/proj.sh $@
+        exit
+    ;;
+
+    ## Plugins
+
+    ## Erros
+    *)
+        usage
+
+esac
