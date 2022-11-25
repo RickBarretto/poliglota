@@ -54,7 +54,7 @@ usage() {
 ## Sets the minimal arguments required by a command
 ## Arguments:
 ##  $minimal: minimal arguments to be able run
-##  $arg_count: the current arguments count
+##  $arg_count: current arguments count
 ## Output:
 ##  Prints an error message and the usage
 ## Returns:
@@ -76,7 +76,8 @@ test_minimal_args() {
 }
 
 ## Saves the project on history
-## $1: <project> -> the latest project used
+## Arguments:
+##  $current_project: current project
 save_history() {
     local config_file=poli.config
     sed -i -e "s/last_project=.*/last_project=$1/g" $config_file
@@ -85,9 +86,14 @@ save_history() {
 ## --- New internal functions ---
 
 ## Creates a new project based on a template
-## $1: the repository's folder path
-## $2: the project name
-## $3: the template's folder path
+## Arguments:
+##  $repository: repository's folder path
+##  $project: name of the new project
+##  $template: template's folder path
+## Outputs:
+##  prints an error message, if mkdir returns an error
+## Returns:
+##   exit
 create_project_with_template() {
     local repository=$1
     local project=$2
@@ -108,8 +114,11 @@ create_project_with_template() {
 }
 
 ## Creates an empty new project given a repository
-## $1: the repository's folder path
-## $2: the project name
+## Arguments:
+##  $repository: repository's folder path
+##  $project: name of the new project
+## Returns:
+##  exit
 create_empty_project() {
     local repository=$1
     local project=$2
@@ -118,12 +127,21 @@ create_empty_project() {
     save_history $project; exit
 }
 
-## Creates a new project base on .templates/
-## $1: <project> -> the new project name
-## --custom|-c <script-path>
-## --empty|-e
-## --repo|-o|-r <folder>
-## --templ|-t <folder>
+## [Command]: Creates a new project based on .templates/
+## Command Arguments:
+##   $project: name of the new project
+## Command Options:
+##  --custom|-c script-path
+##  --empty|-e
+##  --repo|-r folder
+##  --templ|-t folder
+## Arguments:
+##   $@: arguments to parse
+## Returns:
+##  test_minimal_args
+##  create_project_with_template
+##  create_empty_project
+##  exit
 new_command() {
 
     test_minimal_args "1" "$#"
@@ -170,12 +188,17 @@ new_command() {
 
 ## --- Add internal functions ---
 
-## Creates a new implementation based on a template
-## $1: the repository's folder path
-## $2: the project name
-## $3: the template's folder path
-## $4: the folder path of implementation's template
-## $5: the implementation's name inside the project
+## Creates a new project based on a template
+## Arguments:
+##  $repository: repository's folder path
+##  $project: name of the new project
+##  $template: template's folder path
+##  $implementation: the folder path of implementation's template
+##  $name: name to be saved
+## Outputs:
+##  prints an error message, if mkdir returns an error
+## Returns:
+##   exit
 create_implementation_with_template() {
     local repository=$1
     local project=$2
@@ -193,10 +216,13 @@ create_implementation_with_template() {
 
 }
 
-## Creates a new empty implementation
-## $1: the repository's folder path
-## $2: the project name
-## $3: the implementation's name inside the project
+## Creates an empty new project given a repository
+## Arguments:
+##  $repository: repository's folder path
+##  $project: name of the new project
+##  $name: implementation's name inside the project
+## Returns:
+##  exit
 create_empty_implementation() {
     local repository=$1
     local project=$2
@@ -206,14 +232,23 @@ create_empty_implementation() {
     save_history $project; exit
 }
 
-## Adds an implementation to given project
-## $1: <implementation> -> the name of a existing implementation
-## $2: <project>  -> the name of existing project
-## --as <new-name>
-## --custom|-c <script-path>
-## --empty|-e
-## --repo|-o|-r <folder>
-## --templ|-t <folder>
+
+## [Command]: Adds an implementation to given project
+## Command Arguments:
+##   $implementation: an existing implementation's name
+##   $project: an existing project's name
+## Command Options:
+##  --custom|-c script_path
+##  --empty|-e
+##  --repo|-r folder
+##  --templ|-t folder
+## Arguments:
+##   $@: arguments to parse
+## Returns:
+##  test_minimal_args
+##  create_implementation_with_template
+##  create_empty_implementation
+##  exit
 add_command() {
 
     test_minimal_args "2" "$#"
