@@ -85,7 +85,7 @@ save_history() {
 
     sed --in-place --expression                                 \
         "s/last_project=.*/last_project=${current_project}/g"   \
-        "$config_file"
+        "${config_file}"
 
 }
 
