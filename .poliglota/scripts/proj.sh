@@ -60,7 +60,7 @@ usage() {
 ##  Prints an error message and the usage
 ## Returns:
 ##  exit
-test_minimal_args() {
+assert_minimal_arguments() {
 
     local -r -i minimal=$1
     local -r -i arg_count=$2
@@ -183,7 +183,7 @@ create_empty_project() {
 ##  exit
 new_command() {
 
-    test_minimal_args "1" "$#"
+    assert_minimal_arguments "1" "$#"
 
     # local variables
     local project=""                ## Project's name
@@ -308,7 +308,7 @@ create_empty_implementation() {
 ##  exit
 add_command() {
 
-    test_minimal_args "2" "$#"
+    assert_minimal_arguments "2" "$#"
 
     # local variables
     local implementation=""         ## The implementation to be used
@@ -389,7 +389,7 @@ add_command() {
 
 main() {
 
-    test_minimal_args "1" "$#"
+    assert_minimal_args "1" "$#"
 
     case "$1" in
     "--description")
@@ -412,7 +412,6 @@ main() {
         exit "${E_BADARGS}"
         ;;
     esac
-
 
     exit
 
