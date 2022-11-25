@@ -94,6 +94,25 @@ save_and_exit() {
 
 }
 
+## Runs a custom script
+## Command Arguments:
+##   $script: path to the script file
+## Arguments:
+##   $@: arguments to parse
+## Returns:
+##  exit, if --script flag is defined
+try_run_custom_script() {
+    local -i found=0
+    for arg in $@; do
+        if [[ $found = 1 ]]; then
+            ./$1 $@
+            exit
+        elif [[ "${arg}" == "--custom" || "${arg}" == "-c" ]]; then
+            local -r found=1
+        fi
+    done
+}
+
 ## --- New internal functions ---
 
 ## Creates a new project based on a template
@@ -171,12 +190,12 @@ new_command() {
     local templ="${STD_TEMPL_PATH}" ## Template's folder path
     local -i empty=0                   ## --empty
 
+    try_run_custom_script $@
+
     while  [[ -n "$1" ]]; do
         case "$1" in
             "--custom" | "-c")
-                shift;
-                ./$1 $@
-                exit
+                shift 2
                 ;;
             "--empty" | "-e")
                 local empty=1
@@ -299,6 +318,8 @@ add_command() {
     local -i empty=0                ## --empty
     local -i latest=0               ## --latest
 
+    try_run_custom_script $@
+
     # --latest has first-class importance, changing the behavior
     # so, it must to be declared here
     for arg in $@; do
@@ -310,9 +331,7 @@ add_command() {
     while  [[ -n "$1" ]]; do
         case "$1" in
             "--custom" | "-c")
-                shift
-                ./$1 $@
-                exit
+                shift 2
                 ;;
             "--as" | "-a")
                 shift
