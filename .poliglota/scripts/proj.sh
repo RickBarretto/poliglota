@@ -177,8 +177,8 @@ add_implementation() {
         # Creates the project based on a implementation's template
         else
             mkdir $repo/$project/$name
-            cp $templ/$implementation $repo/$project/$name \
-                -r -b --no-preserve=timestamp
+                cp $templ/$implementation/** $repo/$project/$name \
+                    -r -b --no-preserve=timestamp
             exit
         fi
     fi; exit
