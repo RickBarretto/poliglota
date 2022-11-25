@@ -34,6 +34,8 @@ usage() {
     echo "                                specific name.                      "
     echo "    --custom|-c <script-path>   run with a custom script instead    "
     echo "    --empty|-e                  creates an empty implementation     "
+    echo "    --latest|-l                 uses the latest command's project as"
+    echo "                                the current                         "
     echo "    --repo|-r <folder>          modifies the output folder          "
     echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
@@ -130,8 +132,7 @@ new_project() {
 ## --templ|-t <folder>
 add_implementation() {
 
-    # Param checker
-    if [[ ! -n "$2" ]]; then
+    if [[ -z "$2" ]]; then
         echo "Wrong Parameters"
         usage
         exit $E_BADARGS
@@ -146,6 +147,14 @@ add_implementation() {
     local templ=".templates" ## Template's folder path
     local empty=0            ## Sets if the implementation'll be empty
     local latest=0           ## Sets if the latest project'll be the current
+
+    # --latest has first-class importance, changing the behavior
+    # so, it must to be declared here
+    for arg in $@; do
+        if [[ $arg == "--latest" || $arg == "-l" ]]; then
+            local latest=1
+        fi
+    done
 
     while  [[ -n "$1" ]]; do
         case $1 in
@@ -169,10 +178,24 @@ add_implementation() {
                 shift; local templ="$1";
                 shift;;
 
+            # We must to handle --latest to avoid bugs
+            # Without it, $implementation may be "--latest"
+            # What we don't want to happen
+            "--latest" | "-l")
+                local latest=1;
+                shift;;
+
             *)
-                local implementation="$1"
-                local project="$2"
-                shift 2;;
+                if [[ $latest == 0 ]]; then
+                    local implementation="$1"
+                    local project="$2"
+                    shift 2
+                else
+                    local implementation="$1"
+                    local project=$last_project
+                    shift
+                fi
+                ;;
         esac
     done
 
