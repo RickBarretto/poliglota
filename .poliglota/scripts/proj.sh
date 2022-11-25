@@ -70,7 +70,7 @@ test_minimal_args() {
         echo "Wrong: the minimal arguments amout is ${minimal}."
         description
         echo
-        echo "Type `./poli proj --help` for more information."
+        echo "Type './poli proj --help' for more information."
         exit $E_BADARGS
     fi
 
