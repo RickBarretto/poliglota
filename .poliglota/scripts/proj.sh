@@ -126,11 +126,7 @@ create_empty_project() {
 ## --templ|-t <folder>
 new_command() {
 
-    if [[ -z "$1" ]]; then
-        echo "Wrong Parameters"
-        usage
-        exit $E_BADARGS
-    fi
+    test_minimal_args "1" "$#"
 
     # local variables
     local project=""           ## Project name
@@ -220,11 +216,7 @@ create_empty_implementation() {
 ## --templ|-t <folder>
 add_command() {
 
-    if [[ -z "$2" ]]; then
-        echo "Wrong Parameters"
-        usage
-        exit $E_BADARGS
-    fi
+    test_minimal_args "2" "$#"
 
     # local variables
     local implementation=""     ## The implementation to be used
