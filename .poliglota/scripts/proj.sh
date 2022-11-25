@@ -14,7 +14,7 @@ source poli.config
 set -C          # Prevent overwriting of files by redirection
 E_BADARGS=85    ## Bad Arguments error value
 
-# Internal functions ---
+# --- Global internal functions ---
 
 description() {
     echo "  proj                          project related tasks               "
@@ -52,7 +52,6 @@ usage() {
     echo "  --help|-h                     shows this help page                "
 }
 
-
 ## Saves the project on history
 ## $1: <project> -> the latest project used
 save_history() {
@@ -60,7 +59,7 @@ save_history() {
     sed -i -e "s/last_project=.*/last_project=$1/g" $config_file
 }
 
-## --- New internal functions
+## --- New internal functions ---
 
 create_project_with_template() {
     local repository=$1
@@ -95,7 +94,7 @@ create_empty_project() {
 ## --empty|-e
 ## --repo|-o|-r <folder>
 ## --templ|-t <folder>
-new_project() {
+new_command() {
 
     if [[ -z "$1" ]]; then
         echo "Wrong Parameters"
@@ -263,7 +262,7 @@ fi
 case $1 in
     new)
         shift;
-        new_project $@
+        new_command $@
         exit;;
     add)
         shift;
