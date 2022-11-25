@@ -148,7 +148,8 @@ create_implementation_with_template() {
     local repository=$1
     local project=$2
     local template=$3
-    local name=$4
+    local implementation=$4
+    local name=$5
 
     if mkdir $repository/$project/$name ; then
         cp $template/$implementation/** $repository/$project/$name \
@@ -257,7 +258,7 @@ add_command() {
                 $repo $project $name
         else
             create_implementation_with_template \
-                $repo $project $templ $name
+                $repo $project $templ $implementation $name
         fi
     fi
 
