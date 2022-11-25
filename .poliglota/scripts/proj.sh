@@ -96,6 +96,7 @@ new_project() {
         # Just creates a project
         if [[ $empty == 1 ]]; then
             mkdir $repo/$project
+            save_history $project
             exit
 
         # Creates the project based on a template
@@ -108,9 +109,12 @@ new_project() {
                     rm rm -R --force $repo/$project/.template/**
                 fi
             else echo "This Project already exists"
-            fi; exit
-        fi
+            fi;
 
+            save_history $project
+            exit
+
+        fi
     fi
     exit
 
@@ -180,15 +184,18 @@ add_implementation() {
         fi
 
         # Just creates a project
-        if [[ -n "$empty" ]]; then
+        if [[ $empty == 1 ]]; then
             mkdir $repo/$project/$name
+            save_history $project
             exit
 
         # Creates the project based on a implementation's template
         else
-            mkdir $repo/$project/$name
+            if mkdir $repo/$project/$name ; then
                 cp $templ/$implementation/** $repo/$project/$name \
                     -r -b --no-preserve=timestamp
+                save_history $project
+            fi
             exit
         fi
     fi; exit
