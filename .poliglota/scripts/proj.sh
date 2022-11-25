@@ -142,6 +142,33 @@ new_command() {
 
 }
 
+## --- Add internal functions ---
+
+create_implementation_with_template() {
+    local repository=$1
+    local project=$2
+    local template=$3
+    local name=$4
+
+    if mkdir $repository/$project/$name ; then
+        cp $template/$implementation/** $repository/$project/$name \
+            -r -b --no-preserve=timestamp
+        save_history $project; exit
+    else
+        echo "$name already implemented"
+    fi
+
+}
+
+create_empty_implementation() {
+    local repository=$1
+    local project=$2
+    local name=$3
+
+    mkdir $repository/$project/$name
+    save_history $project; exit
+}
+
 ## Adds an implementation to given project
 ## $1: <implementation> -> the name of a existing implementation
 ## $2: <project>  -> the name of existing project
@@ -225,22 +252,14 @@ add_implementation() {
             local name="$implementation"
         fi
 
-        # Just creates a project
         if [[ $empty == 1 ]]; then
-            mkdir $repo/$project/$name
-            save_history $project
-            exit
-
-        # Creates the project based on a implementation's template
+            create_empty_implementation \
+                $repo $project $name
         else
-            if mkdir $repo/$project/$name ; then
-                cp $templ/$implementation/** $repo/$project/$name \
-                    -r -b --no-preserve=timestamp
-                save_history $project
-            fi
-            exit
+            create_implementation_with_template \
+                $repo $project $templ $name
         fi
-    fi; exit
+    fi
 
 }
 
