@@ -52,6 +52,30 @@ usage() {
     echo "  --help|-h                     shows this help page                "
 }
 
+## Sets the minimal arguments required by a command
+## Arguments:
+##  $minimal: minimal arguments to be able run
+##  $arg_count: the current arguments count
+## Output:
+##  Prints an error message and the usage
+## Returns:
+##  exit
+test_minimal_args() {
+
+    local -i -r minimal=$1
+    local -i -r arg_count=$2
+    local -r E_BADARGS=85 ## Bad Arguments error value
+
+    if [[ $minimal -gt $arg_count ]]; then
+        echo "Wrong: the minimal arguments amout is ${minimal}."
+        description
+        echo
+        echo "Type `./poli proj --help` for more information."
+        exit $E_BADARGS
+    fi
+
+}
+
 ## Saves the project on history
 ## $1: <project> -> the latest project used
 save_history() {
