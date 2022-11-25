@@ -80,7 +80,9 @@ test_minimal_args() {
 ##  $current_project: current project
 ## Globals:
 ##  $STD_CONFIG_PATH
-save_history() {
+## Returns
+##  exit
+save_and_exit() {
 
     local -r current_project="$1"
     local -r config_file="${STD_CONFIG_PATH}"
@@ -88,6 +90,7 @@ save_history() {
     sed --in-place --expression                                 \
         "s/last_project=.*/last_project=${current_project}/g"   \
         "${config_file}"
+    exit
 
 }
 
@@ -101,7 +104,7 @@ save_history() {
 ## Outputs:
 ##  prints an error message, if mkdir returns an error
 ## Returns:
-##   exit
+##   save_and_exit
 create_project_with_template() {
 
     local -r repository="$1"
@@ -120,8 +123,7 @@ create_project_with_template() {
             --force -recursive --dir
     fi
 
-    save_history "${project}"
-    exit
+    save_and_exit "${project}"
 
 }
 
@@ -130,16 +132,14 @@ create_project_with_template() {
 ##  $repository: repository's folder path
 ##  $project: name of the new project
 ## Returns:
-##  exit
+##  save_and_exit
 create_empty_project() {
 
     local -r repository="$1"
     local -r project="$2"
 
     mkdir "${repository}/${project}"
-
-    save_history "${project}"
-    exit
+    save_and_exit "${project}"
 
 }
 
@@ -226,7 +226,7 @@ new_command() {
 ## Outputs:
 ##  prints an error message, if mkdir returns an error
 ## Returns:
-##   exit
+##   save_and_exit
 create_implementation_with_template() {
 
     local -r repository="$1"
@@ -241,8 +241,7 @@ create_implementation_with_template() {
             "${repository}/${project}/${name}" \
             -r -b --no-preserve=timestamp
 
-        save_history "${project}"
-        exit
+        save_and_exit "${project}"
 
     else
         echo "${name} already implemented"
@@ -264,9 +263,7 @@ create_empty_implementation() {
     local -r name="$3"
 
     mkdir "${repository}/${project}/${name}"
-
-    save_history "${project}"
-    exit
+    save_and_exit "${project}"
 
 }
 
