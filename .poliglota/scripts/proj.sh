@@ -70,7 +70,7 @@ test_minimal_args() {
         description
         echo
         echo "Type './poli proj --help' for more information."
-        exit $E_BADARGS
+        exit "$E_BADARGS"
     fi
 
 }
