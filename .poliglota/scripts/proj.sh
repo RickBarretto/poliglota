@@ -41,6 +41,15 @@ usage() {
     echo "  --help|-h                     shows this help page                "
 }
 
+
+## Saves the project on history
+## $1: <project> -> the latest project used
+save_history() {
+    local config_file=.poliglota/config/history.config
+    sed -i -e "s/last_project=.*/last_project=$1/g" $config_file
+}
+
+
 ## Creates a new project base on .templates/
 ## $1: <project> -> the new project name
 ## --custom|-c <script-path>
