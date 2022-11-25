@@ -1,8 +1,17 @@
 #! /bin/bash
 
 ## Configuration
-set -C          # Prevent overwriting of files by redirection
 
+## Imports:
+##   $std_poli_path
+##   $std_repo_path
+##   $std_repo_path
+##   $std_plugins_path
+##   $std_history_path
+##   $last_project
+source poli.config
+
+set -C          # Prevent overwriting of files by redirection
 E_BADARGS=85    ## Bad Arguments error value
 
 # Internal functions ---
@@ -47,7 +56,7 @@ usage() {
 ## Saves the project on history
 ## $1: <project> -> the latest project used
 save_history() {
-    local config_file=.poliglota/config/history.config
+    local config_file=poli.config
     sed -i -e "s/last_project=.*/last_project=$1/g" $config_file
 }
 
@@ -67,11 +76,11 @@ new_project() {
     fi
 
     # local variables
-    local project=""         ## Project name
-    local custom=""          ## Custom script path
-    local empty=0            ## Sets if the implementation'll be empty
-    local repo="repository"  ## Repository's folder path
-    local templ=".templates" ## Template's folder path
+    local project=""           ## Project name
+    local custom=""            ## Custom script path
+    local empty=0              ## Sets if the implementation'll be empty
+    local repo=$std_repo_path  ## Repository's folder path
+    local templ=$std_templ_path ## Template's folder path
 
     while  [[ -n "$1" ]]; do
         case $1 in
@@ -104,14 +113,14 @@ new_project() {
         # Creates the project based on a template
         else
             if mkdir $repo/$project; then
-                cp ./$templ/* $repo/$project/ \
+                cp $templ/* $repo/$project/ \
                     -r -b --no-preserve=timestamp
-
-                if [[ "$templ" == ".templates" ]]; then
-                    rm rm -R --force $repo/$project/.template/**
-                fi
             else echo "This Project already exists"
-            fi;
+            fi
+
+            if [ -f $repo/$project/.template ]; then
+                rm -f -R --dir $repo/$project/.template
+            fi
 
             save_history $project
             exit
@@ -139,14 +148,13 @@ add_implementation() {
     fi
 
     # local variables
-    source .poliglota/config/history.config # imports $last_project
-    local implementation=""  ## The implementation to be used
-    local name=""            ## Implementation's name used in the project
-    local project=""         ## Project's name
-    local repo="repository"  ## Repository's folder path
-    local templ=".templates" ## Template's folder path
-    local empty=0            ## Sets if the implementation'll be empty
-    local latest=0           ## Sets if the latest project'll be the current
+    local implementation=""     ## The implementation to be used
+    local name=""               ## Implementation's name used in the project
+    local project=""            ## Project's name
+    local repo=$std_repo_path   ## Repository's folder path
+    local templ=$std_templ_path ## Template's folder path
+    local empty=0               ## Sets if the implementation'll be empty
+    local latest=0              ## Sets if the latest project'll be the current
 
     # --latest has first-class importance, changing the behavior
     # so, it must to be declared here
