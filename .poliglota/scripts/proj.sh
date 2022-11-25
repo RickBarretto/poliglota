@@ -61,8 +61,8 @@ usage() {
 ##  exit
 test_minimal_args() {
 
-    local -i -r minimal=$1
-    local -i -r arg_count=$2
+    local -r -i minimal=$1
+    local -r -i arg_count=$2
     local -r E_BADARGS=85 ## Bad Arguments error value
 
     if [[ $minimal -gt $arg_count ]]; then
@@ -79,8 +79,14 @@ test_minimal_args() {
 ## Arguments:
 ##  $current_project: current project
 save_history() {
-    local config_file=poli.config
-    sed -i -e "s/last_project=.*/last_project=$1/g" $config_file
+
+    local -r current_project="$1"
+    local -r config_file="poli.config"
+
+    sed --in-place --expression                                 \
+        "s/last_project=.*/last_project=${current_project}/g"   \
+        "$config_file"
+
 }
 
 ## --- New internal functions ---
@@ -95,22 +101,26 @@ save_history() {
 ## Returns:
 ##   exit
 create_project_with_template() {
-    local repository=$1
-    local project=$2
-    local template=$3
 
-    if mkdir $repository/$project; then
-        cp $template/* $repository/$project/ \
-        -r -b --no-preserve=timestamp
+    local -r repository="$1"
+    local -r project="$2"
+    local -r template="$3"
+
+    if mkdir "${repository}/${project}"; then
+        cp "${template}"/* "${repository}/${project}/" \
+            --recursive -b --no-preserve=timestamp
     else
-        echo "This Project already exists"
+        echo "${project} already exists"
     fi
 
-    if [ -f $repository/$project/.template ]; then
-        rm -f -R --dir $repository/$project/.template
+    if [ -f "${repository}/${project}/.template" ]; then
+        rm "${repository}/${project}/.template" \
+            --force -recursive --dir
     fi
 
-    save_history $project; exit
+    save_history "${project}"
+    exit
+
 }
 
 ## Creates an empty new project given a repository
@@ -120,11 +130,15 @@ create_project_with_template() {
 ## Returns:
 ##  exit
 create_empty_project() {
-    local repository=$1
-    local project=$2
 
-    mkdir $repository/$project
-    save_history $project; exit
+    local -r repository="$1"
+    local -r project="$2"
+
+    mkdir "${repository}/${project}"
+
+    save_history "${project}"
+    exit
+
 }
 
 ## [Command]: Creates a new project based on .templates/
@@ -147,41 +161,50 @@ new_command() {
     test_minimal_args "1" "$#"
 
     # local variables
-    local project=""           ## Project name
-    local custom=""            ## Custom script path
-    local empty=0              ## Sets if the implementation'll be empty
-    local repo=$std_repo_path  ## Repository's folder path
-    local templ=$std_templ_path ## Template's folder path
+    local project=""                ## Project's name
+    local custom=""                 ## --custom script file path
+    local repo="${std_repo_path}"   ## Repository's folder path
+    local templ="${std_templ_path}" ## Template's folder path
+    local -i empty=0                   ## --empty
 
     while  [[ -n "$1" ]]; do
-        case $1 in
+        case "$1" in
             "--custom" | "-c")
-                shift; ./$1 $@
-                exit;;
+                shift;
+                ./$1 $@
+                exit
+                ;;
             "--empty" | "-e")
                 local empty=1
-                shift;;
+                shift
+                ;;
             "--repo" | "-r")
                 local repo="$2"
-                shift 2;;
+                shift 2
+                ;;
             "--templ" | "-t")
                 local templ="$2";
-                shift 2;;
+                shift 2
+                ;;
             *)
                 local project="$1"
-                shift;;
+                shift
+                ;;
         esac
     done
 
-    if [[ -n "$project" ]]; then
+    if [[ -n "${project}" ]]; then
 
         # Just creates a project
         if [[ $empty == 1 ]]; then
-            create_empty_project $repo $project
+            create_empty_project                  \
+                "${repo}" "${project}"
         else
-            create_project_with_template $repo $project $templ
+            create_project_with_template          \
+                "${repo}" "${project}" "${templ}"
         fi
     fi
+
     exit
 
 }
@@ -200,18 +223,24 @@ new_command() {
 ## Returns:
 ##   exit
 create_implementation_with_template() {
-    local repository=$1
-    local project=$2
-    local template=$3
-    local implementation=$4
-    local name=$5
 
-    if mkdir $repository/$project/$name ; then
-        cp $template/$implementation/** $repository/$project/$name \
+    local -r repository="$1"
+    local -r project="$2"
+    local -r template="$3"
+    local -r implementation="$4"
+    local -r name="$5"
+
+    if mkdir "${repository}/${project}/${name}" ; then
+
+        cp "${template}/${implementation}/"**  \
+            "${repository}/${project}/${name}" \
             -r -b --no-preserve=timestamp
-        save_history $project; exit
+
+        save_history "${project}"
+        exit
+
     else
-        echo "$name already implemented"
+        echo "${name} already implemented"
     fi
 
 }
@@ -224,12 +253,16 @@ create_implementation_with_template() {
 ## Returns:
 ##  exit
 create_empty_implementation() {
-    local repository=$1
-    local project=$2
-    local name=$3
 
-    mkdir $repository/$project/$name
-    save_history $project; exit
+    local -r repository="$1"
+    local -r project="$2"
+    local -r name="$3"
+
+    mkdir "${repository}/${project}/${name}"
+
+    save_history "${project}"
+    exit
+
 }
 
 
@@ -254,84 +287,85 @@ add_command() {
     test_minimal_args "2" "$#"
 
     # local variables
-    local implementation=""     ## The implementation to be used
-    local name=""               ## Implementation's name used in the project
-    local project=""            ## Project's name
-    local repo=$std_repo_path   ## Repository's folder path
-    local templ=$std_templ_path ## Template's folder path
-    local empty=0               ## Sets if the implementation'll be empty
-    local latest=0              ## Sets if the latest project'll be the current
+    local implementation=""         ## The implementation to be used
+    local name=""                   ## Implementation's name used in the project
+    local project=""                ## Project's name
+    local repo="${std_repo_path}"   ## Repository's folder path
+    local templ="${std_templ_path}" ## Template's folder path
+    local -i empty=0                ## --empty
+    local -i latest=0               ## --latest
 
     # --latest has first-class importance, changing the behavior
     # so, it must to be declared here
     for arg in $@; do
-        if [[ $arg == "--latest" || $arg == "-l" ]]; then
-            local latest=1
+        if [[ "${arg}" == "--latest" || "${arg}" == "-l" ]]; then
+            local -r latest=1
         fi
     done
 
     while  [[ -n "$1" ]]; do
-        case $1 in
+        case "$1" in
             "--custom" | "-c")
-                shift; ./$1 $@
-                exit;;
-
+                shift
+                ./$1 $@
+                exit
+                ;;
             "--as" | "-a")
-                shift; local name="$1";
-                shift;;
-
+                shift
+                local -r name="$1"
+                shift
+                ;;
             "--empty" | "-e")
-                local empty=1
-                shift;;
-
+                local -r empty=1
+                shift 2
+                ;;
             "--repo" | "-r")
-                shift; local repo="$1"
-                shift;;
-
+                shift
+                local -r repo="$2"
+                shift 2
+                ;;
             "--templ" | "-t")
-                shift; local templ="$1";
-                shift;;
-
-            # We must to handle --latest to avoid bugs
-            # Without it, $implementation may be "--latest"
-            # What we don't want to happen
+                local -r templ="$2"
+                shift 2
+                ;;
             "--latest" | "-l")
-                local latest=1;
-                shift;;
-
+                shift
+                ;;
             *)
                 if [[ $latest == 0 ]]; then
-                    local implementation="$1"
-                    local project="$2"
+                    local -r implementation="$1"
+                    local -r project="$2"
                     shift 2
                 else
-                    local implementation="$1"
-                    local project=$last_project
+                    local -r implementation="$1"
+                    local -r project="${last_project}"
                     shift
                 fi
                 ;;
         esac
     done
 
-    if [[ -n "$implementation" && -n "$project" ]]; then
+    if [[ -n "${implementation}" && -n "${project}" ]]; then
 
         # Defines $name
-        if [[ -z "$name" ]]; then
-            local name="$implementation"
+        if [[ -z "${name}" ]]; then
+            local name="${implementation}"
         fi
 
         if [[ $empty == 1 ]]; then
             create_empty_implementation \
-                $repo $project $name
+                "${repo}" "${project}" "${name}"
         else
             create_implementation_with_template \
-                $repo $project $templ $implementation $name
+                "${repo}" "${project}" "${templ}" "${implementation}" "${name}"
         fi
     fi
 
 }
 
 # Code execution
+test_minimal_args "1" "$#"
+
 if [[ "$1" == "--description" ]]; then
     description
     exit
@@ -340,18 +374,12 @@ elif [[ "$1" == "--help" || "$1" == "-h" ]]; then
     exit
 fi
 
-if [[ ! -n "$1" ]]; then
-    echo "Wrong Parameters"
-    usage
-    exit $E_BADARGS
-fi
-
-case $1 in
-    new)
+case "$1" in
+    "new")
         shift;
         new_command $@
         exit;;
-    add)
+    "add")
         shift;
         add_command $@
         exit;;
