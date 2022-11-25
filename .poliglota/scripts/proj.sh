@@ -12,7 +12,6 @@
 source poli.config
 
 set -C          # Prevent overwriting of files by redirection
-E_BADARGS=85    ## Bad Arguments error value
 
 # --- Global internal functions ---
 
