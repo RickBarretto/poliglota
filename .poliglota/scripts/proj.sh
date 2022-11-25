@@ -60,6 +60,34 @@ save_history() {
     sed -i -e "s/last_project=.*/last_project=$1/g" $config_file
 }
 
+## --- New internal functions
+
+create_project_with_template() {
+    local repository=$1
+    local project=$2
+    local template=$3
+
+    if mkdir $repository/$project; then
+        cp $template/* $repository/$project/ \
+        -r -b --no-preserve=timestamp
+    else
+        echo "This Project already exists"
+    fi
+
+    if [ -f $repository/$project/.template ]; then
+        rm -f -R --dir $repository/$project/.template
+    fi
+
+    save_history $project; exit
+}
+
+create_empty_project() {
+    local repository=$1
+    local project=$2
+
+    mkdir $repository/$project
+    save_history $project; exit
+}
 
 ## Creates a new project base on .templates/
 ## $1: <project> -> the new project name
@@ -106,25 +134,9 @@ new_project() {
 
         # Just creates a project
         if [[ $empty == 1 ]]; then
-            mkdir $repo/$project
-            save_history $project
-            exit
-
-        # Creates the project based on a template
+            create_empty_project $repo $project
         else
-            if mkdir $repo/$project; then
-                cp $templ/* $repo/$project/ \
-                    -r -b --no-preserve=timestamp
-            else echo "This Project already exists"
-            fi
-
-            if [ -f $repo/$project/.template ]; then
-                rm -f -R --dir $repo/$project/.template
-            fi
-
-            save_history $project
-            exit
-
+            create_project_with_template $repo $project $templ
         fi
     fi
     exit
