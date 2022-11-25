@@ -167,7 +167,6 @@ new_command() {
 
     # local variables
     local project=""                ## Project's name
-    local custom=""                 ## --custom script file path
     local repo="${STD_REPO_PATH}"   ## Repository's folder path
     local templ="${STD_TEMPL_PATH}" ## Template's folder path
     local -i empty=0                   ## --empty
