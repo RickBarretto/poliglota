@@ -58,8 +58,7 @@ save_history() {
 ## --templ|-t <folder>
 new_project() {
 
-    # Param checker
-    if [[ ! -n "$1" ]]; then
+    if [[ -z "$1" ]]; then
         echo "Wrong Parameters"
         usage
         exit $E_BADARGS
