@@ -3,12 +3,12 @@
 ## Configuration
 
 ## Imports:
-##   $std_poli_path
-##   $std_repo_path
-##   $std_repo_path
-##   $std_plugins_path
-##   $std_history_path
-##   $last_project
+##  $STD_CONFIG_PATH
+##  $STD_POLI_PATH
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
+##  $STD_PLUGINS_PATH
+##  $LAST_PROJECT
 source poli.config
 
 set -C # Prevent overwriting of files by redirection
@@ -78,10 +78,12 @@ test_minimal_args() {
 ## Saves the project on history
 ## Arguments:
 ##  $current_project: current project
+## Globals:
+##  $STD_CONFIG_PATH
 save_history() {
 
     local -r current_project="$1"
-    local -r config_file="poli.config"
+    local -r config_file="${STD_CONFIG_PATH}"
 
     sed --in-place --expression                                 \
         "s/last_project=.*/last_project=${current_project}/g"   \
@@ -151,6 +153,9 @@ create_empty_project() {
 ##  --templ|-t folder
 ## Arguments:
 ##   $@: arguments to parse
+## Globals:
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
 ## Returns:
 ##  test_minimal_args
 ##  create_project_with_template
@@ -163,8 +168,8 @@ new_command() {
     # local variables
     local project=""                ## Project's name
     local custom=""                 ## --custom script file path
-    local repo="${std_repo_path}"   ## Repository's folder path
-    local templ="${std_templ_path}" ## Template's folder path
+    local repo="${STD_REPO_PATH}"   ## Repository's folder path
+    local templ="${STD_TEMPL_PATH}" ## Template's folder path
     local -i empty=0                   ## --empty
 
     while  [[ -n "$1" ]]; do
@@ -277,6 +282,9 @@ create_empty_implementation() {
 ##  --templ|-t folder
 ## Arguments:
 ##   $@: arguments to parse
+## Globals:
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
 ## Returns:
 ##  test_minimal_args
 ##  create_implementation_with_template
@@ -290,8 +298,8 @@ add_command() {
     local implementation=""         ## The implementation to be used
     local name=""                   ## Implementation's name used in the project
     local project=""                ## Project's name
-    local repo="${std_repo_path}"   ## Repository's folder path
-    local templ="${std_templ_path}" ## Template's folder path
+    local repo="${STD_REPO_PATH}"   ## Repository's folder path
+    local templ="${STD_TEMPL_PATH}" ## Template's folder path
     local -i empty=0                ## --empty
     local -i latest=0               ## --latest
 
