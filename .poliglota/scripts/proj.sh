@@ -177,7 +177,7 @@ create_empty_implementation() {
 ## --empty|-e
 ## --repo|-o|-r <folder>
 ## --templ|-t <folder>
-add_implementation() {
+add_command() {
 
     if [[ -z "$2" ]]; then
         echo "Wrong Parameters"
@@ -285,7 +285,7 @@ case $1 in
         exit;;
     add)
         shift;
-        add_implementation $@
+        add_command $@
         exit;;
     *)
         echo "Wrong command"
