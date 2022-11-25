@@ -9,7 +9,8 @@
 ##  $STD_TEMPL_PATH
 ##  $STD_PLUGINS_PATH
 ##  $LAST_PROJECT
-source poli.config
+# shellcheck source=poli.config
+source "poli.config"
 
 set -C # Prevent overwriting of files by redirection
 
@@ -70,7 +71,7 @@ test_minimal_args() {
         description
         echo
         echo "Type './poli proj --help' for more information."
-        exit "$E_BADARGS"
+        exit "${E_BADARGS}"
     fi
 
 }
@@ -103,9 +104,9 @@ save_and_exit() {
 ##  exit, if --script flag is defined
 try_run_custom_script() {
     local -i found=0
-    for arg in $@; do
+    for arg in "$@"; do
         if [[ $found = 1 ]]; then
-            ./$1 $@
+            ./"$1" "$@"
             exit
         elif [[ "${arg}" == "--custom" || "${arg}" == "-c" ]]; then
             local -r found=1
@@ -190,7 +191,7 @@ new_command() {
     local templ="${STD_TEMPL_PATH}" ## Template's folder path
     local -i empty=0                   ## --empty
 
-    try_run_custom_script $@
+    try_run_custom_script "$@"
 
     while  [[ -n "$1" ]]; do
         case "$1" in
@@ -318,11 +319,11 @@ add_command() {
     local -i empty=0                ## --empty
     local -i latest=0               ## --latest
 
-    try_run_custom_script $@
+    try_run_custom_script "$@"
 
     # --latest has first-class importance, changing the behavior
     # so, it must to be declared here
-    for arg in $@; do
+    for arg in "$@"; do
         if [[ "${arg}" == "--latest" || "${arg}" == "-l" ]]; then
             local -r latest=1
         fi
@@ -361,7 +362,7 @@ add_command() {
                     shift 2
                 else
                     local -r implementation="$1"
-                    local -r project="${last_project}"
+                    local -r project="${LAST_PROJECT}"
                     shift
                 fi
                 ;;
@@ -400,15 +401,15 @@ fi
 case "$1" in
     "new")
         shift;
-        new_command $@
-        exit;;
+        new_command "$@"
+        ;;
     "add")
         shift;
-        add_command $@
-        exit;;
+        add_command "$@"
+        ;;
     *)
         echo "Wrong command"
-        usage
-        exit $E_BADARGS
-    ;;
+        description
+        exit "${E_BADARGS}"
+        ;;
 esac
