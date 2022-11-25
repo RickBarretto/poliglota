@@ -4,7 +4,7 @@ author: @RickBarretto
 
 # Grammar
 
-This project contain proper expressions.
+This project contains proper expressions.
 Then, it's worth noting their meanings and uses
 to simplify your comprehension
 of what is being said or referred to.
@@ -24,7 +24,8 @@ of what is being said or referred to.
 ---
 
 ## Root Repository
-> Refers to the [root](../../) of Github/Local repository.
+> Refers to the [root folder](https://github.com/RickBarretto/poliglota/)
+of Github/Local repository.
 
 Is Where the folders
 [`.plugins`](../../.plugins) [[#1](#plugins)],
@@ -35,13 +36,14 @@ are located.
 
 ## Main Repository
 > Refers to [`repository/` Folder](../../repository/)
-> at the [Roor Repository](#root-repository).
+> at the [Root Repository](#root-repository).
 
 Is where you'll put your *[Projects](#projects)*
 
 
 ## Project
-> Refers to your projects inside of [Main Repository](#main-repository).
+> Refers to one of your project
+> inside of [Main Repository](#main-repository).
 
 Is where you'll add and write your *[Implementations](#implementations)*
 
@@ -49,11 +51,11 @@ Is where you'll add and write your *[Implementations](#implementations)*
 ## Implementations
 > Refers to each implementation of a [Project](#project).
 
-A implementation is a Project rewrite, it can be
-in some specific language, framework, code-style, algorithm,
-it means, different ways to generate the same result.
+An implementation is a Project rewrite, it can be
+in some specific language, framework, code-style, algorithm...
+It means, different ways to generate the same result.
 
-With these implementations,
+With these implementations
 you can understand better your distinct tools.
 
 Remember, not only frameworks are tools,
@@ -71,7 +73,7 @@ based on a [Base Template](#base-template)
 > Refers to templates inside [`.templates` folder]> (../../.templates)
 
 Are the templates that will be used to generate your
-[Project](#project)'s [Implemantations](#implementations).
+[Project](#project)'s [Implementations](#implementations).
 They are builtin using a [Base Template](#base-template)
 
 
