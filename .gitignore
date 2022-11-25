@@ -1,3 +1,5 @@
 /repository/*/**
 /.templates/*/**
 !/.templates/.template/**
+sandbox.sh
+test.sh
