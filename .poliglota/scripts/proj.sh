@@ -198,19 +198,19 @@ new_command() {
                 shift 2
                 ;;
             "--empty" | "-e")
-                local empty=1
+                local -r empty=1
                 shift
                 ;;
             "--repo" | "-r")
-                local repo="$2"
+                local -r repo="$2"
                 shift 2
                 ;;
             "--templ" | "-t")
-                local templ="$2";
+                local -r templ="$2";
                 shift 2
                 ;;
             *)
-                local project="$1"
+                local -r project="$1"
                 shift
                 ;;
         esac
