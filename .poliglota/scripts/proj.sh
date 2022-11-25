@@ -387,24 +387,23 @@ add_command() {
 
 }
 
-# Code execution
-test_minimal_args "1" "$#"
+main() {
 
-if [[ "$1" == "--description" ]]; then
-    description
-    exit
-elif [[ "$1" == "--help" || "$1" == "-h" ]]; then
-    usage
-    exit
-fi
+    test_minimal_args "1" "$#"
 
-case "$1" in
+    case "$1" in
+    "--description")
+        description
+        ;;
+    "--help" | "-h")
+        usage
+        ;;
     "new")
-        shift;
+        shift
         new_command "$@"
         ;;
     "add")
-        shift;
+        shift
         add_command "$@"
         ;;
     *)
@@ -412,4 +411,11 @@ case "$1" in
         description
         exit "${E_BADARGS}"
         ;;
-esac
+    esac
+
+
+    exit
+
+}
+
+main
