@@ -11,7 +11,7 @@
 ##   $last_project
 source poli.config
 
-set -C          # Prevent overwriting of files by redirection
+set -C # Prevent overwriting of files by redirection
 
 # --- Global internal functions ---
 
