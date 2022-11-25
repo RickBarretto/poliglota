@@ -61,6 +61,10 @@ save_history() {
 
 ## --- New internal functions ---
 
+## Creates a new project based on a template
+## $1: the repository's folder path
+## $2: the project name
+## $3: the template's folder path
 create_project_with_template() {
     local repository=$1
     local project=$2
@@ -80,6 +84,9 @@ create_project_with_template() {
     save_history $project; exit
 }
 
+## Creates an empty new project given a repository
+## $1: the repository's folder path
+## $2: the project name
 create_empty_project() {
     local repository=$1
     local project=$2
@@ -144,6 +151,12 @@ new_command() {
 
 ## --- Add internal functions ---
 
+## Creates a new implementation based on a template
+## $1: the repository's folder path
+## $2: the project name
+## $3: the template's folder path
+## $4: the folder path of implementation's template
+## $5: the implementation's name inside the project
 create_implementation_with_template() {
     local repository=$1
     local project=$2
@@ -161,6 +174,10 @@ create_implementation_with_template() {
 
 }
 
+## Creates a new empty implementation
+## $1: the repository's folder path
+## $2: the project name
+## $3: the implementation's name inside the project
 create_empty_implementation() {
     local repository=$1
     local project=$2
