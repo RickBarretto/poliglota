@@ -65,11 +65,11 @@ new_project() {
     fi
 
     # local variables
-    local project=""
-    local custom=""
-    local empty=0
-    local repo="repository"
-    local templ=".templates"
+    local project=""         ## Project name
+    local custom=""          ## Custom script path
+    local empty=0            ## Sets if the implementation'll be empty
+    local repo="repository"  ## Repository's folder path
+    local templ=".templates" ## Template's folder path
 
     while  [[ -n "$1" ]]; do
         case $1 in
@@ -134,12 +134,14 @@ add_implementation() {
     fi
 
     # local variables
-    local implementation=""
-    local name=""
-    local project=""
-    local repo="repository"
-    local templ=".templates"
-    local empty=0
+    source .poliglota/config/history.config # imports $last_project
+    local implementation=""  ## The implementation to be used
+    local name=""            ## Implementation's name used in the project
+    local project=""         ## Project's name
+    local repo="repository"  ## Repository's folder path
+    local templ=".templates" ## Template's folder path
+    local empty=0            ## Sets if the implementation'll be empty
+    local latest=0           ## Sets if the latest project'll be the current
 
     while  [[ -n "$1" ]]; do
         case $1 in
