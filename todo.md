@@ -109,9 +109,9 @@ Updates a plugin status to
 - [ ] Archive project
 - [ ] Group projects
 - [ ] Test command
-    - [ ] All implementations
-    - [ ] Just the current implementation
+  - [ ] All implementations
+  - [ ] Just the current implementation
 - [ ] Prof command
-    - [ ] All implementations
-    - [ ] Just the current implementation
+  - [ ] All implementations
+  - [ ] Just the current implementation
 - [ ] Save on Zettelkasten
