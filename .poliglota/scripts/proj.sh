@@ -130,7 +130,7 @@ try_run_custom_script() {
     local -i found=0
     for arg in "$@"; do
         if [[ $found = 1 ]]; then
-            ./"$1" "$@"
+            "${arg}" "$@"
             exit
         elif [[ "${arg}" == "--custom" || "${arg}" == "-c" ]]; then
             local -r found=1
