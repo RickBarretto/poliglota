@@ -436,7 +436,7 @@ main() {
         add_command "$@"
         ;;
     *)
-        raise_wrong_arguments_input
+        raise_wrong_arguments_input "$1"
         ;;
     esac
 
