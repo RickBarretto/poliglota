@@ -9,8 +9,8 @@ usage() {
     echo "COMMANDS                                                  "
     echo "                                                          "
 
-    for command in ${commands[@]}; do
-        .poliglota/scripts/$command.sh --description
+    for command in "${commands[@]}"; do
+        ".poliglota/scripts/${command}.sh" --description
     done
 
 }
@@ -19,9 +19,9 @@ usage() {
 case $1 in
 
     ## Commands
-    proj)
+    "proj")
         shift
-        .poliglota/scripts/proj.sh $@
+        .poliglota/scripts/proj.sh "$@"
         exit
     ;;
 
