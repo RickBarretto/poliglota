@@ -50,6 +50,7 @@ usage() {
     echo
     echo "OPTIONS                                                             "
     echo "  --help|-h                     shows this help page                "
+    echo "  --description                 shows a short description           "
 }
 
 ## Sets the minimal arguments required by a command
