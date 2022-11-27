@@ -54,24 +54,37 @@ usage() {
 
 ## Sets the minimal arguments required by a command
 ## Arguments:
+##  None
+## Output:
+##  Prints an error message and the usage
+## Returns:
+##  exit "$E_BADARGS"
+raise_wrong_arguments_input() {
+    local -r E_BADARGS=85 ## Bad Arguments error value
+
+    description
+    echo
+    echo "Type './poli proj --help' for more information."
+    exit "${E_BADARGS}"
+
+}
+
+## Sets the minimal arguments required by a command
+## Arguments:
 ##  $minimal: minimal arguments to be able run
 ##  $arg_count: current arguments count
 ## Output:
 ##  Prints an error message and the usage
 ## Returns:
-##  exit
+##  raise_wrong_arguments_input, if assert fails
 assert_minimal_arguments() {
 
     local -r -i minimal=$1
     local -r -i arg_count=$2
-    local -r E_BADARGS=85 ## Bad Arguments error value
 
     if [[ $minimal -gt $arg_count ]]; then
         echo "Wrong: the minimal arguments amout is ${minimal}."
-        description
-        echo
-        echo "Type './poli proj --help' for more information."
-        exit "${E_BADARGS}"
+        raise_wrong_arguments_input
     fi
 
 }
@@ -417,4 +430,4 @@ main() {
 
 }
 
-main
+main "$@"
