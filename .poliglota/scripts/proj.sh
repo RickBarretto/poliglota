@@ -400,6 +400,20 @@ add_command() {
 
 }
 
+## [Script] Parses the arguments and calls the right commands
+## Script Commands:
+##   new
+##   add
+## Script Options:
+##  --help
+##  --description
+## Arguments:
+##   $@: arguments to parse
+## Returns:
+##  test_minimal_args
+##  create_implementation_with_template
+##  create_empty_implementation
+##  raise_wrong_arguments_input, for wrong arguments
 main() {
 
     assert_minimal_args "1" "$#"
