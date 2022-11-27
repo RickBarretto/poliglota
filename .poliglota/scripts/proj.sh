@@ -420,9 +420,7 @@ main() {
         add_command "$@"
         ;;
     *)
-        echo "Wrong command"
-        description
-        exit "${E_BADARGS}"
+        raise_wrong_arguments_input
         ;;
     esac
 
