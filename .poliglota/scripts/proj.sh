@@ -223,6 +223,9 @@ new_command() {
             local -r templ="$2";
             shift
             ;;
+        "-"*)
+            raise_wrong_arguments_input "$1"
+            ;;
         *)
             local -r project="$1"
             ;;
@@ -363,6 +366,9 @@ add_command() {
             shift
             ;;
         "--latest" | "-l")
+            ;;
+        "-"*)
+            raise_wrong_arguments_input "$1" # badargs, exits
             ;;
         *)
             if [[ $latest == 0 ]]; then
