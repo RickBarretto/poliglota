@@ -36,7 +36,7 @@ Feel free and have fun!
 > [!WARNING]
 > Please, read the complete documentation before start.
 
-## Básico
+## Basic
 
 ### Add new languages support
 
