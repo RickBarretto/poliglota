@@ -95,7 +95,7 @@ assert_minimal_arguments() {
 
     if [[ $minimal -gt $arg_count ]]; then
         raise_wrong_arguments_input \
-            "The minimal arguments amout is ${minimal}."
+            "The minimal arguments amount is ${minimal}."
     fi
 
 }
