@@ -428,7 +428,7 @@ add_command() {
 ##  raise_wrong_arguments_input, for wrong arguments
 main() {
 
-    assert_minimal_args "1" "$#"
+    assert_minimal_arguments "1" "$#"
 
     case "$1" in
     "--description")
