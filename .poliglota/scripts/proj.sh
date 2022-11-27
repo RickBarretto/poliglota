@@ -54,15 +54,16 @@ usage() {
 
 ## Sets the minimal arguments required by a command
 ## Arguments:
-##  None
+##  $wrong_input
 ## Output:
 ##  Prints an error message and the usage
 ## Returns:
 ##  exit "$E_BADARGS"
 raise_wrong_arguments_input() {
+    local -r wrong_input="$1"
     local -r E_BADARGS=85 ## Bad Arguments error value
 
-    echo "Wrong input:"
+    echo "Wrong input: ${wrong_input}"
     echo
     usage
     exit "${E_BADARGS}"
