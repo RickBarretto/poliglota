@@ -6,19 +6,19 @@ author: @RickBarretto
 
 > This page is to explain design choises for *Poliglota*
 > So, if you have some doubt about why I choose A rather than B,
-> please, write me an [Issue](https://github.com/RickBarretto/poliglota/issues).
+> please, write me an [Issue][Issues].
 
-So, as already said in [README](../../README.md),
+So, as already said in [README][Readme],
 *Poliglota* is a *minimalist*, *flexible* and *extensible* tool.
 So this is what this project must to be.
 
-This way, Poli have just a [minimal template](../../.templates/.template/)
+This way, Poli have just a [minimal template][BaseTemplate]
 used to generate user's templates.
 
-Remember, [Everything can be modified](custom-poliglota.md)
+Remember, [Everything can be modified][Customizing]
 
 ## Why poli script doesn't have a extension
-So, as you can see, we have a [`poli` file](../../poli)
+So, as you can see, we have a [`poli` file][Poli]
 at the root of this repository.
 And it doesn't have a `.sh` extension.
 It's just a design choice to simplify the use.
@@ -40,4 +40,11 @@ That you should not change. **But you can!**
 **It'll help you to don't mess the project or inject a accidental bug.**
 
 So, for personal modifications,
-you should use [`.plugins/ folder`](../../.plugins).
+you should use [`.plugins/ folder`][Plugins].
+
+[Issues]: https://github.com/RickBarretto/poliglota/issues
+[Readme]: https://github.com/RickBarretto/poliglota/tree/main/README.md
+[Poli]: https://github.com/RickBarretto/poliglota/tree/main/poli
+[Plugins]: https://github.com/RickBarretto/poliglota/tree/main/.plugins/
+[BaseTemplate]: https://github.com/RickBarretto/poliglota/tree/main/.templates/.template/
+[Customizing]: https://github.com/RickBarretto/poliglota/tree/main/.poliglota/documentation/custom-poliglota.md
