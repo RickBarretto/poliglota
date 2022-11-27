@@ -33,7 +33,7 @@ Add a specific implementation to a project
 |create empty repo     | --empty   -e |   x   |            |
 |repo folder output    | --repo    -r |   x   |            |
 |template folder input | --templ   -t |   x   |            |
-|latest project        | --lastest -l |       |            |
+|latest project        | --lastest -l |   x   |            |
 
 ### Fill implementations
 Adds missing implementations
