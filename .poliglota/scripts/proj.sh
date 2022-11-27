@@ -30,7 +30,7 @@ usage() {
     echo
     echo "SUBCOMMANDS                                                         "
     echo
-    echo "  new <project>               inits a new project with all        "
+    echo "  new <project>                 inits a new project with all        "
     echo "                                avaliable implementations           "
     echo "    --custom|-c <script-path>   run with a custom script instead    "
     echo "    --empty|-e                  creates a empty project             "
