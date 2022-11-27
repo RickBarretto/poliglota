@@ -84,8 +84,8 @@ assert_minimal_arguments() {
     local -r -i arg_count=$2
 
     if [[ $minimal -gt $arg_count ]]; then
-        echo "Wrong: the minimal arguments amout is ${minimal}."
-        raise_wrong_arguments_input
+        raise_wrong_arguments_input \
+            "The minimal arguments amout is ${minimal}."
     fi
 
 }
