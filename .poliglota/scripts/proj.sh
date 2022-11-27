@@ -62,9 +62,9 @@ usage() {
 raise_wrong_arguments_input() {
     local -r E_BADARGS=85 ## Bad Arguments error value
 
-    description
+    echo "Wrong input:"
     echo
-    echo "Type './poli proj --help' for more information."
+    usage
     exit "${E_BADARGS}"
 
 }
