@@ -348,15 +348,13 @@ add_command() {
             shift
             ;;
         "--as" | "-a")
+            local -r name="$2"
             shift
-            local -r name="$1"
             ;;
         "--empty" | "-e")
             local -r empty=1
-            shift
             ;;
         "--repo" | "-r")
-            shift
             local -r repo="$2"
             shift
             ;;
