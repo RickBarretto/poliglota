@@ -208,26 +208,25 @@ new_command() {
 
     while  [[ -n "$1" ]]; do
         case "$1" in
-            "--custom" | "-c")
-                shift 2
-                ;;
-            "--empty" | "-e")
-                local -r empty=1
-                shift
-                ;;
-            "--repo" | "-r")
-                local -r repo="$2"
-                shift 2
-                ;;
-            "--templ" | "-t")
-                local -r templ="$2";
-                shift 2
-                ;;
-            *)
-                local -r project="$1"
-                shift
-                ;;
+        "--custom" | "-c")
+            shift
+            ;;
+        "--empty" | "-e")
+            local -r empty=1
+            ;;
+        "--repo" | "-r")
+            local -r repo="$2"
+            shift
+            ;;
+        "--templ" | "-t")
+            local -r templ="$2";
+            shift
+            ;;
+        *)
+            local -r project="$1"
+            ;;
         esac
+        shift
     done
 
     if [[ -n "${project}" ]]; then
@@ -344,42 +343,40 @@ add_command() {
 
     while  [[ -n "$1" ]]; do
         case "$1" in
-            "--custom" | "-c")
-                shift 2
-                ;;
-            "--as" | "-a")
+        "--custom" | "-c")
+            shift
+            ;;
+        "--as" | "-a")
+            shift
+            local -r name="$1"
+            ;;
+        "--empty" | "-e")
+            local -r empty=1
+            shift
+            ;;
+        "--repo" | "-r")
+            shift
+            local -r repo="$2"
+            shift
+            ;;
+        "--templ" | "-t")
+            local -r templ="$2"
+            shift
+            ;;
+        "--latest" | "-l")
+            ;;
+        *)
+            if [[ $latest == 0 ]]; then
+                local -r implementation="$1"
+                local -r project="$2"
                 shift
-                local -r name="$1"
-                shift
-                ;;
-            "--empty" | "-e")
-                local -r empty=1
-                shift 2
-                ;;
-            "--repo" | "-r")
-                shift
-                local -r repo="$2"
-                shift 2
-                ;;
-            "--templ" | "-t")
-                local -r templ="$2"
-                shift 2
-                ;;
-            "--latest" | "-l")
-                shift
-                ;;
-            *)
-                if [[ $latest == 0 ]]; then
-                    local -r implementation="$1"
-                    local -r project="$2"
-                    shift 2
-                else
-                    local -r implementation="$1"
-                    local -r project="${LAST_PROJECT}"
-                    shift
-                fi
-                ;;
+            else
+                local -r implementation="$1"
+                local -r project="${LAST_PROJECT}"
+            fi
+            ;;
         esac
+        shift
     done
 
     if [[ -n "${implementation}" && -n "${project}" ]]; then
