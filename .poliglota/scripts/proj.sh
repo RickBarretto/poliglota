@@ -48,6 +48,15 @@ usage() {
     echo "    --repo|-r <folder>          modifies the output folder          "
     echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
+    echo "  fill <project>                fills the project with missing      "
+    echo "                                implementations from a template     "
+    echo "                                folder                              "
+    echo "    --custom|-c <script-path>   run with a custom script instead    "
+    echo "    --latest|-l                 uses the latest command's project as"
+    echo "                                the current                         "
+    echo "    --repo|-r <folder>          modifies the output folder          "
+    echo "    --templ|-t <folder>         modifies the template entry folder  "
+    echo
     echo "OPTIONS                                                             "
     echo "  --help|-h                     shows this help page                "
     echo "  --description                 shows a short description           "
