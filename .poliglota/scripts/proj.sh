@@ -412,6 +412,88 @@ add_command() {
 
 }
 
+# --- Fill internal functions ---
+
+## Creates an empty new project given a repository
+## Arguments:
+##  $template: templates' path
+##  $repository_path: repository's folder path
+##  $project_name: name of the new project
+##  $name: implementation's name inside the project
+## Returns:
+##  save_and_exit
+fill_project() {
+    local -r template="$1"
+    local -r repository_path="$2"
+    local -r project_name="$3"
+    local -r project="${repository_path}/${project_name}"
+
+    cp  "${template}/"** "${project}"       \
+        --recursive --no-preserve=timestamp \
+        --no-clobber # prevents overwrite
+
+    save_and_exit "${project_name}"
+
+}
+
+## [Command]: Fills an existing project with missing implementations
+## Command Arguments:
+##   $project: name of the new project
+## Command Options:
+##  --custom|-c script-path
+##  --repo|-r folder
+##  --templ|-t folder
+## Arguments:
+##   $@: arguments to parse
+## Globals:
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
+## Returns:
+##  test_minimal_args
+##  fill_project
+##  exit
+fill_command() {
+
+    assert_minimal_arguments "1" "$#"
+
+    local project=""                ## Project's name
+    local repo="${STD_REPO_PATH}"   ## Repository's folder path
+    local templ="${STD_TEMPL_PATH}" ## Template's folder path
+
+    try_run_custom_script "$@"
+
+    while [[ -n "$1" ]]; do
+        case "$1" in
+        "--custom" | "-c")
+            shift
+            ;;
+        "--repo" | "-r")
+            local -r repo="$2"
+            shift
+            ;;
+        "--templ" | "-t")
+            local -r templ="$2"
+            shift
+            ;;
+        "-"*)
+            raise_wrong_arguments_input "$1"
+            ;;
+        *)
+            local -r project="$1"
+        esac
+        shift
+    done
+
+    if [[ -n "${project}" ]]; then
+        fill_project $templ $repo $project
+    fi
+
+    exit
+
+}
+
+# --- Script functions ---
+
 ## [Script] Parses the arguments and calls the right commands
 ## Script Commands:
 ##   new
