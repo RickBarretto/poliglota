@@ -73,7 +73,9 @@ raise_wrong_arguments_input() {
     local -r wrong_input="$1"
     local -r E_BADARGS=85 ## Bad Arguments error value
 
-    echo "Wrong input: ${wrong_input}"
+    set +o noclobber
+    echo "Wrong input: ${wrong_input}" >> /dev/stderr # > stderr
+
     echo
     usage
     exit "${E_BADARGS}"
@@ -159,7 +161,9 @@ create_project_with_template() {
         cp "${template}"/* "${repository}/${project}/" \
             --recursive -b --no-preserve=timestamp
     else
-        echo "${project} already exists"
+        set +o noclobber
+        echo "${project} already exists" >>/dev/stderr # > stderr
+        exit
     fi
 
     if [ -f "${repository}/${project}/.template" ]; then
@@ -289,7 +293,9 @@ create_implementation_with_template() {
         save_and_exit "${project}"
 
     else
-        echo "${name} already implemented"
+        set +o noclobber
+        echo "${name} already implemented" >>/dev/stderr # > stderr
+        exit
     fi
 
 }
