@@ -208,6 +208,7 @@ create_empty_project() {
 ##  $STD_TEMPL_PATH
 ## Returns:
 ##  test_minimal_args
+##  try_run_custom_script
 ##  create_project_with_template
 ##  create_empty_project
 ##  exit
