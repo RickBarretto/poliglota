@@ -115,7 +115,7 @@ save_and_exit() {
     local -r config_file="${STD_CONFIG_PATH}"
 
     sed --in-place --expression                                 \
-        "s/last_project=.*/last_project=${current_project}/g"   \
+        "s/LAST_PROJECT=.*/LAST_PROJECT=${current_project}/g"   \
         "${config_file}"
     exit
 
