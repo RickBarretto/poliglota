@@ -12,7 +12,7 @@
 # shellcheck source=poli.config
 source "poli.config"
 
-set -C # Prevent overwriting of files by redirection
+set -o noclobber # Prevent overwriting of files by redirection
 
 # --- Global internal functions ---
 
