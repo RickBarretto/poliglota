@@ -52,8 +52,6 @@ usage() {
     echo "                                implementations from a template     "
     echo "                                folder                              "
     echo "    --custom|-c <script-path>   run with a custom script instead    "
-    echo "    --latest|-l                 uses the latest command's project as"
-    echo "                                the current                         "
     echo "    --repo|-r <folder>          modifies the output folder          "
     echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
