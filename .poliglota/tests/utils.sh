@@ -21,7 +21,6 @@ source "poli.config"
 ## This is the current test that is running
 CURRENT_TEST=""
 
-
 ## >> Constant
 ## String used to be printed in fail(),
 ## case the command returned an error
