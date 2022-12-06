@@ -47,3 +47,23 @@ pass() {
 
     echo "[PASSED] ${current_test}: ${message}"
 }
+
+
+## Prints an error message for some test
+## Arguments:
+##  $message
+## Globals:
+##  $CURRENT_TEST
+## Output:
+##  Prints an error message
+##  with the current test and a custom message
+fail() {
+    # -- Arguments
+    local message="$1"
+
+    # -- Globals
+    local current_test="${CURRENT_TEST}"
+
+    echo -e "[FAILED] ${current_test}: ${message}" \
+        >> /dev/stderr
+}
