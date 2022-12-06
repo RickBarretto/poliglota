@@ -82,6 +82,7 @@ test_default_project() {
 
 ## Runs every test for `proj new` command
 init_tests() {
+    echo "Initializing tests..."
 
     test_default_project
 
