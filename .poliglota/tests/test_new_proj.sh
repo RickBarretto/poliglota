@@ -24,3 +24,13 @@
 ##   fail <message>
 source ".poliglota/tests/utils.sh"
 
+## Runs the new command and sends all errors to /dev/null
+## Arguments:
+##   $wrong_input
+## Output:
+##   Writes on an error inside $STD_POLI_PATH/error.txt
+run_new() {
+    ./poli proj new "$@" \
+        1> /dev/null     \
+        2> "error.txt"
+}
