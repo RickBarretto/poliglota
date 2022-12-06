@@ -28,3 +28,22 @@ CURRENT_TEST=""
 declare -r PLEASE_DEBUG="Command returned an error.
 Please run with set -x. And read ${STD_POLI_PATH}/error.txt"
 
+# --- Global functions to be exported ---
+
+## Prints a success message for some test
+## Arguments:
+##  $message
+## Globals:
+##  $CURRENT_TEST
+## Output:
+##  Prints a success message
+##  with the current test and a custom message
+pass() {
+    # -- Arguments
+    local message="$1"
+
+    # -- Globals
+    local current_test="${CURRENT_TEST}"
+
+    echo "[PASSED] ${current_test}: ${message}"
+}
