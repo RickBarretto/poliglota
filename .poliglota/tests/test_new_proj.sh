@@ -201,8 +201,6 @@ test_custom_repository() {
         "Tried with "${repository_flag} ${repository}".\n${debug_message}"
 
     # >>> Assertions
-
-    ## >>> Assertions
     local -r check_impl=$(cd "${template}"; echo */**)
     local -r check_repo=$(cd "${repository}/${proj_name}"; echo */**)
 
