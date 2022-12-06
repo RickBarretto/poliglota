@@ -78,6 +78,53 @@ test_default_project() {
 
 }
 
+
+## Tests with an empty project
+## Arguments:
+##   $empty_flag: must be the empty flag
+## Globals:
+##  $STD_TEMPL_PATH
+##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
+##  $CURRENT_TEST
+test_empty_project() {
+    CURRENT_TEST="test_empty_projects"
+
+    # -- Arguments
+    local empty_flag="$1"
+
+    # -- Globals
+    local -r template="${STD_TEMPL_PATH}"
+    local -r debug_message="${PLEASE_DEBUG}"
+    local -r repository="${STD_REPO_PATH}"
+
+    local -r proj_name="TestEmptyProject"
+
+    # >>> Action
+    run_new "${proj_name}" "${empty_flag}" ||
+        failed "Tried with "${empty_flag}".\n${debug_message}"
+
+    # >>> Assertions
+
+    # Checks if project was created
+    if [[ -d "${repository}/${proj_name}" ]]
+        then pass "Project was created with ${empty_flag}"
+        else fail "${repository}/${proj_name} does not exist"
+    fi
+
+    # Checks if repository is empty
+    if [[ ! -e "${repository}/${proj_name}/*" ]]
+        then pass "Project is empty"
+        else fail "${repository}/${proj_name} is not empty"
+    fi
+
+    # >>> Cleanup
+    rm --recursive "${repository}/${proj_name}" ||
+        echo "Couldn't cleanup"
+
+}
+
+
 # Running tests --------
 
 ## Runs every test for `proj new` command
@@ -85,6 +132,9 @@ init_tests() {
     echo "Initializing tests..."
 
     test_default_project
+
+    test_empty_project "--empty"
+    test_empty_project "-e"
 
 
 }
