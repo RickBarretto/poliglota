@@ -170,6 +170,59 @@ test_custom_template() {
 
 }
 
+
+## Tests with a custom repository folder
+## Arguments:
+##   $repository_flag
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+##  $STD_TEMPL_PATH
+test_custom_repository() {
+    CURRENT_TEST="test_custom_repository"
+
+    # -- Arguments
+    local -r repository_flag="$1"
+
+    # -- Globals
+    local -r debug_message="${PLEASE_DEBUG}"
+    local -r template="${STD_TEMPL_PATH}"
+
+    local -r repository="CustomRepository"
+    local -r proj_name="FromCustom"
+
+    # >>> Prepare
+    # Creates a custom repository folder
+    mkdir "${repository}"
+
+    # >>> Action
+    run_new "${proj_name}" "${repository_flag}" "${repository}"  ||
+        failed \
+        "Tried with "${repository_flag} ${repository}".\n${debug_message}"
+
+    # >>> Assertions
+
+    ## >>> Assertions
+    local -r check_impl=$(cd "${template}"; echo */**)
+    local -r check_repo=$(cd "${repository}/${proj_name}"; echo */**)
+
+    # Checks if the same files exists in both
+    # Note: files with a dot `.` at the start will be ignored
+    if [[ "${check_impl}" = "${check_repo}" ]]
+    then pass "Created with ${repository} folder"
+    else
+        fail "Trying to compare:
+        Templates: ${check_impl} \\
+        = Repository: ${check_repo}"
+    fi
+
+    # >>> Cleanup
+    rm --recursive "${repository}" ||
+        echo "Couldn't cleanup project"
+
+}
+
+
 # Running tests --------
 
 ## Runs every test for `proj new` command
@@ -184,6 +237,8 @@ init_tests() {
     test_custom_template "--templ"
     test_custom_template "-t"
 
+    test_custom_repository "--repo"
+    test_custom_repository "-r"
 }
 
 init_tests
