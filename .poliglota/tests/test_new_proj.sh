@@ -125,6 +125,51 @@ test_empty_project() {
 }
 
 
+## Tests with a custom template folder
+## Arguments:
+##   $template_flag
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
+test_custom_template() {
+    CURRENT_TEST="test_custom_template"
+
+    # -- Arguments
+    local -r template_flag="$1"
+
+    # -- Globals
+    local -r debug_message="${PLEASE_DEBUG}"
+    local repository="${STD_REPO_PATH}"
+
+    local -r template="CustomTemplate"
+    local -r proj_name="FromCustom"
+
+    # >>> Prepare
+    # Creates a custom template folder
+    mkdir "${template}"
+    touch "${template}/${template}s_file.md"
+
+    # >>> Action
+    run_new "${proj_name}" "${template_flag}" "${template}"  ||
+        failed "Tried with "${template_flag} ${template}".\n${debug_message}"
+
+    # >>> Assertions
+
+    # Checks if repository exists and has the template's file
+    if [[ -f "${repository}/${proj_name}/${template}s_file.md" ]]
+        then pass "Created with ${template} folder"
+        else fail "${repository}/${proj_name} doesn't was created"
+    fi
+
+    # >>> Cleanup
+    rm --recursive "${template}/" ||
+        "Couldn't cleanup template folder"
+    rm --recursive "${repository}/${proj_name}" ||
+        echo "Couldn't cleanup project"
+
+}
+
 # Running tests --------
 
 ## Runs every test for `proj new` command
@@ -136,6 +181,8 @@ init_tests() {
     test_empty_project "--empty"
     test_empty_project "-e"
 
+    test_custom_template "--templ"
+    test_custom_template "-t"
 
 }
 
