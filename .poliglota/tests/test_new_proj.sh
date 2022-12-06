@@ -35,10 +35,56 @@ run_new() {
         2> "error.txt"
 }
 
+# Testing functions -------
+
+
+## Tests with default new project settings
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
+test_default_project() {
+    CURRENT_TEST="test_default_project"
+
+    # -- Globals
+    local -r debug_message="${PLEASE_DEBUG}"
+    local -r repository="${STD_REPO_PATH}"
+    local -r template="${STD_TEMPL_PATH}"
+
+    local -r proj_name="TestProject"
+
+    ## >>> Action
+    run_new "${proj_name}" ||
+        failed "${debug_message}"
+
+    ## >>> Assertions
+    local -r check_impl=$(cd "${template}"; echo */**)
+    local -r check_repo=$(cd "${repository}/${proj_name}"; echo */**)
+
+    # Checks if the same files exists in both
+    # Note: files with a dot `.` at the start will be ignored
+    if [[ "${check_impl}" = "${check_repo}" ]]
+    then pass "default config is running"
+    else
+        fail "Trying to compare:
+        Templates: ${check_impl} \\
+        = Repository: ${check_repo}"
+    fi
+
+    ## >>> Cleanup
+    rm --recursive "${repository}/${proj_name}" ||
+        echo "Couldn't cleanup"
+
+}
+
 # Running tests --------
 
 ## Runs every test for `proj new` command
 init_tests() {
+
+    test_default_project
+
 
 }
 
