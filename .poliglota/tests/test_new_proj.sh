@@ -34,3 +34,12 @@ run_new() {
         1> /dev/null     \
         2> "error.txt"
 }
+
+# Running tests --------
+
+## Runs every test for `proj new` command
+init_tests() {
+
+}
+
+init_tests
