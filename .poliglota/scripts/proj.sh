@@ -18,7 +18,7 @@ set -o noclobber # Prevent overwriting of files by redirection
 
 description() {
     echo "  proj                          project related tasks               "
-    echo "      new <project>           inits a new project with all        "
+    echo "      new <project>             inits a new project with all        "
     echo "                                avaliable implementations           "
     echo "      add <impl> <project>      adds a particular implementation to "
     echo "                                an existing project                 "
