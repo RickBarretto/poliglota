@@ -220,43 +220,52 @@ test_custom_repository() {
 
 }
 
-# [TODO] - Please uncomment me
-# ## Tests with a custom repository folder
-# ## Arguments:
-# ##   $custom_flag
-# ## Globals:
-# ##  $CURRENT_TEST
-# ##  $PLEASE_DEBUG
-# ##  $STD_TEMPL_PATH
-# test_custom_script() {
-#     CURRENT_TEST="test_custom_script"
-#
-#     # -- Arguments
-#     local -r custom_flag="$1"
-#
-#     # -- Globals
-#     local -r debug_message="${PLEASE_DEBUG}"
-#
-#     local -r script="custom_script.sh"
-#     local -r args="--flag1 value -f2 value2"
-#     local -r proj_name="CreatedWithCustomScript"
-#
-#     # >>> Prepare
-#
-#     # >>> Action
-#     run_new "${proj_name}" "${custom_flag}" "${script}" "${args}" ||
-#         failed \
-#             "Tried with "${custom_flag} ${script}".\n${debug_message}"
-#
-#     # >>> Assertion
-#     if [[  ]]
-#     then pass ""
-#     else fail ""
-#     fi
-#
-#     # >>> Cleanup
-#
-# }
+
+## Tests with a custom script
+## Arguments:
+##   $custom_flag
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+##  $STD_TEMPL_PATH
+test_custom_script() {
+    CURRENT_TEST="test_custom_script"
+
+    # -- Arguments
+    local -r custom_flag="$1"
+
+    # -- Globals
+    local -r debug_message="${PLEASE_DEBUG}"
+
+    local -r script="custom_script.sh"
+    local -r args="--flag1 value -f2 value2"
+    local -r proj_name="CreatedWithCustomScript"
+    local -r output_file="test.txt"
+
+    # >>> Prepare
+    printf '#! /bin/bash
+echo "$@" > "%s"' "${output_file}" \
+        > "${script}"
+
+    # >>> Action
+    run_new "${proj_name}" "${custom_flag}" "${script}" "${args}" ||
+        failed \
+            "Tried with "${custom_flag} ${script}".\n${debug_message}"
+
+    # >>> Assertion
+    output=$(head -n 1 "${output_file}")
+    if [[ "${output}" = "${proj_name} ${custom_flag} ${script} ${args}" ]]
+    then pass "Custom Script is working.
+    Output: ${output}"
+    else fail "Output is different:
+    ${output}
+    ${proj_name} ${custom_flag} ${script} ${args}"
+    fi
+
+    # >>> Cleanup
+    rm "${output_file}" "${script}"
+
+}
 
 
 # Running tests --------
@@ -276,8 +285,8 @@ init_tests() {
     test_custom_repository "--repo"
     test_custom_repository "-r"
 
-    # test_custom_script "--custom"
-    # test_custom_script "-c"
+    test_custom_script "--custom"
+    test_custom_script "-c"
 
 }
 
