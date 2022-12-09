@@ -67,9 +67,9 @@ test_default_project() {
     if [[ "${check_impl}" = "${check_repo}" ]]
     then pass "default config is running"
     else
-        fail "Trying to compare:
-        Templates: ${check_impl} \\
-        = Repository: ${check_repo}"
+        fail "Trying to compare:\n"     \
+        "\tTemplates : ${check_impl}\n" \
+        "\tRepository: ${check_repo}"
     fi
 
     ## >>> Cleanup
@@ -152,7 +152,8 @@ test_custom_template() {
 
     # >>> Action
     run_new "${proj_name}" "${template_flag}" "${template}"  ||
-        failed "Tried with "${template_flag} ${template}".\n${debug_message}"
+        failed "Tried with ${template_flag} ${template}.\n" \
+        "\t${debug_message}"
 
     # >>> Assertions
 
@@ -197,8 +198,8 @@ test_custom_repository() {
 
     # >>> Action
     run_new "${proj_name}" "${repository_flag}" "${repository}"  ||
-        failed \
-        "Tried with "${repository_flag} ${repository}".\n${debug_message}"
+        failed "Tried with ${repository_flag} ${repository}.\n" \
+        "\t${debug_message}"
 
     # >>> Assertions
     local -r check_impl=$(cd "${template}"; echo */**)
