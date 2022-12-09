@@ -31,7 +31,7 @@ Please run with set -x. And read ${STD_POLI_PATH}/error.txt"
 
 ## Prints a success message for some test
 ## Arguments:
-##  $message
+##  $message *
 ## Globals:
 ##  $CURRENT_TEST
 ## Output:
@@ -39,7 +39,7 @@ Please run with set -x. And read ${STD_POLI_PATH}/error.txt"
 ##  with the current test and a custom message
 pass() {
     # -- Arguments
-    local message="$1"
+    local -r message="$*"
 
     # -- Globals
     local current_test="${CURRENT_TEST}"
@@ -62,7 +62,7 @@ pass() {
 
 ## Prints an error message for some test
 ## Arguments:
-##  $message
+##  $message *
 ## Globals:
 ##  $CURRENT_TEST
 ## Output:
@@ -70,7 +70,7 @@ pass() {
 ##  with the current test and a custom message
 fail() {
     # -- Arguments
-    local message="$1"
+    local -r message="$*"
 
     # -- Globals
     local current_test="${CURRENT_TEST}"
