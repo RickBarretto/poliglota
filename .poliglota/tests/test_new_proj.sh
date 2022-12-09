@@ -245,7 +245,8 @@ test_custom_script() {
 
     # >>> Prepare
     printf '#! /bin/bash
-echo "$@" > "%s"' "${output_file}" \
+        echo "$@" > "%s"' \
+        "${output_file}"  \
         > "${script}"
 
     # >>> Action
