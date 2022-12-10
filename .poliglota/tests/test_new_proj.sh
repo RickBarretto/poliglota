@@ -61,9 +61,11 @@ test_default_project() {
         failed "${debug_message}"
 
     ## >>> Assertions
-    local -r check_impl=$(cd "${template}" || exit
+    local -r check_impl=$(
+        ( cd "${template}" || raise_cannot_execute )
         echo */**)
-    local -r check_repo=$(cd "${repository}/${proj_name}" ||
+    local -r check_repo=$(
+        ( cd "${repository}/${proj_name}" || raise_cannot_execute )
         echo */**)
 
     # Checks if the same files exists in both
@@ -78,7 +80,8 @@ test_default_project() {
 
     ## >>> Cleanup
     rm --recursive "${repository:?}/${proj_name:?}" ||
-        echo "Couldn't cleanup" >> /dev/stderr; raise_cannot_execute
+        ( echo "Couldn't cleanup" >> /dev/stderr &&
+            raise_cannot_execute )
 
 }
 
@@ -125,8 +128,8 @@ test_empty_project() {
 
     # >>> Cleanup
     rm --recursive "${repository:?}/${proj_name:?}" ||
-        echo "Couldn't cleanup" >> /dev/stderr &&
-        raise_cannot_execute
+        ( echo "Couldn't cleanup" >> /dev/stderr &&
+            raise_cannot_execute )
 
 }
 
@@ -171,11 +174,11 @@ test_custom_template() {
 
     # >>> Cleanup
     rm --recursive "${template:?}/" ||
-        "Couldn't cleanup template folder" >> /dev/stderr &&
-        raise_cannot_execute
+        ( echo "Couldn't cleanup template folder" >> /dev/stderr &&
+            raise_cannot_execute )
     rm --recursive "${repository:?}/${proj_name:?}" ||
-        echo "Couldn't cleanup project" >> /dev/stderr &&
-        raise_cannot_execute
+        ( echo "Couldn't cleanup project" >> /dev/stderr &&
+            raise_cannot_execute )
 
 }
 
@@ -212,11 +215,11 @@ test_custom_repository() {
         "\t${debug_message}"
 
     # >>> Assertions
-    local -r check_impl=$(cd "${template}" ||
-        raise_cannot_execute
+    local -r check_impl=$(
+        ( cd "${template}" || raise_cannot_execute )
         echo */**)
-    local -r check_repo=$(cd "${repository}/${proj_name}" ||
-        raise_cannot_execute
+    local -r check_repo=$(
+        ( cd "${repository}/${proj_name}" || raise_cannot_execute )
         echo */**)
 
     # Checks if the same files exists in both
@@ -231,8 +234,8 @@ test_custom_repository() {
 
     # >>> Cleanup
     rm --recursive "${repository:?}" ||
-        echo "Couldn't cleanup project" >> /dev/stderr &&
-        raise_cannot_execute
+        ( echo "Couldn't cleanup project" >> /dev/stderr &&
+            raise_cannot_execute )
 
 }
 
@@ -282,8 +285,8 @@ test_custom_script() {
 
     # >>> Cleanup
     rm "${output_file:?}" "${script:?}" ||
-        echo "Couldn't cleanup" >> /dev/stderr &&
-        raise_cannot_execute
+        ( echo "Couldn't cleanup" >> /dev/stderr &&
+            raise_cannot_execute )
 
 }
 
