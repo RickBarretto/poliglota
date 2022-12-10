@@ -179,6 +179,8 @@ test_custom_template() {
 ##  $CURRENT_TEST
 ##  $PLEASE_DEBUG
 ##  $STD_TEMPL_PATH
+## Returnns:
+##  exits if cd command fails
 test_custom_repository() {
     CURRENT_TEST="test_custom_repository"
 
@@ -202,8 +204,10 @@ test_custom_repository() {
         "\t${debug_message}"
 
     # >>> Assertions
-    local -r check_impl=$(cd "${template}"; echo */**)
-    local -r check_repo=$(cd "${repository}/${proj_name}"; echo */**)
+    local -r check_impl=$(cd "${template}" || exit
+        echo */**)
+    local -r check_repo=$(cd "${repository}/${proj_name}" || exit
+        echo */**)
 
     # Checks if the same files exists in both
     # Note: files with a dot `.` at the start will be ignored
