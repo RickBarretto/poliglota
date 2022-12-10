@@ -129,7 +129,7 @@ cleanup_directory() {
 cleanup_project() {
     local -r repository="$1"
     local -r project="$2"
-    rm --recursive "${repository:?}/${proj_name:?}" ||
+    rm --recursive "${repository:?}/${project:?}" ||
         ( echo "Couldn't cleanup project"           \
             >> /dev/stderr                          \
             && raise_cannot_execute )
