@@ -259,7 +259,8 @@ test_custom_script() {
     # >>> Action
     run_new "${proj_name}" "${custom_flag}" "${script}" "${args}" ||
         failed \
-            "Tried with "${custom_flag} ${script}".\n${debug_message}"
+            "Tried with ${custom_flag} ${script}.\n" \
+            "${debug_message}"
 
     # >>> Assertion
     output=$(head -n 1 "${output_file}")
