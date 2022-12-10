@@ -41,7 +41,8 @@ run_add() {
 generate_project() {
     ./poli proj new "$@"    \
         1> /dev/null        \
-        2> "error.txt"
+        2> "error.txt"      \
+    || raise_cannot_execute
 }
 
 
