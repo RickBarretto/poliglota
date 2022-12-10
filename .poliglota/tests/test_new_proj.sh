@@ -117,7 +117,8 @@ test_empty_project() {
 
     # >>> Action ------------
     run_new "${proj_name}" "${empty_flag}" ||
-        failed "Tried with ${empty_flag}.\n" \
+        failed                              \
+            "Tried with ${empty_flag}.\n"   \
             "${debug_message}"
 
 
@@ -125,17 +126,17 @@ test_empty_project() {
 
     # Checks if project was created
     if [[ -d "${repository}/${proj_name}" ]]
-        then pass
+        then pass                                           \
                 "Project was created with ${empty_flag}"
-        else fail
+        else fail                                           \
                 "${repository}/${proj_name} does not exist"
     fi
 
     # Checks if repository is empty
     if [[ ! -e "${repository:?}/${proj_name:?}/"* ]]
-        then pass
+        then pass                                           \
                 "Project is empty"
-        else fail
+        else fail                                           \
                 "${repository}/${proj_name} is not empty"
     fi
 
@@ -177,26 +178,31 @@ test_custom_template() {
 
     # >>> Action ------------
     run_new "${proj_name}" "${template_flag}" "${template}"  ||
-        failed "Tried with ${template_flag} ${template}.\n" \
-        "\t${debug_message}"
+        failed                                              \
+            "Tried with ${template_flag} ${template}.\n"    \
+            "\t${debug_message}"
 
 
     # >>> Assertions --------
 
     # Checks if repository exists and has the template's file
     if [[ -f "${repository}/${proj_name}/${template}s_file.md" ]]
-        then pass "Created with ${template} folder"
-        else fail "${repository}/${proj_name} doesn't was created"
+        then pass                                               \
+            "Created with ${template} folder"
+        else fail                                               \
+            "${repository}/${proj_name} doesn't was created"
     fi
 
 
     # >>> Cleanup -----------
     rm --recursive "${template:?}/" ||
-        ( echo "Couldn't cleanup template folder" >> /dev/stderr &&
-            raise_cannot_execute )
+        ( echo "Couldn't cleanup template folder"   \
+            >> /dev/stderr                          \
+            && raise_cannot_execute )
     rm --recursive "${repository:?}/${proj_name:?}" ||
-        ( echo "Couldn't cleanup project" >> /dev/stderr &&
-            raise_cannot_execute )
+        ( echo "Couldn't cleanup project"           \
+            >> /dev/stderr                          \
+            && raise_cannot_execute )
 
 }
 
@@ -231,8 +237,9 @@ test_custom_repository() {
 
     # >>> Action ------------
     run_new "${proj_name}" "${repository_flag}" "${repository}"  ||
-        failed "Tried with ${repository_flag} ${repository}.\n" \
-        "\t${debug_message}"
+        failed                                                  \
+            "Tried with ${repository_flag} ${repository}.\n"    \
+            "\t${debug_message}"
 
 
     # >>> Assertions --------
@@ -258,8 +265,9 @@ test_custom_repository() {
 
     # >>> Cleanup -----------
     rm --recursive "${repository:?}" ||
-        ( echo "Couldn't cleanup project" >> /dev/stderr &&
-            raise_cannot_execute )
+        ( echo "Couldn't cleanup project"       \
+            >> /dev/stderr                      \
+            && raise_cannot_execute )
 
 }
 
@@ -303,7 +311,7 @@ test_custom_script() {
     # >>> Assertion ---------
     output=$(head -n 1 "${output_file}")
     if [[ "${output}" = "${proj_name} ${custom_flag} ${script} ${args}" ]]
-    then pass "Custom Script is working." \
+    then pass "Custom Script is working."                   \
         "\n\tOutput: ${output}"
     else fail "Output is different:"                        \
         "\n\t${output}"                                     \
@@ -313,8 +321,9 @@ test_custom_script() {
 
     # >>> Cleanup -----------
     rm "${output_file:?}" "${script:?}" ||
-        ( echo "Couldn't cleanup" >> /dev/stderr &&
-            raise_cannot_execute )
+        ( echo "Couldn't cleanup"       \
+            >> /dev/stderr              \
+            && raise_cannot_execute )
 
 }
 
