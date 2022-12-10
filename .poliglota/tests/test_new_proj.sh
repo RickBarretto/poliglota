@@ -69,20 +69,20 @@ test_default_project() {
         ( cd "${template}" || raise_cannot_execute )
         echo */**)
 
-    local -r check_repo=$(
+    local -r check_proj=$(
         ( cd "${repository}/${proj_name}" || raise_cannot_execute )
         echo */**)
 
     # Checks if files exists in both
     # Note: files with a dot `.` at the start will be ignored
-    if [[ "${check_impl}" = "${check_repo}" ]]
+    if [[ "${check_impl}" = "${check_proj}" ]]
     then pass                               \
             "default config is running"
     else
         fail                                \
             "Trying to compare:\n"          \
             "\tTemplates : ${check_impl}\n" \
-            "\tRepository: ${check_repo}"
+            "\tProject   : ${check_proj}"
     fi
 
 
