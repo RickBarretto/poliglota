@@ -37,8 +37,8 @@ run_new() {
         2> "error.txt"
 }
 
-# Testing functions ---------
 
+# Testing functions ---------
 
 ## Tests with default new project settings
 ## Globals:
