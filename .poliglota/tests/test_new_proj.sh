@@ -224,9 +224,9 @@ test_custom_repository() {
     if [[ "${check_impl}" = "${check_repo}" ]]
     then pass "Created with ${repository} folder"
     else
-        fail "Trying to compare:
-        Templates: ${check_impl} \\
-        = Repository: ${check_repo}"
+        fail "Trying to compare:"           \
+        "\n\tTemplates: ${check_impl}"      \
+        "\n\t= Repository: ${check_repo}"
     fi
 
     # >>> Cleanup
@@ -273,11 +273,11 @@ test_custom_script() {
     # >>> Assertion
     output=$(head -n 1 "${output_file}")
     if [[ "${output}" = "${proj_name} ${custom_flag} ${script} ${args}" ]]
-    then pass "Custom Script is working.
-    Output: ${output}"
-    else fail "Output is different:
-    ${output}
-    ${proj_name} ${custom_flag} ${script} ${args}"
+    then pass "Custom Script is working." \
+        "\n\tOutput: ${output}"
+    else fail "Output is different:"                        \
+        "\n\t${output}"                                     \
+        "\n\t${proj_name} ${custom_flag} ${script} ${args}"
     fi
 
     # >>> Cleanup
