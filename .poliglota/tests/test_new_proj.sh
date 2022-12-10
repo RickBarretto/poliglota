@@ -73,7 +73,7 @@ test_default_project() {
     fi
 
     ## >>> Cleanup
-    rm --recursive "${repository}/${proj_name}" ||
+    rm --recursive "${repository:?}/${proj_name:?}" ||
         echo "Couldn't cleanup"
 
 }
@@ -119,7 +119,7 @@ test_empty_project() {
     fi
 
     # >>> Cleanup
-    rm --recursive "${repository}/${proj_name}" ||
+    rm --recursive "${repository:?}/${proj_name:?}" ||
         echo "Couldn't cleanup"
 
 }
@@ -164,9 +164,9 @@ test_custom_template() {
     fi
 
     # >>> Cleanup
-    rm --recursive "${template}/" ||
+    rm --recursive "${template:?}/" ||
         "Couldn't cleanup template folder"
-    rm --recursive "${repository}/${proj_name}" ||
+    rm --recursive "${repository:?}/${proj_name:?}" ||
         echo "Couldn't cleanup project"
 
 }
@@ -220,7 +220,7 @@ test_custom_repository() {
     fi
 
     # >>> Cleanup
-    rm --recursive "${repository}" ||
+    rm --recursive "${repository:?}" ||
         echo "Couldn't cleanup project"
 
 }
@@ -269,7 +269,7 @@ test_custom_script() {
     fi
 
     # >>> Cleanup
-    rm "${output_file}" "${script}"
+    rm "${output_file:?}" "${script:?}" ||
 
 }
 
