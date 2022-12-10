@@ -32,8 +32,10 @@ source ".poliglota/tests/utils.sh"
 ## Output:
 ##   Writes on an error inside $STD_POLI_PATH/error.txt
 run_add() {
-    ./poli proj add "$@" \
-        1> /dev/null     \
+    ./poli proj add "$@"    \
+        1> /dev/null        \
+        2> "error.txt"
+}
         2> "error.txt"
 }
 
