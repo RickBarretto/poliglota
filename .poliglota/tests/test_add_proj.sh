@@ -46,16 +46,6 @@ generate_project() {
 }
 
 
-cleanup_project() {
-    local -r repository="$1"
-    local -r project="$2"
-    rm --recursive "${repository:?}/${proj_name:?}" ||
-        ( echo "Couldn't cleanup project"           \
-            >> /dev/stderr                          \
-            && raise_cannot_execute )
-}
-
-
 # Testing functions ---------
 
 
