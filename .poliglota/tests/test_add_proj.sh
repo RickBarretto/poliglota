@@ -56,7 +56,7 @@ test_default_add_implementation() {
 
 
     # >>> Action ------------
-    run_new
+    run_add
 
 
     # >>> Assertion ---------
@@ -82,7 +82,7 @@ test_empty_implementation() {
 
 
     # >>> Action ------------
-    run_new
+    run_add
 
 
     # >>> Assertion ---------
@@ -107,7 +107,7 @@ test_add_implementation_as() {
 
 
     # >>> Action ------------
-    run_new
+    run_add
 
 
     # >>> Assertion ---------
@@ -132,7 +132,7 @@ test_custom_template() {
 
 
     # >>> Action ------------
-    run_new
+    run_add
 
 
     # >>> Assertion ---------
@@ -157,7 +157,7 @@ test_custom_repository() {
 
 
     # >>> Action ------------
-    run_new
+    run_add
 
 
     # >>> Assertion ---------
@@ -182,7 +182,7 @@ test_custom_script() {
 
 
     # >>> Action ------------
-    run_new
+    run_add
 
 
     # >>> Assertion ---------
