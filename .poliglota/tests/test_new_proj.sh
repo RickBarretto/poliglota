@@ -37,7 +37,7 @@ run_new() {
         2> "error.txt"
 }
 
-# Testing functions -------
+# Testing functions ---------
 
 
 ## Tests with default new project settings
@@ -56,29 +56,35 @@ test_default_project() {
 
     local -r proj_name="TestProject"
 
-    ## >>> Action
+
+    ## >>> Action -----------
     run_new "${proj_name}" ||
         failed "${debug_message}"
 
-    ## >>> Assertions
+
+    ## >>> Assertions -------
     local -r check_impl=$(
         ( cd "${template}" || raise_cannot_execute )
         echo */**)
+
     local -r check_repo=$(
         ( cd "${repository}/${proj_name}" || raise_cannot_execute )
         echo */**)
 
-    # Checks if the same files exists in both
+    # Checks if files exists in both
     # Note: files with a dot `.` at the start will be ignored
     if [[ "${check_impl}" = "${check_repo}" ]]
-    then pass "default config is running"
+    then pass                               \
+            "default config is running"
     else
-        fail "Trying to compare:\n"     \
-        "\tTemplates : ${check_impl}\n" \
-        "\tRepository: ${check_repo}"
+        fail                                \
+            "Trying to compare:\n"          \
+            "\tTemplates : ${check_impl}\n" \
+            "\tRepository: ${check_repo}"
     fi
 
-    ## >>> Cleanup
+
+    ## >>> Cleanup ----------
     rm --recursive "${repository:?}/${proj_name:?}" ||
         ( echo "Couldn't cleanup" >> /dev/stderr &&
             raise_cannot_execute )
@@ -97,34 +103,42 @@ test_default_project() {
 test_empty_project() {
     CURRENT_TEST="test_empty_projects"
 
-    # -- Arguments
+    # -- Arguments ----------
     local empty_flag="$1"
 
-    # -- Globals
+
+    # -- Globals ------------
     local -r template="${STD_TEMPL_PATH}"
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
 
     local -r proj_name="TestEmptyProject"
 
-    # >>> Action
+
+    # >>> Action ------------
     run_new "${proj_name}" "${empty_flag}" ||
         failed "Tried with ${empty_flag}.\n" \
             "${debug_message}"
 
-    # >>> Assertions
+
+    # >>> Assertions --------
 
     # Checks if project was created
     if [[ -d "${repository}/${proj_name}" ]]
-        then pass "Project was created with ${empty_flag}"
-        else fail "${repository}/${proj_name} does not exist"
+        then pass
+                "Project was created with ${empty_flag}"
+        else fail
+                "${repository}/${proj_name} does not exist"
     fi
 
     # Checks if repository is empty
-    if [[ ! -e "${repository}/${proj_name}/*" ]]
-        then pass "Project is empty"
-        else fail "${repository}/${proj_name} is not empty"
+    if [[ ! -e "${repository:?}/${proj_name:?}/"* ]]
+        then pass
+                "Project is empty"
+        else fail
+                "${repository}/${proj_name} is not empty"
     fi
+
 
     # >>> Cleanup
     rm --recursive "${repository:?}/${proj_name:?}" ||
@@ -144,27 +158,30 @@ test_empty_project() {
 test_custom_template() {
     CURRENT_TEST="test_custom_template"
 
-    # -- Arguments
+    # -- Arguments ----------
     local -r template_flag="$1"
 
-    # -- Globals
+    # -- Globals ------------
     local -r debug_message="${PLEASE_DEBUG}"
     local repository="${STD_REPO_PATH}"
 
     local -r template="CustomTemplate"
     local -r proj_name="FromCustom"
 
-    # >>> Prepare
+
+    # >>> Prepare -----------
     # Creates a custom template folder
     mkdir "${template}"
     touch "${template}/${template}s_file.md"
 
-    # >>> Action
+
+    # >>> Action ------------
     run_new "${proj_name}" "${template_flag}" "${template}"  ||
         failed "Tried with ${template_flag} ${template}.\n" \
         "\t${debug_message}"
 
-    # >>> Assertions
+
+    # >>> Assertions --------
 
     # Checks if repository exists and has the template's file
     if [[ -f "${repository}/${proj_name}/${template}s_file.md" ]]
@@ -172,7 +189,8 @@ test_custom_template() {
         else fail "${repository}/${proj_name} doesn't was created"
     fi
 
-    # >>> Cleanup
+
+    # >>> Cleanup -----------
     rm --recursive "${template:?}/" ||
         ( echo "Couldn't cleanup template folder" >> /dev/stderr &&
             raise_cannot_execute )
@@ -195,26 +213,29 @@ test_custom_template() {
 test_custom_repository() {
     CURRENT_TEST="test_custom_repository"
 
-    # -- Arguments
+    # -- Arguments ----------
     local -r repository_flag="$1"
 
-    # -- Globals
+    # -- Globals ------------
     local -r debug_message="${PLEASE_DEBUG}"
     local -r template="${STD_TEMPL_PATH}"
 
     local -r repository="CustomRepository"
     local -r proj_name="FromCustom"
 
-    # >>> Prepare
+
+    # >>> Prepare -----------
     # Creates a custom repository folder
     mkdir "${repository}"
 
-    # >>> Action
+
+    # >>> Action ------------
     run_new "${proj_name}" "${repository_flag}" "${repository}"  ||
         failed "Tried with ${repository_flag} ${repository}.\n" \
         "\t${debug_message}"
 
-    # >>> Assertions
+
+    # >>> Assertions --------
     local -r check_impl=$(
         ( cd "${template}" || raise_cannot_execute )
         echo */**)
@@ -225,14 +246,17 @@ test_custom_repository() {
     # Checks if the same files exists in both
     # Note: files with a dot `.` at the start will be ignored
     if [[ "${check_impl}" = "${check_repo}" ]]
-    then pass "Created with ${repository} folder"
+    then pass                                   \
+            "Created with ${repository} folder"
     else
-        fail "Trying to compare:"           \
-        "\n\tTemplates: ${check_impl}"      \
-        "\n\t= Repository: ${check_repo}"
+        fail                                    \
+            "Trying to compare:"                \
+            "\n\tTemplates: ${check_impl}"      \
+            "\n\t= Repository: ${check_repo}"
     fi
 
-    # >>> Cleanup
+
+    # >>> Cleanup -----------
     rm --recursive "${repository:?}" ||
         ( echo "Couldn't cleanup project" >> /dev/stderr &&
             raise_cannot_execute )
@@ -250,10 +274,10 @@ test_custom_repository() {
 test_custom_script() {
     CURRENT_TEST="test_custom_script"
 
-    # -- Arguments
+    # -- Arguments ----------
     local -r custom_flag="$1"
 
-    # -- Globals
+    # -- Globals ------------
     local -r debug_message="${PLEASE_DEBUG}"
 
     local -r script="custom_script.sh"
@@ -261,19 +285,22 @@ test_custom_script() {
     local -r proj_name="CreatedWithCustomScript"
     local -r output_file="test.txt"
 
-    # >>> Prepare
+
+    # >>> Prepare -----------
     printf '#! /bin/bash
         echo "$@" > "%s"' \
         "${output_file}"  \
         > "${script}"
 
-    # >>> Action
+
+    # >>> Action ------------
     run_new "${proj_name}" "${custom_flag}" "${script}" "${args}" ||
         failed \
             "Tried with ${custom_flag} ${script}.\n" \
             "${debug_message}"
 
-    # >>> Assertion
+
+    # >>> Assertion ---------
     output=$(head -n 1 "${output_file}")
     if [[ "${output}" = "${proj_name} ${custom_flag} ${script} ${args}" ]]
     then pass "Custom Script is working." \
@@ -283,7 +310,8 @@ test_custom_script() {
         "\n\t${proj_name} ${custom_flag} ${script} ${args}"
     fi
 
-    # >>> Cleanup
+
+    # >>> Cleanup -----------
     rm "${output_file:?}" "${script:?}" ||
         ( echo "Couldn't cleanup" >> /dev/stderr &&
             raise_cannot_execute )
@@ -291,10 +319,11 @@ test_custom_script() {
 }
 
 
-# Running tests --------
+# Running tests -------------
 
 ## Runs every test for `proj new` command
 init_tests() {
+
     echo "Initializing tests..."
 
     test_default_project
