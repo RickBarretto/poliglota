@@ -5,7 +5,7 @@
 
 ## NOTE: Run these test'll update your $LAST_PROJECT
 
-## Every file here will outputs:
+## Every function here will outputs:
 ## A success message if everything is alright
 ## An error message if wrong
 
