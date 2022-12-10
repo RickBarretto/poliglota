@@ -3,7 +3,7 @@
 ## These are unit tests for `poli proj new` command
 ## It tests flags, arguments and behavior
 
-## NOTE: Run these test'll update your $LAST_PROJECT
+## NOTE: Run this test updates your $LAST_PROJECT
 
 ## Every function here will outputs:
 ## A success message if everything is alright
