@@ -90,3 +90,12 @@ fail() {
     echo -e "${status} ${title}${divisor}" "${description}" \
         >> /dev/stderr
 }
+
+
+## Exits with 126 code
+## Returns
+##  exits with 126 code
+raise_cannot_execute() {
+    local -r -i cannot_execute=126
+    exit $cannot_execute
+}
