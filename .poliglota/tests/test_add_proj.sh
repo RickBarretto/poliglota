@@ -36,6 +36,11 @@ run_add() {
         1> /dev/null        \
         2> "error.txt"
 }
+
+
+generate_project() {
+    ./poli proj new "$@"    \
+        1> /dev/null        \
         2> "error.txt"
 }
 
