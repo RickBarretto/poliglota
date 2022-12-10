@@ -23,7 +23,7 @@
 ##   pass <message>
 ##   fail <message>
 ##   raise_cannot_execute
-# shellcheck source=".poliglota/tests/utils.sh"
+# shellcheck source=.poliglota/tests/utils.sh
 source ".poliglota/tests/utils.sh"
 
 ## Runs the new command and sends all errors to /dev/null
