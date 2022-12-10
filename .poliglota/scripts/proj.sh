@@ -492,7 +492,7 @@ fill_command() {
     done
 
     if [[ -n "${project}" ]]; then
-        fill_project $templ $repo $project
+        fill_project "$templ" "$repo" "$project"
     fi
 
     exit
