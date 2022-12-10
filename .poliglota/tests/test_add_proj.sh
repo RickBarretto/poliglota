@@ -20,8 +20,10 @@
 ##   $CURRENT_TEST
 ##   $PLEASE_DEBUG
 ##  -- Functions --
-##   pass <message>
+##   cleanup_directory
+##   cleanup_project
 ##   fail <message>
+##   pass <message>
 ##   raise_cannot_execute
 # shellcheck source=.poliglota/tests/utils.sh
 source ".poliglota/tests/utils.sh"
