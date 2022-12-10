@@ -74,7 +74,7 @@ test_default_project() {
 
     ## >>> Cleanup
     rm --recursive "${repository:?}/${proj_name:?}" ||
-        echo "Couldn't cleanup"
+        echo "Couldn't cleanup" >> /dev/stderr
 
 }
 
@@ -120,7 +120,7 @@ test_empty_project() {
 
     # >>> Cleanup
     rm --recursive "${repository:?}/${proj_name:?}" ||
-        echo "Couldn't cleanup"
+        echo "Couldn't cleanup" >> /dev/stderr
 
 }
 
@@ -165,9 +165,9 @@ test_custom_template() {
 
     # >>> Cleanup
     rm --recursive "${template:?}/" ||
-        "Couldn't cleanup template folder"
+        "Couldn't cleanup template folder" >> /dev/stderr
     rm --recursive "${repository:?}/${proj_name:?}" ||
-        echo "Couldn't cleanup project"
+        echo "Couldn't cleanup project" >> /dev/stderr
 
 }
 
@@ -221,7 +221,7 @@ test_custom_repository() {
 
     # >>> Cleanup
     rm --recursive "${repository:?}" ||
-        echo "Couldn't cleanup project"
+        echo "Couldn't cleanup project" >> /dev/stderr
 
 }
 
@@ -270,6 +270,7 @@ test_custom_script() {
 
     # >>> Cleanup
     rm "${output_file:?}" "${script:?}" ||
+        echo "Couldn't cleanup" >> /dev/stderr
 
 }
 
