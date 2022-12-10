@@ -104,7 +104,8 @@ test_empty_project() {
 
     # >>> Action
     run_new "${proj_name}" "${empty_flag}" ||
-        failed "Tried with "${empty_flag}".\n${debug_message}"
+        failed "Tried with ${empty_flag}.\n" \
+            "${debug_message}"
 
     # >>> Assertions
 
