@@ -37,10 +37,159 @@ run_add() {
         2> "error.txt"
 }
 
+
 # Testing functions ---------
 
-# ...
 
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+test_default_add_implementation() {
+    CURRENT_TEST="test_default_add_implementation"
+
+    # -- Arguments ----------
+
+    # -- Globals ------------
+
+
+    # >>> Prepare -----------
+
+
+    # >>> Action ------------
+    run_new
+
+
+    # >>> Assertion ---------
+
+
+    # >>> Cleanup -----------
+
+}
+
+
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+test_empty_implementation() {
+    CURRENT_TEST="test_empty_implementation"
+
+    # -- Arguments ----------
+
+    # -- Globals ------------
+
+
+    # >>> Prepare -----------
+
+
+    # >>> Action ------------
+    run_new
+
+
+    # >>> Assertion ---------
+
+
+    # >>> Cleanup -----------
+}
+
+
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+test_add_implementation_as() {
+    CURRENT_TEST="test_custom_implementation"
+
+    # -- Arguments ----------
+
+    # -- Globals ------------
+
+
+    # >>> Prepare -----------
+
+
+    # >>> Action ------------
+    run_new
+
+
+    # >>> Assertion ---------
+
+
+    # >>> Cleanup -----------
+}
+
+
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+test_custom_template() {
+    CURRENT_TEST="test_custom_template"
+
+    # -- Arguments ----------
+
+    # -- Globals ------------
+
+
+    # >>> Prepare -----------
+
+
+    # >>> Action ------------
+    run_new
+
+
+    # >>> Assertion ---------
+
+
+    # >>> Cleanup -----------
+}
+
+
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+test_custom_repository() {
+    CURRENT_TEST="test_custom_repository"
+
+    # -- Arguments ----------
+
+    # -- Globals ------------
+
+
+    # >>> Prepare -----------
+
+
+    # >>> Action ------------
+    run_new
+
+
+    # >>> Assertion ---------
+
+
+    # >>> Cleanup -----------
+}
+
+
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+test_custom_script() {
+    CURRENT_TEST="test_custom_script"
+
+    # -- Arguments ----------
+
+    # -- Globals ------------
+
+
+    # >>> Prepare -----------
+
+
+    # >>> Action ------------
+    run_new
+
+
+    # >>> Assertion ---------
+
+
+    # >>> Cleanup -----------
+}
 
 
 # Running tests -------------
@@ -50,7 +199,22 @@ init_tests() {
 
     echo "Initializing tests..."
 
-    # ...
+    test_default_add_implementation
+
+    test_empty_implementation "--empty"
+    test_empty_implementation "-e"
+
+    test_add_implementation_as "--as"
+    test_add_implementation_as "-a"
+
+    test_custom_template "--templ"
+    test_custom_template "-t"
+
+    test_custom_repository "--repo"
+    test_custom_repository "-r"
+
+    test_custom_script "--custom"
+    test_custom_script "-c"
 
 }
 
