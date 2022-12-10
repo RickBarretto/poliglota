@@ -59,8 +59,10 @@ test_default_project() {
         failed "${debug_message}"
 
     ## >>> Assertions
-    local -r check_impl=$(cd "${template}"; echo */**)
-    local -r check_repo=$(cd "${repository}/${proj_name}"; echo */**)
+    local -r check_impl=$(cd "${template}" || exit
+        echo */**)
+    local -r check_repo=$(cd "${repository}/${proj_name}" ||
+        echo */**)
 
     # Checks if the same files exists in both
     # Note: files with a dot `.` at the start will be ignored
