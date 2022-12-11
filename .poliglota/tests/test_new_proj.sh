@@ -236,24 +236,27 @@ test_custom_repository() {
 
     # >>> Assertions --------
     local -r check_impl=$(
-        ( cd "${template}" || raise_cannot_execute )
-        echo */**)
+        cd "${template}" ||
+            raise_cannot_execute
+        ls | xargs)
     local -r check_repo=$(
-        ( cd "${repository}/${proj_name}" || raise_cannot_execute )
-        echo */**)
+        cd "${repository}/${proj_name}" ||
+            raise_cannot_execute
+        ls | xargs)
 
     # Checks if the same files exists in both
     # Note: files with a dot `.` at the start will be ignored
     if [[ "${check_impl}" = "${check_repo}" ]]
     then pass                                   \
-            "Created with ${repository} folder"
+            "Created with ${repository} folder" \
+            "\n\tTemplate  : ${check_impl}"   \
+            "\n\tRepository: ${check_repo}"
     else
         fail                                    \
             "Trying to compare:"                \
-            "\n\tTemplates: ${check_impl}"      \
-            "\n\t= Repository: ${check_repo}"
+            "\n\tTemplate  : ${check_impl}"   \
+            "\n\tRepository: ${check_repo}"
     fi
-
 
     # >>> Cleanup -----------
     cleanup_directory "${repository}"
