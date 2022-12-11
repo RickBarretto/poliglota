@@ -162,28 +162,58 @@ test_default_add_implementation() {
 }
 
 
+## Tests with an empty implementation
+## Arguments:
+##  $empty_flag
 ## Globals:
 ##  $CURRENT_TEST
 ##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
 test_empty_implementation() {
     CURRENT_TEST="test_empty_implementation"
 
     # -- Arguments ----------
+    local -r empty_flag="$1"
 
     # -- Globals ------------
+    local -r debug_message="${PLEASE_DEBUG}"
+    local -r repository="${STD_REPO_PATH}"
+
+    local -r implementation="MyCustomImplementation"
+    local -r project="MyCustomProject"
 
 
     # >>> Prepare -----------
-
+    generate_project "${project}"
 
     # >>> Action ------------
-    run_add
+    run_add "${implementation}" "${project}" "${empty_flag}" ||
+        failed                              \
+            "Tried with ${empty_flag}.\n"   \
+            "${debug_message}"
 
 
     # >>> Assertion ---------
 
+    # Checks if implementation was created
+    if [[ -d "${repository}/${project}/${implementation}/" ]]
+        then pass                                               \
+                "Implementation was created with ${empty_flag}"
+        else fail                                               \
+                "${repository}/${project}/${implementation} was not created"
+    fi
+
+    # Checks if implementation is empty
+    if [[ ! -e "${repository}/${project}/${implementation}"* ]]
+        then pass                                               \
+                "Implementation is empty"
+        else fail                                               \
+                "${repository}/${project}/${implementation} is not empty"
+    fi
 
     # >>> Cleanup -----------
+    cleanup_project "${repository}" "${project}"
+
 }
 
 
@@ -296,8 +326,8 @@ init_tests() {
 
     test_default_add_implementation
 
-    # test_empty_implementation "--empty"
-    # test_empty_implementation "-e"
+    test_empty_implementation "--empty"
+    test_empty_implementation "-e"
 
     # test_add_implementation_as "--as"
     # test_add_implementation_as "-a"
