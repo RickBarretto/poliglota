@@ -47,7 +47,7 @@ echo_init_tests() {
     local -r title="${CYAN_UNDERLINE}${file}${RESET}"
     local -r divisor="${CYAN}:${RESET}"
 
-    echo -e "\n${status} ${title}${divisor}\n"
+    echo -e "\n${status} ${title}${divisor}"
 
 }
 
