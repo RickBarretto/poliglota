@@ -100,6 +100,7 @@ cleanup_template() {
 # Testing functions ---------
 
 
+## Tests with default config
 ## Globals:
 ##  $CURRENT_TEST
 ##  $PLEASE_DEBUG
