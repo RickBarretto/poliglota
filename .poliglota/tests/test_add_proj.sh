@@ -58,6 +58,15 @@ generate_project() {
 
 # TODO: replace by the real template command
 #   It should run with `templ new ...`
+## Creates a new empty project based on `proj new` command
+## Arguments:
+##  ~~$@~~ (on a future implementation)
+##  $template_folder
+##  $implementation
+## Output:
+##  prints just errors
+## Returns:
+##  raise_cannot_execute
 generate_template() {
     # .poli templ new "$@"    \
     # 1> /dev/null            \
