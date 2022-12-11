@@ -74,7 +74,7 @@ pass() {
     local -r GREEN_UNDERLINE='\033[4;32m'
 
     # -- To print
-    local -r status="${GREEN_BG}[PASSED]${RESET}"
+    local -r status="${GREEN_BG}[PASSED✔]${RESET}"
     local -r title="${GREEN_UNDERLINE}${current_test}"
     local -r divisor="${GREEN}:${RESET}"
     local -r description="${RESET}${message}"
@@ -105,7 +105,7 @@ fail() {
     local -r RED_UNDERLINE='\033[4;31m'
 
     # -- To print
-    local -r status="${RED_BG}[FAILED]${RESET}"
+    local -r status="${RED_BG}[FAILED✘]${RESET}"
     local -r title="${RED_UNDERLINE}${current_test}"
     local -r divisor="${RED}:${RESET}"
     local -r description="${RESET}${message}"
