@@ -219,6 +219,68 @@ test_empty_implementation() {
 }
 
 
+## Tests with default config
+## Arguments:
+##  $latest_flag
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
+test_add_implementation_to_lastest_project() {
+    CURRENT_TEST="test_default_add_implementation"
+
+    # -- Arguments ----------
+    latest_flag="$1"
+
+    # -- Globals ------------
+    local -r debug_message="${PLEASE_DEBUG}"
+    local -r repository="${STD_REPO_PATH}"
+    local -r template="${STD_TEMPL_PATH}"
+
+    local -r implementation="MyCustomImplementation"
+    local -r project="MyCustomProject"
+
+    # >>> Prepare -----------
+    generate_project "${project}"
+    generate_template "${template}" "${implementation}"
+
+    # >>> Action ------------
+    run_add "${implementation}" "${latest_flag}" ||
+        failed                                  \
+            "Tried to run with ${latest_flag}"  \
+            "${debug_message}"
+
+
+    # >>> Assertion ---------
+
+    local -r check_impl=$(
+        cd "${template}/${implementation}" ||
+            raise_cannot_execute
+        ls | xargs )
+
+    local -r check_proj=$(
+        cd "${repository}/${project}/${implementation}" ||
+            raise_cannot_execute
+        ls | xargs )
+
+    if [[ "${check_impl}" = "${check_proj}" ]]
+    then pass "Running with ${latest_flag}"                     \
+        "\n  Template's: ${check_impl}"                         \
+        "\n  Project's : ${check_proj}"
+    else fail "Trying to compare, while using ${latest_flag}:"  \
+        "\n  Template's: ${check_impl}"                         \
+        "\n  Project's : ${check_proj}"
+    fi
+
+
+    # >>> Cleanup -----------
+    cleanup_project "${repository}" "${project}"
+    cleanup_template "${template}" "${implementation}"
+
+}
+
+
 ## Globals:
 ##  $CURRENT_TEST
 ##  $PLEASE_DEBUG
