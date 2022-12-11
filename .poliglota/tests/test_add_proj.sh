@@ -283,7 +283,7 @@ test_custom_script() {
 ## Runs every test for `proj add` command
 init_tests() {
 
-    echo "Initializing tests..."
+    echo_init_tests "test_add_proj"
 
     test_default_add_implementation
 
