@@ -41,7 +41,13 @@ run_add() {
         2> "error.txt"
 }
 
-
+## Creates a new empty project based on proj new command
+## Arguments:
+##  $@
+## Output:
+##  prints only errors
+## Returns:
+##  raise_cannot_execute
 generate_project() {
     ./poli proj new "$@" "--empty"  \
         1> /dev/null                \
