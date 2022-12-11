@@ -88,25 +88,51 @@ cleanup_template() {
 ## Globals:
 ##  $CURRENT_TEST
 ##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
 test_default_add_implementation() {
     CURRENT_TEST="test_default_add_implementation"
 
-    # -- Arguments ----------
-
     # -- Globals ------------
+    local -r debug_message="${PLEASE_DEBUG}"
+    local -r repository="${STD_REPO_PATH}"
+    local -r template="${STD_TEMPL_PATH}"
 
+    local -r implementation="MyCustomImplementation"
+    local -r project="MyCustomProject"
 
     # >>> Prepare -----------
-
+    generate_project "${project}"
+    generate_template "${template}" "${implementation}"
 
     # >>> Action ------------
-    run_add
+    run_add "${implementation}" "${project}" ||
+        failed "${debug_message}"
 
 
     # >>> Assertion ---------
 
+    local -r check_impl=$(
+        ( cd "${template}/${implementation}" || raise_cannot_execute )
+        echo */**)
+
+    local -r check_proj=$(
+        ( cd "${repository}/${proj_name}" || raise_cannot_execute )
+        echo */**)
+
+    if [[ "${check_impl}" = "${check_proj}" ]]
+    then pass                               \
+            "default config is running"
+    else fail                               \
+            "Trying to compare:\n"          \
+            "\tTemplate : ${check_impl}\n" \
+            "\tProject  : ${check_proj}"
+    fi
+
 
     # >>> Cleanup -----------
+    cleanup_project "${repository}" "${project}"
+    cleanup_template "${template}" "${implementation}"
 
 }
 
