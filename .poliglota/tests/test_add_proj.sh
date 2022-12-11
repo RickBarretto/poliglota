@@ -138,20 +138,22 @@ test_default_add_implementation() {
     # >>> Assertion ---------
 
     local -r check_impl=$(
-        ( cd "${template}/${implementation}" || raise_cannot_execute )
-        echo */**)
+        cd "${template}/${implementation}" ||
+            raise_cannot_execute
+        ls | xargs )
 
     local -r check_proj=$(
-        ( cd "${repository}/${proj_name}" || raise_cannot_execute )
-        echo */**)
+        cd "${repository}/${project}/${implementation}" ||
+            raise_cannot_execute
+        ls | xargs )
 
     if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass                               \
-            "default config is running"
-    else fail                               \
-            "Trying to compare:\n"          \
-            "\tTemplate : ${check_impl}\n" \
-            "\tProject  : ${check_proj}"
+    then pass "Default config is running"   \
+        "\n  Template's: ${check_impl}"     \
+        "\n  Project's : ${check_proj}"
+    else fail "Trying to compare:"          \
+        "\n  Template's: ${check_impl}"     \
+        "\n  Project's : ${check_proj}"
     fi
 
 
