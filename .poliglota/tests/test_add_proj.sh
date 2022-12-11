@@ -75,6 +75,12 @@ generate_template() {
 
 }
 
+cleanup_template() {
+    local -r template="$1"
+    local -r implementation="$2"
+    cleanup_project "${template}" "${implementation}"
+}
+
 
 # Testing functions ---------
 
