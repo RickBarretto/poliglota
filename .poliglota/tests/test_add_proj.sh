@@ -90,6 +90,15 @@ generate_template() {
 
 }
 
+
+## Cleanup created project
+## Arguments:
+##   $template
+##   $implementation
+## Output:
+##  outputs to stderr if cleanup fails
+## Return:
+##  raise_cannot_execute if cleanup fails
 cleanup_template() {
     local -r template="$1"
     local -r implementation="$2"
