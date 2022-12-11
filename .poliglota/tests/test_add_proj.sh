@@ -393,6 +393,9 @@ init_tests() {
     test_empty_implementation "--empty"
     test_empty_implementation "-e"
 
+    test_add_implementation_to_lastest_project "--latest"
+    test_add_implementation_to_lastest_project "-l"
+
     # test_add_implementation_as "--as"
     # test_add_implementation_as "-a"
 
