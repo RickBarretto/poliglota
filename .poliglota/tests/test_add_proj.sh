@@ -271,20 +271,20 @@ init_tests() {
 
     test_default_add_implementation
 
-    test_empty_implementation "--empty"
-    test_empty_implementation "-e"
+    # test_empty_implementation "--empty"
+    # test_empty_implementation "-e"
 
-    test_add_implementation_as "--as"
-    test_add_implementation_as "-a"
+    # test_add_implementation_as "--as"
+    # test_add_implementation_as "-a"
 
-    test_custom_template "--templ"
-    test_custom_template "-t"
+    # test_custom_template "--templ"
+    # test_custom_template "-t"
 
-    test_custom_repository "--repo"
-    test_custom_repository "-r"
+    # test_custom_repository "--repo"
+    # test_custom_repository "-r"
 
-    test_custom_script "--custom"
-    test_custom_script "-c"
+    # test_custom_script "--custom"
+    # test_custom_script "-c"
 
 }
 
