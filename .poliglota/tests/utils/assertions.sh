@@ -77,6 +77,11 @@ fail() {
 }
 
 
+## Checks if a directory is empty
+## Arguments:
+##  $dir1
+##  $dir2
+##  $params
 assert_are_equals() {
 
     local -r  path1="$1"
@@ -104,6 +109,11 @@ assert_are_equals() {
 
 }
 
+
+## Checks if a directory exists
+## Arguments:
+##  $directory
+##  $flags
 assert_dir_exists() {
 
     local -r directory="$1"
@@ -117,6 +127,9 @@ assert_dir_exists() {
     fi
 }
 
+## Checks if a directory is empty
+## Arguments:
+##  $directory
 assert_dir_is_empty() {
 
     local -r directory="$1"
