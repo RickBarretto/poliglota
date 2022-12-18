@@ -280,10 +280,14 @@ test_add_implementation_to_lastest_project() {
 
 }
 
-
+## Tests with custom name
+## Arguments:
+##  $as_flag
 ## Globals:
 ##  $CURRENT_TEST
 ##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
 test_add_implementation_as() {
     CURRENT_TEST="test_add_implementation_as"
 
