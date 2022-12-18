@@ -96,8 +96,50 @@ save_and_exit() {
 ## $1: the new template name
 ##
 add_template() {
-    mkdir .templates/$1
+
+    local -r template_folder="$1"
+    local -r template_name="$2"
+    local -r from="$3"
+
+    mkdir "${template_folder:?}/${template_name:?}"
+
     cp -r -b --no-preserve=timestamp            \
+        "${template_folder:?}/${from:?}/"**         \
+        "${template_folder:?}/${template_name:?}/"
+
+}
+
+add_command() {
+
+    assert_minimal_arguments "1" "$#"
+
+    local -r templ="${STD_TEMPL_PATH}" ## Template's folder path
+    local new_template=""           ## The implementation to be used
+    local from=".template"
+
+    while  [[ -n "$1" ]]; do
+        case "$1" in
+        "--from" | "-f")
+            from="$2"
+            shift
+            ;;
+        "-"*)
+            raise_wrong_arguments_input "$1" # badargs, exits
+            ;;
+        *)
+            new_template="$1"
+            ;;
+        esac
+        shift
+    done
+
+    if [[ -z "${new_template}" ]]; then
+        raise_wrong_arguments_input "New template name is missing"
+    fi
+
+    add_template "${templ:?}" "${new_template:?}" "${from:?}"
+
+}
 # --- Script functions ---
 
 ## [Script] Parses the arguments and calls the right commands
