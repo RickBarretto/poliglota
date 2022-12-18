@@ -158,6 +158,28 @@ add_command() {
     add_template "${templ:?}" "${new_template:?}" "${from:?}"
 
 }
+
+
+rm_command() {
+
+    assert_minimal_arguments "1" "$#"
+
+    local -r templ="${STD_TEMPL_PATH}" ## Template's folder path
+    local template="$1"
+
+    if [[ -z "${template}" ]]; then
+        raise_wrong_arguments_input \
+            "New template name is missing"
+    fi
+
+    rm --recursive "${templ:?}/${template:?}/" ||
+        ( echo "Couldn't cleanup directory"         \
+            >> /dev/stderr                          \
+            && raise_cannot_execute )
+
+}
+
+
 # --- Script functions ---
 
 ## [Script] Parses the arguments and calls the right commands
