@@ -20,12 +20,12 @@ source "poli.config"
 ## Imports:
 ## >> Functions
 ##  cleanup_directory $directory
-source "${STD_POLI_PATH}/tests/cleanuppers.sh"
+source "${STD_POLI_PATH}/tests/utils/cleanuppers.sh"
 
 ## Imports:
 ## generate_project $@
 ## generate_template $template_folder $implementation
-source "${STD_POLI_PATH}/tests/generators.sh"
+source "${STD_POLI_PATH}/tests/utils/generators.sh"
 
 ## Imports:
 ##  assert_are_equals <dir1> <dir2> <flags>
@@ -34,7 +34,7 @@ source "${STD_POLI_PATH}/tests/generators.sh"
 ##  fail <message>
 ##  pass <message>
 ##  raise_cannot_execute
-source "${STD_POLI_PATH}/tests/assertions.sh"
+source "${STD_POLI_PATH}/tests/utils/assertions.sh"
 
 ## >> Variable
 ## This is the current test that is running
