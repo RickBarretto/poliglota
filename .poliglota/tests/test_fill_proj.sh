@@ -80,10 +80,8 @@ test_fill() {
 
 ## Runs every test for `proj new` command
 init_tests() {
-
     echo_init_tests "test_fill_proj"
     test_fill
-
 }
 
 init_tests

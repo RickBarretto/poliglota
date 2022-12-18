@@ -128,14 +128,11 @@ test_empty_project() {
 
 ## Runs every test for `proj new` command
 init_tests() {
-
     echo_init_tests "test_new_proj"
 
     test_default_project
-
     test_empty_project "--empty"
     test_empty_project "-e"
-
 }
 
 init_tests

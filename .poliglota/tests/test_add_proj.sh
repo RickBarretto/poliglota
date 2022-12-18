@@ -240,20 +240,15 @@ test_add_implementation_as() {
 
 ## Runs every test for `proj add` command
 init_tests() {
-
     echo_init_tests "test_add_proj"
 
     test_default_add_implementation
-
     test_empty_implementation "--empty"
     test_empty_implementation "-e"
-
     test_add_implementation_to_lastest_project "--latest"
     test_add_implementation_to_lastest_project "-l"
-
     test_add_implementation_as "--as"
     test_add_implementation_as "-a"
-
 }
 
 init_tests
