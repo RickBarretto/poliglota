@@ -43,6 +43,13 @@ run_fill() {
         2> "error.txt"
 }
 
+
+## Tests with fill command
+## Globals:
+##  $CURRENT_TEST
+##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
 test_fill() {
     CURRENT_TEST="test_fill"
 
