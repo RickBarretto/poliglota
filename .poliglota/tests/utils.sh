@@ -20,11 +20,13 @@ source "poli.config"
 ## Imports:
 ## >> Functions
 ##  cleanup_directory $directory
+# shellcheck source=.poliglota/tests/utils/cleanuppers.sh
 source "${STD_POLI_PATH}/tests/utils/cleanuppers.sh"
 
 ## Imports:
 ## generate_project $@
 ## generate_template $template_folder $implementation
+# shellcheck source=.poliglota/tests/utils/generators.sh
 source "${STD_POLI_PATH}/tests/utils/generators.sh"
 
 ## Imports:
@@ -34,6 +36,7 @@ source "${STD_POLI_PATH}/tests/utils/generators.sh"
 ##  fail <message>
 ##  pass <message>
 ##  raise_cannot_execute
+# shellcheck source=.poliglota/tests/utils/assertions.sh
 source "${STD_POLI_PATH}/tests/utils/assertions.sh"
 
 ## >> Variable

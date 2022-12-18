@@ -15,6 +15,7 @@ source "poli.config"
 ## Imports:
 ##   raise_wrong_arguments_input <wrong_input>
 ##   assert_minimal_arguments <minimal> <arg_count>
+# shellcheck source=.poliglota/scripts/utils.sh
 source "${STD_POLI_PATH}/scripts/utils.sh"
 
 set -o noclobber # Prevent overwriting of files by redirection
