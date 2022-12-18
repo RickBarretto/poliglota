@@ -17,6 +17,13 @@
 # shellcheck source=poli.config
 source "poli.config"
 
+## Imports:
+## >> Functions
+##  cleanup_directory $directory
+##  cleanup_project   $repository $project
+##  cleanup_template  $template   $implementation
+source "${STD_POLI_PATH}/tests/cleanuppers.sh"
+
 ## >> Variable
 ## This is the current test that is running
 CURRENT_TEST=""
@@ -121,39 +128,4 @@ fail() {
 raise_cannot_execute() {
     local -r -i cannot_execute=126
     exit $cannot_execute
-}
-
-# -- Cleanup functions
-
-## Cleanup created directory
-## Arguments:
-##   $directory
-## Output:
-##  outputs to stderr if cleanup fails
-## Return:
-##  raise_cannot_execute if cleanup fails
-cleanup_directory() {
-    local -r directory="$1"
-    rm --recursive "${directory:?}/" ||
-        ( echo "Couldn't cleanup directory"         \
-            >> /dev/stderr                          \
-            && raise_cannot_execute )
-}
-
-
-## Cleanup created project
-## Arguments:
-##   $repository
-##   $project
-## Output:
-##  outputs to stderr if cleanup fails
-## Return:
-##  raise_cannot_execute if cleanup fails
-cleanup_project() {
-    local -r repository="$1"
-    local -r project="$2"
-    rm --recursive "${repository:?}/${project:?}" ||
-        ( echo "Couldn't cleanup project"           \
-            >> /dev/stderr                          \
-            && raise_cannot_execute )
 }

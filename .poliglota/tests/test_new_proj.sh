@@ -20,8 +20,9 @@
 ##   $CURRENT_TEST
 ##   $PLEASE_DEBUG
 ##  -- Functions --
-##   cleanup_directory
-##   cleanup_project
+##   cleanup_directory <directory>
+##   cleanup_project <repository> <project>
+##   cleanup_template <template> <implementation>
 ##   fail <message>
 ##   pass <message>
 ##   raise_cannot_execute

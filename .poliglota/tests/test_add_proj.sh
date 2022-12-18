@@ -22,8 +22,9 @@
 ##   $CURRENT_TEST
 ##   $PLEASE_DEBUG
 ##  -- Functions --
-##   cleanup_directory
-##   cleanup_project
+##   cleanup_directory <directory>
+##   cleanup_project <repository> <project>
+##   cleanup_template <template> <implementation>
 ##   fail <message>
 ##   pass <message>
 ##   raise_cannot_execute
@@ -88,21 +89,6 @@ generate_template() {
             >> /dev/stderr                              \
             && raise_cannot_execute )
 
-}
-
-
-## Cleanup created project
-## Arguments:
-##   $template
-##   $implementation
-## Output:
-##  outputs to stderr if cleanup fails
-## Return:
-##  raise_cannot_execute if cleanup fails
-cleanup_template() {
-    local -r template="$1"
-    local -r implementation="$2"
-    cleanup_project "${template}" "${implementation}"
 }
 
 
