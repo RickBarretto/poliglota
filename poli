@@ -1,7 +1,7 @@
 #! /bin/bash
 
 commands=("proj" "templ")
-plugins=()
+plugins=("archive.sh")
 
 usage() {
     echo "Usage: poli COMMANDS ARGS [OPTIONS]                       "
@@ -11,6 +11,10 @@ usage() {
 
     for command in "${commands[@]}"; do
         ".poliglota/scripts/${command}.sh" --description
+    done
+
+    for plugin in "${plugins[@]}"; do
+        ".poliglota/scripts/${plugin}" --description
     done
 
 }
@@ -29,8 +33,13 @@ case $1 in
         .poliglota/scripts/templ.sh "$@"
         exit
     ;;
-    ## Plugins
 
+    ## Plugins
+    "archive")
+        shift
+        .plugins/archive.sh "$@"
+        exit
+    ;;
     ## Errors
     *)
         usage
