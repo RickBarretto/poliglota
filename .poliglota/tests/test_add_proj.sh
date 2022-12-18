@@ -58,31 +58,25 @@ run_add() {
 test_default_add_implementation() {
     CURRENT_TEST="test_default_add_implementation"
 
-    # -- Globals ------------
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-
     local -r implementation="MyCustomImplementation"
     local -r project="MyCustomProject"
-
 
     # >>> Prepare -----------
     generate_project "${project:?}"
     generate_template "${template:?}" "${implementation:?}"
 
-
     # >>> Action ------------
     run_add "${implementation:?}" "${project:?}" ||
         fail "${debug_message:?}"
 
-
     # >>> Assertion ---------
-    assert_are_equals                                   \
+    assert_are_equals                                       \
         "${template:?}/${implementation:?}"                 \
-        "${repository:?}/${project:?}/${implementation:?}"    \
+        "${repository:?}/${project:?}/${implementation:?}"  \
         "default config"
-
 
     # >>> Cleanup -----------
     cleanup_directory "${repository:?}/${project:?}"
@@ -101,40 +95,31 @@ test_default_add_implementation() {
 test_empty_implementation() {
     CURRENT_TEST="test_empty_implementation"
 
-    # -- Arguments ----------
     local -r empty_flag="$1"
-
-    # -- Globals ------------
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
-
     local -r implementation="MyCustomImplementation"
     local -r project="MyCustomProject"
-
 
     # >>> Prepare -----------
     generate_project "${project:?}"
 
-
     # >>> Action ------------
     run_add "${implementation:?}" "${project:?}" "${empty_flag:?}" ||
         fail                                \
-            "Tried with ${empty_flag:?}.\n"   \
+            "Tried with ${empty_flag:?}.\n" \
             "${debug_message:?}"
 
-
     # >>> Assertion ---------
-    assert_dir_exists                                   \
-        "${repository:?}/${project:?}/${implementation:?}"    \
+    assert_dir_exists                                       \
+        "${repository:?}/${project:?}/${implementation:?}"  \
         "${empty_flag:?}"
 
-    assert_dir_is_empty                                 \
+    assert_dir_is_empty                                     \
         "${repository:?}/${project:?}/${implementation:?}"
-
 
     # >>> Cleanup -----------
     cleanup_directory "${repository:?}/${project:?}"
-
 }
 
 
@@ -149,41 +134,32 @@ test_empty_implementation() {
 test_add_implementation_to_lastest_project() {
     CURRENT_TEST="test_default_add_implementation"
 
-    # -- Arguments ----------
-    latest_flag="$1"
-
-    # -- Globals ------------
+    local -r latest_flag="$1"
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-
     local -r implementation="MyCustomImplementation"
     local -r project="MyCustomProject"
-
 
     # >>> Prepare -----------
     generate_project "${project:?}"
     generate_template "${template:?}" "${implementation:?}"
 
-
     # >>> Action ------------
     run_add "${implementation:?}" "${latest_flag:?}" ||
-        fail                                    \
-            "Tried to run with ${latest_flag:?}"  \
+        fail                                        \
+            "Tried to run with ${latest_flag:?}"    \
             "${debug_message:?}"
 
-
     # >>> Assertion ---------
-    assert_are_equals                                   \
+    assert_are_equals                                       \
         "${template:?}/${implementation:?}"                 \
-        "${repository:?}/${project:?}/${implementation:?}"    \
+        "${repository:?}/${project:?}/${implementation:?}"  \
         "${latest_flag:?}"
-
 
     # >>> Cleanup -----------
     cleanup_directory "${repository:?}/${project:?}"
     cleanup_directory "${template:?}/${implementation:?}"
-
 }
 
 ## Tests with custom name
@@ -197,31 +173,24 @@ test_add_implementation_to_lastest_project() {
 test_add_implementation_as() {
     CURRENT_TEST="test_add_implementation_as"
 
-    # -- Arguments ----------
-    as_flag="$1"
-
-    # -- Globals ------------
+    local -r as_flag="$1"
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-
     local -r implementation="MyCustomImplementation"
     local -r project="MyCustomProject"
     local -r as_value="MyCustomImplementation2"
-
 
     # >>> Prepare -----------
     generate_project "${project:?}"
     generate_template "${template:?}" "${implementation:?}"
 
-
     # >>> Action ------------
     run_add "${implementation:?}" "${project:?}" \
         "${as_flag:?}" "${as_value:?}" ||
-        fail                                            \
+        fail                                                \
             "Tried to run with ${as_flag:?} ${as_value:?}"  \
             "${debug_message:?}"
-
 
     # >>> Assertion ---------
     assert_are_equals                                   \
@@ -229,11 +198,9 @@ test_add_implementation_as() {
         "${repository:?}/${project:?}/${as_value:?}"    \
         "${as_flag:?} ${as_value:?}"
 
-
     # # >>> Cleanup -----------
     cleanup_directory "${repository:?}/${project:?}"
     cleanup_directory "${template:?}/${implementation:?}"
-
 }
 
 # Running tests -------------

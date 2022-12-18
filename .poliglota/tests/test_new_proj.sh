@@ -55,18 +55,14 @@ run_new() {
 test_default_project() {
     CURRENT_TEST="test_default_project"
 
-    # -- Globals
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-
     local -r proj_name="TestProject"
-
 
     ## >>> Action -----------
     run_new "${proj_name:?}" ||
         fail "${debug_message:?}"
-
 
     ## >>> Assertions -------
     assert_are_equals                       \
@@ -74,10 +70,8 @@ test_default_project() {
         "${repository:?}/${proj_name:?}"    \
         "default config"
 
-
     ## >>> Cleanup ----------
     cleanup_directory "${repository:?}/${proj_name:?}"
-
 }
 
 
@@ -92,17 +86,11 @@ test_default_project() {
 test_empty_project() {
     CURRENT_TEST="test_empty_projects"
 
-    # -- Arguments ----------
     local empty_flag="$1"
-
-
-    # -- Globals ------------
     local -r template="${STD_TEMPL_PATH}"
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
-
     local -r proj_name="TestEmptyProject"
-
 
     # >>> Action ------------
     run_new "${proj_name:?}" "${empty_flag:?}" ||
@@ -110,17 +98,14 @@ test_empty_project() {
             "Tried with ${empty_flag:?}.\n" \
             "${debug_message:?}"
 
-
     # >>> Assertions --------
     assert_dir_exists "${repository:?}/${proj_name:?}"      \
         "${empty_flag}"
 
     assert_dir_is_empty "${repository:?}/${proj_name:?}"
 
-
     # >>> Cleanup
     cleanup_directory "${repository:?}/${proj_name:?}"
-
 }
 
 

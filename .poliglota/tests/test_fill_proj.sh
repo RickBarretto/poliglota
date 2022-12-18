@@ -38,7 +38,7 @@ source ".poliglota/tests/utils.sh"
 ## Output:
 ##   Writes on an error inside $STD_POLI_PATH/error.txt
 run_fill() {
-    ./poli proj fill "$@"    \
+    ./poli proj fill "$@"   \
         1> /dev/null        \
         2> "error.txt"
 }
@@ -46,11 +46,9 @@ run_fill() {
 test_fill() {
     CURRENT_TEST="test_fill"
 
-    # -- Globals
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-
     local -r project="TestProject"
     local -r implementation="MyCustomImplementation"
 
@@ -71,8 +69,6 @@ test_fill() {
     # >>> Cleanup -----------
     cleanup_directory "${repository:?}/${project:?}"
     cleanup_directory "${template:?}/${implementation:?}"
-
-
 }
 
 
