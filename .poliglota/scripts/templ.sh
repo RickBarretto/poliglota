@@ -79,16 +79,6 @@ assert_minimal_arguments() {
 
 }
 
-assert_arguments_count() {
-    local -r -i count_to_match=$1
-    local -r -i      arg_count=$2
-
-    if [[ $count_to_match = $arg_count ]]; then
-        raise_wrong_arguments_input \
-            "The right arguments amount is ${count_to_match}."
-    fi
-}
-
 
 ## Add a new template to template's folder
 ## Arguments:
