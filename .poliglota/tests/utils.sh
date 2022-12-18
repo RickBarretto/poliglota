@@ -24,6 +24,11 @@ source "poli.config"
 ##  cleanup_template  $template   $implementation
 source "${STD_POLI_PATH}/tests/cleanuppers.sh"
 
+## Imports:
+## generate_project $@
+## generate_template $template_folder $implementation
+source "${STD_POLI_PATH}/tests/generators.sh"
+
 ## >> Variable
 ## This is the current test that is running
 CURRENT_TEST=""

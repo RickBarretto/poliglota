@@ -24,6 +24,8 @@
 ##   cleanup_project <repository> <project>
 ##   cleanup_template <template> <implementation>
 ##   fail <message>
+##   generate_project $@
+##   generate_template <template_folder> <implementation>
 ##   pass <message>
 ##   raise_cannot_execute
 # shellcheck source=.poliglota/tests/utils.sh
