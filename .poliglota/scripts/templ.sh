@@ -1,5 +1,21 @@
 #! /bin/bash
 
+## Configuration
+
+## Imports:
+##  $STD_CONFIG_PATH
+##  $STD_POLI_PATH
+##  $STD_REPO_PATH
+##  $STD_TEMPL_PATH
+##  $STD_PLUGINS_PATH
+##  $LAST_PROJECT
+# shellcheck source=poli.config
+source "poli.config"
+
+set -o noclobber # Prevent overwriting of files by redirection
+
+# --- Global internal functions ---
+
 description() {
     echo "templ                                                               "
     echo "    add                           creates a new template            "
