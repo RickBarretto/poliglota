@@ -4,6 +4,7 @@
 ##  raise_cannot_execute
 ##  pass <message>
 ##  fail <message>
+##  assert_are_equals <dir1> <dir2> <flags>
 
 ## Exits with 126 code
 ## Returns
@@ -74,3 +75,32 @@ fail() {
     echo -e "${status} ${title}${divisor}" "${description}" \
         >> /dev/stderr
 }
+
+
+assert_are_equals() {
+
+    local -r  path1="$1"
+    local -r  path2="$2"
+    local -r params="$3"
+
+    local -r dir_1=$(
+        cd "${path1}" ||
+            raise_cannot_execute
+        ls --recursive | xargs )
+
+    local -r dir_2=$(
+        cd "${path2}" ||
+            raise_cannot_execute
+        ls --recursive | xargs )
+
+    if [[ "${dir_1}" = "${dir_2}" ]]
+    then pass "Running with ${params}"                      \
+        "\n  ${path1}'s: ${dir_1}"                          \
+        "\n  ${path2}'s : ${dir_2}"
+    else fail "Trying to compare, while using ${params}:"   \
+        "\n  ${path1}'s: ${dir_1}"                          \
+        "\n  ${path2}'s : ${dir_2}"
+    fi
+
+}
+
