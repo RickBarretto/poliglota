@@ -117,3 +117,15 @@ assert_dir_exists() {
     fi
 }
 
+assert_dir_is_empty() {
+
+    local -r directory="$1"
+
+    if [[ ! -e "${directory:?}/"* ]]
+        then pass                                           \
+                "${directory:?} is empty"
+        else fail                                           \
+                "${directory:?} is not empty"
+    fi
+
+}
