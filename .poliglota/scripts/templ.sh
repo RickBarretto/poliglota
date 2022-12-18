@@ -98,5 +98,48 @@ save_and_exit() {
 add_template() {
     mkdir .templates/$1
     cp -r -b --no-preserve=timestamp            \
-        .templates/.template/** .templates/$1/
+# --- Script functions ---
+
+## [Script] Parses the arguments and calls the right commands
+## Script Commands:
+##   add
+##   rm
+## Script Options:
+##  --help
+##  --description
+## Arguments:
+##   $@: arguments to parse
+## Returns:
+##  test_minimal_args
+##  create_implementation_with_template
+##  create_empty_implementation
+##  raise_wrong_arguments_input, for wrong arguments
+main() {
+
+    assert_minimal_arguments "1" "$#"
+
+    case "$1" in
+    "--description")
+        description
+        ;;
+    "--help" | "-h")
+        usage
+        ;;
+    "add")
+        shift
+        add_command "$@"
+        ;;
+    "rm")
+        shift
+        rm_command "$@"
+        ;;
+    *)
+        raise_wrong_arguments_input "$1"
+        ;;
+    esac
+
+    exit
+
 }
+
+main "$@"
