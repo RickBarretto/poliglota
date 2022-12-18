@@ -111,8 +111,11 @@ save_and_exit() {
 }
 
 
-## $1: the new template name
-##
+## Add a new template to template's folder
+## Arguments:
+##  $template_folder: template's folder
+##  $template_name: template's name
+##  $from: the existing template to be used as base
 add_template() {
 
     local -r template_folder="$1"
@@ -127,6 +130,18 @@ add_template() {
 
 }
 
+## [Command]: Creates a new template
+## Command Arguments:
+##   $new_template: name of the new template
+## Command Options:
+##  --from|-f: uses another template as base to the new
+## Arguments:
+##   $@: arguments to parse
+## Globals:
+##  $STD_TEMPL_PATH
+## Returns:
+##  assert_minimal_arguments
+##  raise_wrong_arguments_input
 add_command() {
 
     assert_minimal_arguments "1" "$#"
@@ -160,6 +175,16 @@ add_command() {
 }
 
 
+## [Command]: Removes a template
+## Command Arguments:
+##   $template: name of the template to be removed
+## Arguments:
+##   $1: argument to parse
+## Globals:
+##  $STD_TEMPL_PATH
+## Returns:
+##  assert_minimal_arguments
+##  raise_wrong_arguments_input
 rm_command() {
 
     assert_minimal_arguments "1" "$#"
