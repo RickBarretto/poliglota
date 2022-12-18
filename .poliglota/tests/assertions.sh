@@ -104,3 +104,16 @@ assert_are_equals() {
 
 }
 
+assert_dir_exists() {
+
+    local -r directory="$1"
+    local -r flags="$2"
+
+    if [[ -d "${directory:?}" ]]
+        then pass                                               \
+                "${directory:?} was created with ${flags}"
+        else fail                                               \
+                "${directory:?} does not exist"
+    fi
+}
+
