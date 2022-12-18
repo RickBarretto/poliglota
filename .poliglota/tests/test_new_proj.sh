@@ -64,19 +64,19 @@ test_default_project() {
 
 
     ## >>> Action -----------
-    run_new "${proj_name}" ||
-        fail "${debug_message}"
+    run_new "${proj_name:?}" ||
+        fail "${debug_message:?}"
 
 
     ## >>> Assertions -------
-    assert_are_equals                   \
-        "${template}"                   \
-        "${repository}/${proj_name}"    \
+    assert_are_equals                       \
+        "${template:?}"                     \
+        "${repository:?}/${proj_name:?}"    \
         "default config"
 
 
     ## >>> Cleanup ----------
-    cleanup_project "${repository}" "${proj_name}"
+    cleanup_directory "${repository:?}/${proj_name:?}"
 
 }
 
@@ -105,21 +105,21 @@ test_empty_project() {
 
 
     # >>> Action ------------
-    run_new "${proj_name}" "${empty_flag}" ||
+    run_new "${proj_name:?}" "${empty_flag:?}" ||
         fail                                \
-            "Tried with ${empty_flag}.\n"   \
-            "${debug_message}"
+            "Tried with ${empty_flag:?}.\n" \
+            "${debug_message:?}"
 
 
     # >>> Assertions --------
     assert_dir_exists "${repository:?}/${proj_name:?}"      \
         "${empty_flag}"
 
-    assert_dir_is_empty "${repository:?}/${proj_name:?}"    \
+    assert_dir_is_empty "${repository:?}/${proj_name:?}"
 
 
     # >>> Cleanup
-    cleanup_project "${repository}" "${proj_name}"
+    cleanup_directory "${repository:?}/${proj_name:?}"
 
 }
 

@@ -68,19 +68,19 @@ test_default_add_implementation() {
 
 
     # >>> Prepare -----------
-    generate_project "${project}"
-    generate_template "${template}" "${implementation}"
+    generate_project "${project:?}"
+    generate_template "${template:?}" "${implementation:?}"
 
 
     # >>> Action ------------
-    run_add "${implementation}" "${project}" ||
-        fail "${debug_message}"
+    run_add "${implementation:?}" "${project:?}" ||
+        fail "${debug_message:?}"
 
 
     # >>> Assertion ---------
     assert_are_equals                                   \
-        "${template}/${implementation}"                 \
-        "${repository}/${project}/${implementation}"    \
+        "${template:?}/${implementation:?}"                 \
+        "${repository:?}/${project:?}/${implementation:?}"    \
         "default config"
 
 
@@ -113,23 +113,23 @@ test_empty_implementation() {
 
 
     # >>> Prepare -----------
-    generate_project "${project}"
+    generate_project "${project:?}"
 
 
     # >>> Action ------------
-    run_add "${implementation}" "${project}" "${empty_flag}" ||
+    run_add "${implementation:?}" "${project:?}" "${empty_flag:?}" ||
         fail                                \
-            "Tried with ${empty_flag}.\n"   \
-            "${debug_message}"
+            "Tried with ${empty_flag:?}.\n"   \
+            "${debug_message:?}"
 
 
     # >>> Assertion ---------
     assert_dir_exists                                   \
-        "${repository}/${project}/${implementation}"    \
-        "${empty_flag}"
+        "${repository:?}/${project:?}/${implementation:?}"    \
+        "${empty_flag:?}"
 
     assert_dir_is_empty                                 \
-        "${repository}/${project}/${implementation}"
+        "${repository:?}/${project:?}/${implementation:?}"
 
 
     # >>> Cleanup -----------
@@ -162,22 +162,22 @@ test_add_implementation_to_lastest_project() {
 
 
     # >>> Prepare -----------
-    generate_project "${project}"
-    generate_template "${template}" "${implementation}"
+    generate_project "${project:?}"
+    generate_template "${template:?}" "${implementation:?}"
 
 
     # >>> Action ------------
-    run_add "${implementation}" "${latest_flag}" ||
+    run_add "${implementation:?}" "${latest_flag:?}" ||
         fail                                    \
-            "Tried to run with ${latest_flag}"  \
-            "${debug_message}"
+            "Tried to run with ${latest_flag:?}"  \
+            "${debug_message:?}"
 
 
     # >>> Assertion ---------
     assert_are_equals                                   \
-        "${template}/${implementation}"                 \
-        "${repository}/${project}/${implementation}"    \
-        "${latest_flag}"
+        "${template:?}/${implementation:?}"                 \
+        "${repository:?}/${project:?}/${implementation:?}"    \
+        "${latest_flag:?}"
 
 
     # >>> Cleanup -----------
@@ -211,15 +211,16 @@ test_add_implementation_as() {
 
 
     # >>> Prepare -----------
-    generate_project "${project}"
-    generate_template "${template}" "${implementation}"
+    generate_project "${project:?}"
+    generate_template "${template:?}" "${implementation:?}"
 
 
     # >>> Action ------------
-    run_add "${implementation}" "${project}" "${as_flag}" "${as_value}" ||
+    run_add "${implementation:?}" "${project:?}" \
+        "${as_flag:?}" "${as_value:?}" ||
         fail                                            \
-            "Tried to run with ${as_flag} ${as_value}"  \
-            "${debug_message}"
+            "Tried to run with ${as_flag:?} ${as_value:?}"  \
+            "${debug_message:?}"
 
 
     # >>> Assertion ---------

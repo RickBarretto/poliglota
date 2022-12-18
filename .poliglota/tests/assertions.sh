@@ -36,12 +36,12 @@ pass() {
     local -r GREEN_UNDERLINE='\033[4;32m'
 
     # -- To print
-    local -r status="${GREEN_BG}[PASSED✔]${RESET}"
-    local -r title="${GREEN_UNDERLINE}${current_test}"
-    local -r divisor="${GREEN}:${RESET}"
-    local -r description="${RESET}${message}"
+    local -r status="${GREEN_BG:?}[PASSED✔]${RESET:?}"
+    local -r title="${GREEN_UNDERLINE:?}${current_test:?}"
+    local -r divisor="${GREEN:?}:${RESET:?}"
+    local -r description="${RESET:?}${message}"
 
-    echo -e "${status} ${title}${divisor}" "${description}"
+    echo -e "${status:?} ${title:?}${divisor:?}" "${description}"
 }
 
 
@@ -67,12 +67,12 @@ fail() {
     local -r RED_UNDERLINE='\033[4;31m'
 
     # -- To print
-    local -r status="${RED_BG}[FAILED✘]${RESET}"
-    local -r title="${RED_UNDERLINE}${current_test}"
-    local -r divisor="${RED}:${RESET}"
+    local -r status="${RED_BG:?}[FAILED✘]${RESET:?}"
+    local -r title="${RED_UNDERLINE:?}${current_test:?}"
+    local -r divisor="${RED:?}:${RESET:?}"
     local -r description="${RESET}${message}"
 
-    echo -e "${status} ${title}${divisor}" "${description}" \
+    echo -e "${status:?} ${title:?}${divisor:?}" "${description}" \
         >> /dev/stderr
 }
 
@@ -84,22 +84,22 @@ assert_are_equals() {
     local -r params="$3"
 
     local -r dir_1=$(
-        cd "${path1}" ||
+        cd "${path1:?}" ||
             raise_cannot_execute
         ls --recursive | xargs )
 
     local -r dir_2=$(
-        cd "${path2}" ||
+        cd "${path2:?}" ||
             raise_cannot_execute
         ls --recursive | xargs )
 
     if [[ "${dir_1}" = "${dir_2}" ]]
     then pass "Running with ${params}"                      \
-        "\n  ${path1}'s: ${dir_1}"                          \
-        "\n  ${path2}'s : ${dir_2}"
+        "\n  ${path1:?}'s: ${dir_1}"                          \
+        "\n  ${path2:?}'s : ${dir_2}"
     else fail "Trying to compare, while using ${params}:"   \
-        "\n  ${path1}'s: ${dir_1}"                          \
-        "\n  ${path2}'s : ${dir_2}"
+        "\n  ${path1:?}'s: ${dir_1}"                          \
+        "\n  ${path2:?}'s : ${dir_2}"
     fi
 
 }
