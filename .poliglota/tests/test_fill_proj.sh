@@ -56,8 +56,8 @@ test_fill() {
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-    local -r project="TestProject"
-    local -r implementation="MyCustomImplementation"
+    local -r project="__test_project"
+    local -r implementation="__test_implementation"
 
     # >>> Prepare -----------
     generate_project "${project}"
