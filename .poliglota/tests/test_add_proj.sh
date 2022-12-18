@@ -219,7 +219,7 @@ test_empty_implementation() {
 }
 
 
-## Tests with default config
+## Tests with latest project
 ## Arguments:
 ##  $latest_flag
 ## Globals:
