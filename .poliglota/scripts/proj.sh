@@ -32,10 +32,7 @@ usage() {
     echo
     echo "  new <project>                 inits a new project with all        "
     echo "                                avaliable implementations           "
-    echo "    --custom|-c <script-path>   run with a custom script instead    "
     echo "    --empty|-e                  creates a empty project             "
-    echo "    --repo|-r <folder>          modifies the output folder          "
-    echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
     echo "  add <impl> <project>          adds a particular implementation to "
     echo "                                an existing project                 "
@@ -195,10 +192,7 @@ create_empty_project() {
 ## Command Arguments:
 ##   $project: name of the new project
 ## Command Options:
-##  --custom|-c script-path
 ##  --empty|-e
-##  --repo|-r folder
-##  --templ|-t folder
 ## Arguments:
 ##   $@: arguments to parse
 ## Globals:
@@ -224,19 +218,8 @@ new_command() {
 
     while  [[ -n "$1" ]]; do
         case "$1" in
-        "--custom" | "-c")
-            shift
-            ;;
         "--empty" | "-e")
             local -r empty=1
-            ;;
-        "--repo" | "-r")
-            local -r repo="$2"
-            shift
-            ;;
-        "--templ" | "-t")
-            local -r templ="$2";
-            shift
             ;;
         "-"*)
             raise_wrong_arguments_input "$1"
