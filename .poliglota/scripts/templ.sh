@@ -6,13 +6,10 @@ usage() {
     echo
     echo "  SUBCOMMANDS                                                       "
     echo
-    echo "    add                                                             "
-    echo "      --templ <folder-path>       uses a custom template base       "
-    echo "      --custom <file-path>        uses a custom script to run       "
-    echo "                                  instead of this                   "
+    echo "    add                           creates a new template            "
+    echo "      --from <template>           uses an existing template as base "
     echo
-    echo "    rm                            removes a language's template     "
-    echo "      --templ <folder-path>       uses a custom template folder     "
+    echo "    rm                            removes an exiting template       "
     echo
     echo "  OPTIONS                                                           "
     echo "    --help|-h                     shows this help page              "
