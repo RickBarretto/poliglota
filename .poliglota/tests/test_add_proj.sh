@@ -22,6 +22,7 @@
 ##   $CURRENT_TEST
 ##   $PLEASE_DEBUG
 ##  -- Functions --
+##   assert_are_equals <dir1> <dir2> <flags>
 ##   cleanup_directory <directory>
 ##   cleanup_project <repository> <project>
 ##   cleanup_template <template> <implementation>
@@ -75,25 +76,10 @@ test_default_add_implementation() {
 
 
     # >>> Assertion ---------
-
-    local -r check_impl=$(
-        cd "${template}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    local -r check_proj=$(
-        cd "${repository}/${project}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass "Default config is running"   \
-        "\n  Template's: ${check_impl}"     \
-        "\n  Project's : ${check_proj}"
-    else fail "Trying to compare:"          \
-        "\n  Template's: ${check_impl}"     \
-        "\n  Project's : ${check_proj}"
-    fi
+    assert_are_equals                                   \
+        "${template}/${implementation}"                 \
+        "${repository}/${project}/${implementation}"    \
+        "default config"
 
 
     # >>> Cleanup -----------
@@ -192,25 +178,10 @@ test_add_implementation_to_lastest_project() {
 
 
     # >>> Assertion ---------
-
-    local -r check_impl=$(
-        cd "${template}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    local -r check_proj=$(
-        cd "${repository}/${project}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass "Running with ${latest_flag}"                     \
-        "\n  Template's: ${check_impl}"                         \
-        "\n  Project's : ${check_proj}"
-    else fail "Trying to compare, while using ${latest_flag}:"  \
-        "\n  Template's: ${check_impl}"                         \
-        "\n  Project's : ${check_proj}"
-    fi
+    assert_are_equals                                   \
+        "${template}/${implementation}"                 \
+        "${repository}/${project}/${implementation}"    \
+        "${latest_flag}"
 
 
     # >>> Cleanup -----------
@@ -256,40 +227,11 @@ test_add_implementation_as() {
 
     # >>> Assertion ---------
 
-    if [[ -d "${repository}/${project}/${as_value}" ]]; then
-        pass "Implementation was created!"
-        if [[ ! -e "${repository}/${project}/${implementation}" ]]
-            then pass "Original implementation was not."
-            else fail "But with the original implementation"    \
-                "instead of the new."
-        fi
-    else
-        fail "Implementation was not created!"
-        if [[ ! -e "${repository}/${project}/${implementation}" ]]
-            then fail "Neither the original implementation."
-            else fail "But, the original implementation created!"   \
-                "It should be the new."
-        fi
-    fi
-
-    local -r check_impl=$(
-        cd "${template}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    local -r check_proj=$(
-        cd "${repository}/${project}/${as_value}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass "Running with ${as_flag} ${as_value}"                     \
-        "\n  Template's: ${check_impl}"                                 \
-        "\n  Project's : ${check_proj}"
-    else fail "Trying to compare, while using ${as_flag} ${as_value}:"  \
-        "\n  Template's: ${check_impl}"                                 \
-        "\n  Project's : ${check_proj}"
-    fi
+    # >>> Assertion ---------
+    assert_are_equals                           \
+        "${template:?}/${implementation:?}"         \
+        "${repository:?}/${project:?}/${as_value:?}"  \
+        "${as_flag:?} ${as_value:?}"
 
 
     # # >>> Cleanup -----------

@@ -20,6 +20,7 @@
 ##   $CURRENT_TEST
 ##   $PLEASE_DEBUG
 ##  -- Functions --
+##   assert_are_equals <dir1> <dir2> <flags>
 ##   cleanup_directory <directory>
 ##   cleanup_project <repository> <project>
 ##   cleanup_template <template> <implementation>
@@ -68,25 +69,10 @@ test_default_project() {
 
 
     ## >>> Assertions -------
-    local -r check_impl=$(
-        ( cd "${template}" || raise_cannot_execute )
-        echo */**)
-
-    local -r check_proj=$(
-        ( cd "${repository}/${proj_name}" || raise_cannot_execute )
-        echo */**)
-
-    # Checks if files exists in both
-    # Note: files with a dot `.` at the start will be ignored
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass                               \
-            "default config is running"
-    else
-        fail                                \
-            "Trying to compare:\n"          \
-            "\tTemplates : ${check_impl}\n" \
-            "\tProject   : ${check_proj}"
-    fi
+    assert_are_equals                   \
+        "${template}"                   \
+        "${repository}/${proj_name}"    \
+        "default config"
 
 
     ## >>> Cleanup ----------
