@@ -288,21 +288,71 @@ test_add_implementation_as() {
     CURRENT_TEST="test_custom_implementation"
 
     # -- Arguments ----------
+    as_flag="$1"
 
     # -- Globals ------------
+    local -r debug_message="${PLEASE_DEBUG}"
+    local -r repository="${STD_REPO_PATH}"
+    local -r template="${STD_TEMPL_PATH}"
+
+    local -r implementation="MyCustomImplementation"
+    local -r project="MyCustomProject"
+    local -r as_value="MyCustomImplementation2"
 
 
     # >>> Prepare -----------
+    generate_project "${project}"
+    generate_template "${template}" "${implementation}"
 
 
     # >>> Action ------------
-    run_add
-
+    run_add "${implementation}" "${project}" "${as_flag}" "${as_value}" ||
+        failed                                          \
+            "Tried to run with ${as_flag} ${as_value}"  \
+            "${debug_message}"
 
     # >>> Assertion ---------
 
+    if [[ -d "${repository}/${project}/${as_value}" ]]; then
+        pass "Implementation was created!"
+        if [[ ! -e "${repository}/${project}/${implementation}" ]]
+            then pass "Original implementation was not."
+            else fail "But with the original implementation"    \
+                "instead of the new."
+        fi
+    else
+        fail "Implementation was not created!"
+        if [[ ! -e "${repository}/${project}/${implementation}" ]]
+            then fail "Neither the original implementation."
+            else fail "But, the original implementation created!"   \
+                "It should be the new."
+        fi
+    fi
 
-    # >>> Cleanup -----------
+    local -r check_impl=$(
+        cd "${template}/${implementation}" ||
+            raise_cannot_execute
+        ls | xargs )
+
+    local -r check_proj=$(
+        cd "${repository}/${project}/${as_value}" ||
+            raise_cannot_execute
+        ls | xargs )
+
+    if [[ "${check_impl}" = "${check_proj}" ]]
+    then pass "Running with ${as_flag} ${as_value}"                     \
+        "\n  Template's: ${check_impl}"                                 \
+        "\n  Project's : ${check_proj}"
+    else fail "Trying to compare, while using ${as_flag} ${as_value}:"  \
+        "\n  Template's: ${check_impl}"                                 \
+        "\n  Project's : ${check_proj}"
+    fi
+
+
+    # # >>> Cleanup -----------
+    cleanup_project "${repository}" "${project}"
+    cleanup_template "${template}" "${implementation}"
+
 }
 
 
@@ -396,8 +446,8 @@ init_tests() {
     test_add_implementation_to_lastest_project "--latest"
     test_add_implementation_to_lastest_project "-l"
 
-    # test_add_implementation_as "--as"
-    # test_add_implementation_as "-a"
+    test_add_implementation_as "--as"
+    test_add_implementation_as "-a"
 
     # test_custom_template "--templ"
     # test_custom_template "-t"
