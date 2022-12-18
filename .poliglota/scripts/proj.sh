@@ -45,9 +45,6 @@ usage() {
     echo "  fill <project>                fills the project with missing      "
     echo "                                implementations from a template     "
     echo "                                folder                              "
-    echo "    --custom|-c <script-path>   run with a custom script instead    "
-    echo "    --repo|-r <folder>          modifies the output folder          "
-    echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
     echo "OPTIONS                                                             "
     echo "  --help|-h                     shows this help page                "
@@ -411,21 +408,9 @@ fill_command() {
     local repo="${STD_REPO_PATH}"   ## Repository's folder path
     local templ="${STD_TEMPL_PATH}" ## Template's folder path
 
-    try_run_custom_script "$@"
 
     while [[ -n "$1" ]]; do
         case "$1" in
-        "--custom" | "-c")
-            shift
-            ;;
-        "--repo" | "-r")
-            local -r repo="$2"
-            shift
-            ;;
-        "--templ" | "-t")
-            local -r templ="$2"
-            shift
-            ;;
         "-"*)
             raise_wrong_arguments_input "$1"
             ;;
