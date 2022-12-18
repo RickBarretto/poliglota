@@ -22,6 +22,9 @@ description() {
     echo "                                avaliable implementations           "
     echo "      add <impl> <project>      adds a particular implementation to "
     echo "                                an existing project                 "
+    echo "      fill <project>            fills the project with missing      "
+    echo "                                implementations from a template     "
+    echo "                                folder                              "
 }
 
 usage() {
