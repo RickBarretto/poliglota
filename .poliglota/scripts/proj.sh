@@ -32,28 +32,19 @@ usage() {
     echo
     echo "  new <project>                 inits a new project with all        "
     echo "                                avaliable implementations           "
-    echo "    --custom|-c <script-path>   run with a custom script instead    "
     echo "    --empty|-e                  creates a empty project             "
-    echo "    --repo|-r <folder>          modifies the output folder          "
-    echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
     echo "  add <impl> <project>          adds a particular implementation to "
     echo "                                an existing project                 "
     echo "    --as|-a <new-impl-name>     adds the implementation with a      "
     echo "                                specific name.                      "
-    echo "    --custom|-c <script-path>   run with a custom script instead    "
     echo "    --empty|-e                  creates an empty implementation     "
     echo "    --latest|-l                 uses the latest command's project as"
     echo "                                the current                         "
-    echo "    --repo|-r <folder>          modifies the output folder          "
-    echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
     echo "  fill <project>                fills the project with missing      "
     echo "                                implementations from a template     "
     echo "                                folder                              "
-    echo "    --custom|-c <script-path>   run with a custom script instead    "
-    echo "    --repo|-r <folder>          modifies the output folder          "
-    echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
     echo "OPTIONS                                                             "
     echo "  --help|-h                     shows this help page                "
@@ -121,24 +112,6 @@ save_and_exit() {
 
 }
 
-## Runs a custom script
-## Command Arguments:
-##   $script: path to the script file
-## Arguments:
-##   $@: arguments to parse
-## Returns:
-##  exit, if --script flag is defined
-try_run_custom_script() {
-    local -i found=0
-    for arg in "$@"; do
-        if [[ $found = 1 ]]; then
-            "./${arg}" "$@"
-            exit
-        elif [[ "${arg}" == "--custom" || "${arg}" == "-c" ]]; then
-            local -r found=1
-        fi
-    done
-}
 
 ## --- New internal functions ---
 
@@ -195,10 +168,7 @@ create_empty_project() {
 ## Command Arguments:
 ##   $project: name of the new project
 ## Command Options:
-##  --custom|-c script-path
 ##  --empty|-e
-##  --repo|-r folder
-##  --templ|-t folder
 ## Arguments:
 ##   $@: arguments to parse
 ## Globals:
@@ -220,23 +190,10 @@ new_command() {
     local templ="${STD_TEMPL_PATH}" ## Template's folder path
     local -i empty=0                   ## --empty
 
-    try_run_custom_script "$@"
-
     while  [[ -n "$1" ]]; do
         case "$1" in
-        "--custom" | "-c")
-            shift
-            ;;
         "--empty" | "-e")
             local -r empty=1
-            ;;
-        "--repo" | "-r")
-            local -r repo="$2"
-            shift
-            ;;
-        "--templ" | "-t")
-            local -r templ="$2";
-            shift
             ;;
         "-"*)
             raise_wrong_arguments_input "$1"
@@ -325,10 +282,7 @@ create_empty_implementation() {
 ##   $implementation: an existing implementation's name
 ##   $project: an existing project's name
 ## Command Options:
-##  --custom|-c script_path
 ##  --empty|-e
-##  --repo|-r folder
-##  --templ|-t folder
 ## Arguments:
 ##   $@: arguments to parse
 ## Globals:
@@ -352,8 +306,6 @@ add_command() {
     local -i empty=0                ## --empty
     local -i latest=0               ## --latest
 
-    try_run_custom_script "$@"
-
     # --latest has first-class importance, changing the behavior
     # so, it must to be declared here
     for arg in "$@"; do
@@ -364,23 +316,12 @@ add_command() {
 
     while  [[ -n "$1" ]]; do
         case "$1" in
-        "--custom" | "-c")
-            shift
-            ;;
         "--as" | "-a")
             local -r name="$2"
             shift
             ;;
         "--empty" | "-e")
             local -r empty=1
-            ;;
-        "--repo" | "-r")
-            local -r repo="$2"
-            shift
-            ;;
-        "--templ" | "-t")
-            local -r templ="$2"
-            shift
             ;;
         "--latest" | "-l")
             ;;
@@ -467,21 +408,9 @@ fill_command() {
     local repo="${STD_REPO_PATH}"   ## Repository's folder path
     local templ="${STD_TEMPL_PATH}" ## Template's folder path
 
-    try_run_custom_script "$@"
 
     while [[ -n "$1" ]]; do
         case "$1" in
-        "--custom" | "-c")
-            shift
-            ;;
-        "--repo" | "-r")
-            local -r repo="$2"
-            shift
-            ;;
-        "--templ" | "-t")
-            local -r templ="$2"
-            shift
-            ;;
         "-"*)
             raise_wrong_arguments_input "$1"
             ;;
