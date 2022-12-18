@@ -95,8 +95,8 @@ main() {
         mkdir "${archive_PATH:?}/${group:?}/${project:?}"
     fi
 
-    mv -b             \
-        "${STD_REPO_PATH:?}/${project:?}"         \
+    mv -b                                           \
+        "${STD_REPO_PATH:?}/${project:?}"           \
         "${archive_PATH:?}/${group:?}/${project:?}"
 
 
