@@ -52,6 +52,7 @@ raise_wrong_arguments_input() {
 ## Returns:
 ##  raise_wrong_arguments_input, if assert fails
 assert_minimal_arguments() {
+
     local -r -i minimal=$1
     local -r -i arg_count=$2
 
@@ -59,6 +60,7 @@ assert_minimal_arguments() {
         raise_wrong_arguments_input \
             "The minimal arguments amount is ${minimal}."
     fi
+
 }
 
 assert_arguments_count() {
