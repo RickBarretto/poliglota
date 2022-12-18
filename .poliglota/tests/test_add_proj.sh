@@ -285,7 +285,7 @@ test_add_implementation_to_lastest_project() {
 ##  $CURRENT_TEST
 ##  $PLEASE_DEBUG
 test_add_implementation_as() {
-    CURRENT_TEST="test_custom_implementation"
+    CURRENT_TEST="test_add_implementation_as"
 
     # -- Arguments ----------
     as_flag="$1"
