@@ -22,9 +22,10 @@
 ##   $CURRENT_TEST
 ##   $PLEASE_DEBUG
 ##  -- Functions --
+##   assert_are_equals <dir1> <dir2> <flags>
+##   assert_dir_exists <directory> <flags>
+##   assert_dir_is_empty <directory>
 ##   cleanup_directory <directory>
-##   cleanup_project <repository> <project>
-##   cleanup_template <template> <implementation>
 ##   fail <message>
 ##   generate_project $@
 ##   generate_template <template_folder> <implementation>
@@ -65,40 +66,27 @@ test_default_add_implementation() {
     local -r implementation="MyCustomImplementation"
     local -r project="MyCustomProject"
 
+
     # >>> Prepare -----------
-    generate_project "${project}"
-    generate_template "${template}" "${implementation}"
+    generate_project "${project:?}"
+    generate_template "${template:?}" "${implementation:?}"
+
 
     # >>> Action ------------
-    run_add "${implementation}" "${project}" ||
-        fail "${debug_message}"
+    run_add "${implementation:?}" "${project:?}" ||
+        fail "${debug_message:?}"
 
 
     # >>> Assertion ---------
-
-    local -r check_impl=$(
-        cd "${template}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    local -r check_proj=$(
-        cd "${repository}/${project}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass "Default config is running"   \
-        "\n  Template's: ${check_impl}"     \
-        "\n  Project's : ${check_proj}"
-    else fail "Trying to compare:"          \
-        "\n  Template's: ${check_impl}"     \
-        "\n  Project's : ${check_proj}"
-    fi
+    assert_are_equals                                   \
+        "${template:?}/${implementation:?}"                 \
+        "${repository:?}/${project:?}/${implementation:?}"    \
+        "default config"
 
 
     # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
-    cleanup_template "${template}" "${implementation}"
+    cleanup_directory "${repository:?}/${project:?}"
+    cleanup_directory "${template:?}/${implementation:?}"
 
 }
 
@@ -125,35 +113,27 @@ test_empty_implementation() {
 
 
     # >>> Prepare -----------
-    generate_project "${project}"
+    generate_project "${project:?}"
+
 
     # >>> Action ------------
-    run_add "${implementation}" "${project}" "${empty_flag}" ||
-        fail                              \
-            "Tried with ${empty_flag}.\n"   \
-            "${debug_message}"
+    run_add "${implementation:?}" "${project:?}" "${empty_flag:?}" ||
+        fail                                \
+            "Tried with ${empty_flag:?}.\n"   \
+            "${debug_message:?}"
 
 
     # >>> Assertion ---------
+    assert_dir_exists                                   \
+        "${repository:?}/${project:?}/${implementation:?}"    \
+        "${empty_flag:?}"
 
-    # Checks if implementation was created
-    if [[ -d "${repository}/${project}/${implementation}/" ]]
-        then pass                                               \
-                "Implementation was created with ${empty_flag}"
-        else fail                                               \
-                "${repository}/${project}/${implementation} was not created"
-    fi
+    assert_dir_is_empty                                 \
+        "${repository:?}/${project:?}/${implementation:?}"
 
-    # Checks if implementation is empty
-    if [[ ! -e "${repository}/${project}/${implementation}"* ]]
-        then pass                                               \
-                "Implementation is empty"
-        else fail                                               \
-                "${repository}/${project}/${implementation} is not empty"
-    fi
 
     # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
+    cleanup_directory "${repository:?}/${project:?}"
 
 }
 
@@ -180,42 +160,29 @@ test_add_implementation_to_lastest_project() {
     local -r implementation="MyCustomImplementation"
     local -r project="MyCustomProject"
 
+
     # >>> Prepare -----------
-    generate_project "${project}"
-    generate_template "${template}" "${implementation}"
+    generate_project "${project:?}"
+    generate_template "${template:?}" "${implementation:?}"
+
 
     # >>> Action ------------
-    run_add "${implementation}" "${latest_flag}" ||
-        fail                                  \
-            "Tried to run with ${latest_flag}"  \
-            "${debug_message}"
+    run_add "${implementation:?}" "${latest_flag:?}" ||
+        fail                                    \
+            "Tried to run with ${latest_flag:?}"  \
+            "${debug_message:?}"
 
 
     # >>> Assertion ---------
-
-    local -r check_impl=$(
-        cd "${template}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    local -r check_proj=$(
-        cd "${repository}/${project}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass "Running with ${latest_flag}"                     \
-        "\n  Template's: ${check_impl}"                         \
-        "\n  Project's : ${check_proj}"
-    else fail "Trying to compare, while using ${latest_flag}:"  \
-        "\n  Template's: ${check_impl}"                         \
-        "\n  Project's : ${check_proj}"
-    fi
+    assert_are_equals                                   \
+        "${template:?}/${implementation:?}"                 \
+        "${repository:?}/${project:?}/${implementation:?}"    \
+        "${latest_flag:?}"
 
 
     # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
-    cleanup_template "${template}" "${implementation}"
+    cleanup_directory "${repository:?}/${project:?}"
+    cleanup_directory "${template:?}/${implementation:?}"
 
 }
 
@@ -244,57 +211,28 @@ test_add_implementation_as() {
 
 
     # >>> Prepare -----------
-    generate_project "${project}"
-    generate_template "${template}" "${implementation}"
+    generate_project "${project:?}"
+    generate_template "${template:?}" "${implementation:?}"
 
 
     # >>> Action ------------
-    run_add "${implementation}" "${project}" "${as_flag}" "${as_value}" ||
-        fail                                          \
-            "Tried to run with ${as_flag} ${as_value}"  \
-            "${debug_message}"
+    run_add "${implementation:?}" "${project:?}" \
+        "${as_flag:?}" "${as_value:?}" ||
+        fail                                            \
+            "Tried to run with ${as_flag:?} ${as_value:?}"  \
+            "${debug_message:?}"
+
 
     # >>> Assertion ---------
-
-    if [[ -d "${repository}/${project}/${as_value}" ]]; then
-        pass "Implementation was created!"
-        if [[ ! -e "${repository}/${project}/${implementation}" ]]
-            then pass "Original implementation was not."
-            else fail "But with the original implementation"    \
-                "instead of the new."
-        fi
-    else
-        fail "Implementation was not created!"
-        if [[ ! -e "${repository}/${project}/${implementation}" ]]
-            then fail "Neither the original implementation."
-            else fail "But, the original implementation created!"   \
-                "It should be the new."
-        fi
-    fi
-
-    local -r check_impl=$(
-        cd "${template}/${implementation}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    local -r check_proj=$(
-        cd "${repository}/${project}/${as_value}" ||
-            raise_cannot_execute
-        ls | xargs )
-
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass "Running with ${as_flag} ${as_value}"                     \
-        "\n  Template's: ${check_impl}"                                 \
-        "\n  Project's : ${check_proj}"
-    else fail "Trying to compare, while using ${as_flag} ${as_value}:"  \
-        "\n  Template's: ${check_impl}"                                 \
-        "\n  Project's : ${check_proj}"
-    fi
+    assert_are_equals                                   \
+        "${template:?}/${implementation:?}"             \
+        "${repository:?}/${project:?}/${as_value:?}"    \
+        "${as_flag:?} ${as_value:?}"
 
 
     # # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
-    cleanup_template "${template}" "${implementation}"
+    cleanup_directory "${repository:?}/${project:?}"
+    cleanup_directory "${template:?}/${implementation:?}"
 
 }
 
@@ -302,20 +240,15 @@ test_add_implementation_as() {
 
 ## Runs every test for `proj add` command
 init_tests() {
-
     echo_init_tests "test_add_proj"
 
     test_default_add_implementation
-
     test_empty_implementation "--empty"
     test_empty_implementation "-e"
-
     test_add_implementation_to_lastest_project "--latest"
     test_add_implementation_to_lastest_project "-l"
-
     test_add_implementation_as "--as"
     test_add_implementation_as "-a"
-
 }
 
 init_tests

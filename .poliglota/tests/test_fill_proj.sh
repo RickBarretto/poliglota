@@ -22,9 +22,8 @@
 ##   $CURRENT_TEST
 ##   $PLEASE_DEBUG
 ##  -- Functions --
+##   assert_are_equals <dir1> <dir2> <flags>
 ##   cleanup_directory <directory>
-##   cleanup_project <repository> <project>
-##   cleanup_template <template> <implementation>
 ##   fail <message>
 ##   generate_project $@
 ##   generate_template <template_folder> <implementation>
@@ -64,28 +63,14 @@ test_fill() {
         fail "${debug_message}"
 
     # >>> Assertion ---------
-    local -r check_impl=$(
-        cd "${template}" ||
-            raise_cannot_execute
-        ls --recursive | xargs )
-
-    local -r check_proj=$(
-        cd "${repository}/${project}" ||
-            raise_cannot_execute
-        ls --recursive | xargs )
-
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass "Default config is running"   \
-        "\n  Template's: ${check_impl}"     \
-        "\n  Project's : ${check_proj}"
-    else fail "Trying to compare:"          \
-        "\n  Template's: ${check_impl}"     \
-        "\n  Project's : ${check_proj}"
-    fi
+    assert_are_equals                   \
+        "${template:?}"                 \
+        "${repository:?}/${project:?}"  \
+        "default config"
 
     # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
-    cleanup_template "${template}" "${implementation}"
+    cleanup_directory "${repository:?}/${project:?}"
+    cleanup_directory "${template:?}/${implementation:?}"
 
 
 }
@@ -95,10 +80,8 @@ test_fill() {
 
 ## Runs every test for `proj new` command
 init_tests() {
-
     echo_init_tests "test_fill_proj"
     test_fill
-
 }
 
 init_tests

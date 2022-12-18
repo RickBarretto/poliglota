@@ -20,9 +20,10 @@
 ##   $CURRENT_TEST
 ##   $PLEASE_DEBUG
 ##  -- Functions --
+##   assert_are_equals <dir1> <dir2> <flags>
+##   assert_dir_exists <directory> <flags>
+##   assert_dir_is_empty <directory>
 ##   cleanup_directory <directory>
-##   cleanup_project <repository> <project>
-##   cleanup_template <template> <implementation>
 ##   fail <message>
 ##   generate_project $@
 ##   generate_template <template_folder> <implementation>
@@ -63,34 +64,19 @@ test_default_project() {
 
 
     ## >>> Action -----------
-    run_new "${proj_name}" ||
-        fail "${debug_message}"
+    run_new "${proj_name:?}" ||
+        fail "${debug_message:?}"
 
 
     ## >>> Assertions -------
-    local -r check_impl=$(
-        ( cd "${template}" || raise_cannot_execute )
-        echo */**)
-
-    local -r check_proj=$(
-        ( cd "${repository}/${proj_name}" || raise_cannot_execute )
-        echo */**)
-
-    # Checks if files exists in both
-    # Note: files with a dot `.` at the start will be ignored
-    if [[ "${check_impl}" = "${check_proj}" ]]
-    then pass                               \
-            "default config is running"
-    else
-        fail                                \
-            "Trying to compare:\n"          \
-            "\tTemplates : ${check_impl}\n" \
-            "\tProject   : ${check_proj}"
-    fi
+    assert_are_equals                       \
+        "${template:?}"                     \
+        "${repository:?}/${proj_name:?}"    \
+        "default config"
 
 
     ## >>> Cleanup ----------
-    cleanup_project "${repository}" "${proj_name}"
+    cleanup_directory "${repository:?}/${proj_name:?}"
 
 }
 
@@ -119,33 +105,21 @@ test_empty_project() {
 
 
     # >>> Action ------------
-    run_new "${proj_name}" "${empty_flag}" ||
-        fail                              \
-            "Tried with ${empty_flag}.\n"   \
-            "${debug_message}"
+    run_new "${proj_name:?}" "${empty_flag:?}" ||
+        fail                                \
+            "Tried with ${empty_flag:?}.\n" \
+            "${debug_message:?}"
 
 
     # >>> Assertions --------
+    assert_dir_exists "${repository:?}/${proj_name:?}"      \
+        "${empty_flag}"
 
-    # Checks if project was created
-    if [[ -d "${repository}/${proj_name}" ]]
-        then pass                                           \
-                "Project was created with ${empty_flag}"
-        else fail                                           \
-                "${repository}/${proj_name} does not exist"
-    fi
-
-    # Checks if repository is empty
-    if [[ ! -e "${repository:?}/${proj_name:?}/"* ]]
-        then pass                                           \
-                "Project is empty"
-        else fail                                           \
-                "${repository}/${proj_name} is not empty"
-    fi
+    assert_dir_is_empty "${repository:?}/${proj_name:?}"
 
 
     # >>> Cleanup
-    cleanup_project "${repository}" "${proj_name}"
+    cleanup_directory "${repository:?}/${proj_name:?}"
 
 }
 
@@ -154,14 +128,11 @@ test_empty_project() {
 
 ## Runs every test for `proj new` command
 init_tests() {
-
     echo_init_tests "test_new_proj"
 
     test_default_project
-
     test_empty_project "--empty"
     test_empty_project "-e"
-
 }
 
 init_tests
