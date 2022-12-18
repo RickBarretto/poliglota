@@ -16,10 +16,7 @@ Inits a new project
 
 |Features           | Options     | Usage | Documented |
 |:------------------|:------------|:-----:|:----------:|
-|custom script      | --custom -c |   x   |            |
 |create empty repo  | --empty  -e |   x   |            |
-|output redirection | --repo   -r |   x   |            |
-|input redirection  | --templ  -t |   x   |            |
 
 ### Add implementation command
 Add a specific implementation to a project
@@ -29,10 +26,7 @@ Add a specific implementation to a project
 |Features              | Options      | Usage | Documented |
 |:---------------------|:-------------|:-----:|:----------:|
 |new name              | --as  -a     |   x   |            |
-|custom script         | --custom  -c |   x   |            |
 |create empty repo     | --empty   -e |   x   |            |
-|repo folder output    | --repo    -r |   x   |            |
-|template folder input | --templ   -t |   x   |            |
 |latest project        | --lastest -l |   x   |            |
 
 ### Fill implementations
@@ -41,11 +35,6 @@ to a project
 
 - [ ] Description
 
-|Features           | Options      | Usage | Documented |
-|:------------------|:-------------|:-----:|:----------:|
-|custom script      | --custom  -c |       |            |
-|output redirection | --output  -o |       |            |
-|input redirection  | --templ   -t |       |            |
 
 
 ## Templates related command
@@ -57,10 +46,7 @@ Inits a new template
 
 |Features          | Options     | Usage | Documented |
 |:-----------------|:------------|:-----:|:----------:|
-|custom script     | --custom -c |       |            |
 |create empty repo | --empty  -e |       |            |
-|output redirection| --output -o |       |            |
-|input redirection | --templ  -t |       |            |
 
 ### Remove command
 Removes a new template
@@ -69,39 +55,8 @@ Removes a new template
 
 |Features        | Options     | Usage | Documented |
 |:---------------|:------------|:-----:|:----------:|
-| template's dir | --templ  -t |       |            |
 | all            | --all       |       |            |
 | yes            | --yes       |       |            |
-
-
-## Plugins related
-
-### Create command
-Inits a plugin,
-adds to a config file and
-add a documentation file
-
-- [ ] Description
-
-|Features          | Options     | Usage | Documented |
-|:-----------------|:------------|:-----:|:----------:|
-|custom script     | --custom -c |       |            |
-|file extension    | --ext    -e |       |            |
-|output redirection| --output -o |       |            |
-|input redirection | --templ  -t |       |            |
-
-
-### Update status command
-Updates a plugin status to
-(testing|stable|on|off)
-
-- [ ] Description
-
-|Features          | Options      | Usage | Documented |
-|:-----------------|:-------------|:-----:|:----------:|
-|custom script     | --custom -c  |       |            |
-|latest plugin     | --lastest -l |       |            |
-
 
 
 ----
