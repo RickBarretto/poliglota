@@ -360,28 +360,68 @@ test_add_implementation_as() {
 }
 
 
+## Tests with custom template
+## Arguments:
+##  $template_flag
 ## Globals:
 ##  $CURRENT_TEST
 ##  $PLEASE_DEBUG
+##  $STD_REPO_PATH
 test_custom_template() {
     CURRENT_TEST="test_custom_template"
 
     # -- Arguments ----------
+    template_flag="$1"
 
     # -- Globals ------------
+    local -r debug_message="${PLEASE_DEBUG}"
+    local -r repository="${STD_REPO_PATH}"
+    local -r template="MyCustomPath"
 
+    local -r implementation="MyCustomImplementation"
+    local -r project="MyCustomProject"
 
     # >>> Prepare -----------
+    mkdir "${template}"                                         \
+        "${template}/${implementation}"                         \
+        "${template}/${implementation}/src"
 
+    touch "${template}/${implementation}/custom_template.md"    \
+        "${template}/${implementation}/src/main.c"
+
+    generate_project "${project}"
 
     # >>> Action ------------
-    run_add
+    run_add "${implementation}" "${project}"                    \
+        "${template_flag}" "${template}" ||
+        failed "${debug_message}"
 
 
     # >>> Assertion ---------
 
+    local -r check_impl=$(
+        cd "${template}/${implementation}" ||
+            raise_cannot_execute
+        ls -R | xargs )
+
+    local -r check_proj=$(
+        cd "${repository}/${project}/${implementation}" ||
+            raise_cannot_execute
+        ls -R | xargs )
+
+    if [[ "${check_impl}" = "${check_proj}" ]]
+    then pass "Default config is running"   \
+        "\n  Template's: ${check_impl}"     \
+        "\n  Project's : ${check_proj}"
+    else fail "Trying to compare:"          \
+        "\n  Template's: ${check_impl}"     \
+        "\n  Project's : ${check_proj}"
+    fi
+
 
     # >>> Cleanup -----------
+    cleanup_project "${repository}" "${project}"
+    rm --force --recursive "${template}"
 }
 
 
@@ -453,8 +493,8 @@ init_tests() {
     test_add_implementation_as "--as"
     test_add_implementation_as "-a"
 
-    # test_custom_template "--templ"
-    # test_custom_template "-t"
+    test_custom_template "--templ"
+    test_custom_template "-t"
 
     # test_custom_repository "--repo"
     # test_custom_repository "-r"
