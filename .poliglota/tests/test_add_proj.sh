@@ -68,9 +68,11 @@ test_default_add_implementation() {
     local -r implementation="MyCustomImplementation"
     local -r project="MyCustomProject"
 
+
     # >>> Prepare -----------
     generate_project "${project}"
     generate_template "${template}" "${implementation}"
+
 
     # >>> Action ------------
     run_add "${implementation}" "${project}" ||
@@ -115,9 +117,10 @@ test_empty_implementation() {
     # >>> Prepare -----------
     generate_project "${project}"
 
+
     # >>> Action ------------
     run_add "${implementation}" "${project}" "${empty_flag}" ||
-        fail                              \
+        fail                                \
             "Tried with ${empty_flag}.\n"   \
             "${debug_message}"
 
@@ -159,13 +162,15 @@ test_add_implementation_to_lastest_project() {
     local -r implementation="MyCustomImplementation"
     local -r project="MyCustomProject"
 
+
     # >>> Prepare -----------
     generate_project "${project}"
     generate_template "${template}" "${implementation}"
 
+
     # >>> Action ------------
     run_add "${implementation}" "${latest_flag}" ||
-        fail                                  \
+        fail                                    \
             "Tried to run with ${latest_flag}"  \
             "${debug_message}"
 
@@ -214,16 +219,15 @@ test_add_implementation_as() {
 
     # >>> Action ------------
     run_add "${implementation}" "${project}" "${as_flag}" "${as_value}" ||
-        fail                                          \
+        fail                                            \
             "Tried to run with ${as_flag} ${as_value}"  \
             "${debug_message}"
 
-    # >>> Assertion ---------
 
     # >>> Assertion ---------
-    assert_are_equals                           \
-        "${template:?}/${implementation:?}"         \
-        "${repository:?}/${project:?}/${as_value:?}"  \
+    assert_are_equals                                   \
+        "${template:?}/${implementation:?}"             \
+        "${repository:?}/${project:?}/${as_value:?}"    \
         "${as_flag:?} ${as_value:?}"
 
 
