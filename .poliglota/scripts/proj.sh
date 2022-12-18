@@ -38,12 +38,9 @@ usage() {
     echo "                                an existing project                 "
     echo "    --as|-a <new-impl-name>     adds the implementation with a      "
     echo "                                specific name.                      "
-    echo "    --custom|-c <script-path>   run with a custom script instead    "
     echo "    --empty|-e                  creates an empty implementation     "
     echo "    --latest|-l                 uses the latest command's project as"
     echo "                                the current                         "
-    echo "    --repo|-r <folder>          modifies the output folder          "
-    echo "    --templ|-t <folder>         modifies the template entry folder  "
     echo
     echo "  fill <project>                fills the project with missing      "
     echo "                                implementations from a template     "
@@ -308,10 +305,7 @@ create_empty_implementation() {
 ##   $implementation: an existing implementation's name
 ##   $project: an existing project's name
 ## Command Options:
-##  --custom|-c script_path
 ##  --empty|-e
-##  --repo|-r folder
-##  --templ|-t folder
 ## Arguments:
 ##   $@: arguments to parse
 ## Globals:
@@ -347,23 +341,12 @@ add_command() {
 
     while  [[ -n "$1" ]]; do
         case "$1" in
-        "--custom" | "-c")
-            shift
-            ;;
         "--as" | "-a")
             local -r name="$2"
             shift
             ;;
         "--empty" | "-e")
             local -r empty=1
-            ;;
-        "--repo" | "-r")
-            local -r repo="$2"
-            shift
-            ;;
-        "--templ" | "-t")
-            local -r templ="$2"
-            shift
             ;;
         "--latest" | "-l")
             ;;
