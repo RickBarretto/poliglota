@@ -24,8 +24,6 @@
 ##  -- Functions --
 ##   assert_are_equals <dir1> <dir2> <flags>
 ##   cleanup_directory <directory>
-##   cleanup_project <repository> <project>
-##   cleanup_template <template> <implementation>
 ##   fail <message>
 ##   generate_project $@
 ##   generate_template <template_folder> <implementation>
@@ -71,8 +69,8 @@ test_fill() {
         "default config"
 
     # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
-    cleanup_template "${template}" "${implementation}"
+    cleanup_directory "${repository:?}/${project:?}"
+    cleanup_directory "${template:?}/${implementation:?}"
 
 
 }

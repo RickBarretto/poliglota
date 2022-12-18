@@ -26,8 +26,6 @@
 ##   assert_dir_exists <directory> <flags>
 ##   assert_dir_is_empty <directory>
 ##   cleanup_directory <directory>
-##   cleanup_project <repository> <project>
-##   cleanup_template <template> <implementation>
 ##   fail <message>
 ##   generate_project $@
 ##   generate_template <template_folder> <implementation>
@@ -87,8 +85,8 @@ test_default_add_implementation() {
 
 
     # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
-    cleanup_template "${template}" "${implementation}"
+    cleanup_directory "${repository:?}/${project:?}"
+    cleanup_directory "${template:?}/${implementation:?}"
 
 }
 
@@ -135,7 +133,7 @@ test_empty_implementation() {
 
 
     # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
+    cleanup_directory "${repository:?}/${project:?}"
 
 }
 
@@ -183,8 +181,8 @@ test_add_implementation_to_lastest_project() {
 
 
     # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
-    cleanup_template "${template}" "${implementation}"
+    cleanup_directory "${repository:?}/${project:?}"
+    cleanup_directory "${template:?}/${implementation:?}"
 
 }
 
@@ -232,8 +230,8 @@ test_add_implementation_as() {
 
 
     # # >>> Cleanup -----------
-    cleanup_project "${repository}" "${project}"
-    cleanup_template "${template}" "${implementation}"
+    cleanup_directory "${repository:?}/${project:?}"
+    cleanup_directory "${template:?}/${implementation:?}"
 
 }
 

@@ -20,8 +20,6 @@ source "poli.config"
 ## Imports:
 ## >> Functions
 ##  cleanup_directory $directory
-##  cleanup_project   $repository $project
-##  cleanup_template  $template   $implementation
 source "${STD_POLI_PATH}/tests/cleanuppers.sh"
 
 ## Imports:

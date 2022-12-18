@@ -24,8 +24,6 @@
 ##   assert_dir_exists <directory> <flags>
 ##   assert_dir_is_empty <directory>
 ##   cleanup_directory <directory>
-##   cleanup_project <repository> <project>
-##   cleanup_template <template> <implementation>
 ##   fail <message>
 ##   generate_project $@
 ##   generate_template <template_folder> <implementation>
