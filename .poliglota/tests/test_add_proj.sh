@@ -23,6 +23,7 @@
 ##   $PLEASE_DEBUG
 ##  -- Functions --
 ##   assert_are_equals <dir1> <dir2> <flags>
+##   assert_dir_exists <directory> <flags>
 ##   cleanup_directory <directory>
 ##   cleanup_project <repository> <project>
 ##   cleanup_template <template> <implementation>
@@ -121,6 +122,9 @@ test_empty_implementation() {
 
 
     # >>> Assertion ---------
+    assert_dir_exists                                   \
+        "${repository}/${project}/${implementation}"    \
+        "${empty_flag}"
 
     # Checks if implementation was created
     if [[ -d "${repository}/${project}/${implementation}/" ]]

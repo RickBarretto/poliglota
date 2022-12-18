@@ -31,6 +31,7 @@ source "${STD_POLI_PATH}/tests/generators.sh"
 
 ## Imports:
 ##  assert_are_equals <dir1> <dir2> <flags>
+##  assert_dir_exists <directory> <flags>
 ##  fail <message>
 ##  pass <message>
 ##  raise_cannot_execute

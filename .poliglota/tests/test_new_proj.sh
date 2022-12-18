@@ -21,6 +21,7 @@
 ##   $PLEASE_DEBUG
 ##  -- Functions --
 ##   assert_are_equals <dir1> <dir2> <flags>
+##   assert_dir_exists <directory> <flags>
 ##   cleanup_directory <directory>
 ##   cleanup_project <repository> <project>
 ##   cleanup_template <template> <implementation>
@@ -112,6 +113,8 @@ test_empty_project() {
 
 
     # >>> Assertions --------
+    assert_dir_exists "${repository:?}/${proj_name:?}"      \
+        "${empty_flag}"
 
     # Checks if project was created
     if [[ -d "${repository}/${proj_name}" ]]
