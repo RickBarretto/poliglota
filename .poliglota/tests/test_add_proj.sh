@@ -61,8 +61,8 @@ test_default_add_implementation() {
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-    local -r implementation="MyCustomImplementation"
-    local -r project="MyCustomProject"
+    local -r implementation="__test_implementation"
+    local -r project="__test_project"
 
     # >>> Prepare -----------
     generate_project "${project:?}"
@@ -98,8 +98,8 @@ test_empty_implementation() {
     local -r empty_flag="$1"
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
-    local -r implementation="MyCustomImplementation"
-    local -r project="MyCustomProject"
+    local -r implementation="__test_implementation"
+    local -r project="__test_project"
 
     # >>> Prepare -----------
     generate_project "${project:?}"
@@ -138,8 +138,8 @@ test_add_implementation_to_lastest_project() {
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-    local -r implementation="MyCustomImplementation"
-    local -r project="MyCustomProject"
+    local -r implementation="__test_implementation"
+    local -r project="__test_project"
 
     # >>> Prepare -----------
     generate_project "${project:?}"
@@ -177,9 +177,9 @@ test_add_implementation_as() {
     local -r debug_message="${PLEASE_DEBUG}"
     local -r repository="${STD_REPO_PATH}"
     local -r template="${STD_TEMPL_PATH}"
-    local -r implementation="MyCustomImplementation"
-    local -r project="MyCustomProject"
-    local -r as_value="MyCustomImplementation2"
+    local -r implementation="__test_implementation"
+    local -r project="__test_project"
+    local -r as_value="__test_new_implementation_name"
 
     # >>> Prepare -----------
     generate_project "${project:?}"
