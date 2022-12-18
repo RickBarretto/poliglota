@@ -1,15 +1,22 @@
 #! /bin/bash
 
+description() {
+    echo "templ                                                               "
+    echo "    add                           creates a new template            "
+    echo "    rm                            removes an exiting template       "
+}
+
+
 usage() {
     echo "templ command                                                       "
     echo "  poli templ [OPTIONS]... [SUBCOMMANDS]                             "
     echo
     echo "  SUBCOMMANDS                                                       "
     echo
-    echo "    add                           creates a new template            "
-    echo "      --from <template>           uses an existing template as base "
+    echo "    add <new-template>            creates a new template            "
+    echo "      --from|-f <template2>       uses an existing template as base "
     echo
-    echo "    rm                            removes an exiting template       "
+    echo "    rm <template>                 removes an exiting template       "
     echo
     echo "  OPTIONS                                                           "
     echo "    --help|-h                     shows this help page              "
