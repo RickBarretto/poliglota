@@ -115,24 +115,6 @@ save_and_exit() {
 
 }
 
-## Runs a custom script
-## Command Arguments:
-##   $script: path to the script file
-## Arguments:
-##   $@: arguments to parse
-## Returns:
-##  exit, if --script flag is defined
-try_run_custom_script() {
-    local -i found=0
-    for arg in "$@"; do
-        if [[ $found = 1 ]]; then
-            "./${arg}" "$@"
-            exit
-        elif [[ "${arg}" == "--custom" || "${arg}" == "-c" ]]; then
-            local -r found=1
-        fi
-    done
-}
 
 ## --- New internal functions ---
 
@@ -210,8 +192,6 @@ new_command() {
     local repo="${STD_REPO_PATH}"   ## Repository's folder path
     local templ="${STD_TEMPL_PATH}" ## Template's folder path
     local -i empty=0                   ## --empty
-
-    try_run_custom_script "$@"
 
     while  [[ -n "$1" ]]; do
         case "$1" in
@@ -328,8 +308,6 @@ add_command() {
     local templ="${STD_TEMPL_PATH}" ## Template's folder path
     local -i empty=0                ## --empty
     local -i latest=0               ## --latest
-
-    try_run_custom_script "$@"
 
     # --latest has first-class importance, changing the behavior
     # so, it must to be declared here
