@@ -22,6 +22,77 @@ usage() {
     echo "    --help|-h                     shows this help page              "
 }
 
+
+## Sets the minimal arguments required by a command
+## Arguments:
+##  $wrong_input
+## Output:
+##  Prints an error message and the usage
+## Returns:
+##  exit "$E_BADARGS"
+raise_wrong_arguments_input() {
+    local -r wrong_input="$1"
+    local -r E_BADARGS=85 ## Bad Arguments error value
+
+    set +o noclobber
+    echo "Wrong input: ${wrong_input}" >> /dev/stderr # > stderr
+
+    echo
+    usage
+    exit "${E_BADARGS}"
+
+}
+
+## Sets the minimal arguments required by a command
+## Arguments:
+##  $minimal: minimal arguments to be able run
+##  $arg_count: current arguments count
+## Output:
+##  Prints an error message and the usage
+## Returns:
+##  raise_wrong_arguments_input, if assert fails
+assert_minimal_arguments() {
+    local -r -i minimal=$1
+    local -r -i arg_count=$2
+
+    if [[ $minimal -gt $arg_count ]]; then
+        raise_wrong_arguments_input \
+            "The minimal arguments amount is ${minimal}."
+    fi
+}
+
+assert_arguments_count() {
+    local -r -i count_to_match=$1
+    local -r -i      arg_count=$2
+
+    if [[ $count_to_match = $arg_count ]]; then
+        raise_wrong_arguments_input \
+            "The right arguments amount is ${count_to_match}."
+    fi
+}
+
+## Saves the project on history
+## Arguments:
+##  $current_project: current project
+## Globals:
+##  $STD_CONFIG_PATH
+## Returns
+##  exit
+save_and_exit() {
+
+    local -r current_project="$1"
+    local -r config_file="${STD_CONFIG_PATH}"
+
+    echo "Saving... ${current_project} on ${STD_CONFIG_PATH}"
+
+    sed --in-place --expression                                 \
+        "s/LAST_PROJECT=.*/LAST_PROJECT=${current_project}/g"   \
+        "${config_file}"
+    exit
+
+}
+
+
 ## $1: the new template name
 ##
 add_template() {
