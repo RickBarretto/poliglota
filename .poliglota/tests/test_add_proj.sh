@@ -24,6 +24,7 @@
 ##  -- Functions --
 ##   assert_are_equals <dir1> <dir2> <flags>
 ##   assert_dir_exists <directory> <flags>
+##   assert_dir_is_empty <directory>
 ##   cleanup_directory <directory>
 ##   cleanup_project <repository> <project>
 ##   cleanup_template <template> <implementation>
@@ -126,21 +127,9 @@ test_empty_implementation() {
         "${repository}/${project}/${implementation}"    \
         "${empty_flag}"
 
-    # Checks if implementation was created
-    if [[ -d "${repository}/${project}/${implementation}/" ]]
-        then pass                                               \
-                "Implementation was created with ${empty_flag}"
-        else fail                                               \
-                "${repository}/${project}/${implementation} was not created"
-    fi
+    assert_dir_is_empty                                 \
+        "${repository}/${project}/${implementation}"
 
-    # Checks if implementation is empty
-    if [[ ! -e "${repository}/${project}/${implementation}"* ]]
-        then pass                                               \
-                "Implementation is empty"
-        else fail                                               \
-                "${repository}/${project}/${implementation} is not empty"
-    fi
 
     # >>> Cleanup -----------
     cleanup_project "${repository}" "${project}"

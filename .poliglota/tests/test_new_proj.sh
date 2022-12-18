@@ -22,6 +22,7 @@
 ##  -- Functions --
 ##   assert_are_equals <dir1> <dir2> <flags>
 ##   assert_dir_exists <directory> <flags>
+##   assert_dir_is_empty <directory>
 ##   cleanup_directory <directory>
 ##   cleanup_project <repository> <project>
 ##   cleanup_template <template> <implementation>
@@ -116,21 +117,7 @@ test_empty_project() {
     assert_dir_exists "${repository:?}/${proj_name:?}"      \
         "${empty_flag}"
 
-    # Checks if project was created
-    if [[ -d "${repository}/${proj_name}" ]]
-        then pass                                           \
-                "Project was created with ${empty_flag}"
-        else fail                                           \
-                "${repository}/${proj_name} does not exist"
-    fi
-
-    # Checks if repository is empty
-    if [[ ! -e "${repository:?}/${proj_name:?}/"* ]]
-        then pass                                           \
-                "Project is empty"
-        else fail                                           \
-                "${repository}/${proj_name} is not empty"
-    fi
+    assert_dir_is_empty "${repository:?}/${proj_name:?}"    \
 
 
     # >>> Cleanup
