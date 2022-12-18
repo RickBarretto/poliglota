@@ -1,6 +1,6 @@
 #! /bin/bash
 
-commands=("proj")
+commands=("proj" "templ")
 plugins=()
 
 usage() {
@@ -24,7 +24,11 @@ case $1 in
         .poliglota/scripts/proj.sh "$@"
         exit
     ;;
-
+    "templ")
+        shift
+        .poliglota/scripts/templ.sh "$@"
+        exit
+    ;;
     ## Plugins
 
     ## Errors
