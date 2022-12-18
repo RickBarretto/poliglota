@@ -390,10 +390,6 @@ fill_project() {
 ## [Command]: Fills an existing project with missing implementations
 ## Command Arguments:
 ##   $project: name of the new project
-## Command Options:
-##  --custom|-c script-path
-##  --repo|-r folder
-##  --templ|-t folder
 ## Arguments:
 ##   $@: arguments to parse
 ## Globals:
@@ -465,6 +461,10 @@ main() {
     "add")
         shift
         add_command "$@"
+        ;;
+    "fill")
+        shift
+        fill_command "$@"
         ;;
     *)
         raise_wrong_arguments_input "$1"
