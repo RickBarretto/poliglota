@@ -71,7 +71,7 @@ test_default_add_implementation() {
 
     # >>> Action ------------
     run_add "${implementation}" "${project}" ||
-        failed "${debug_message}"
+        fail "${debug_message}"
 
 
     # >>> Assertion ---------
@@ -129,7 +129,7 @@ test_empty_implementation() {
 
     # >>> Action ------------
     run_add "${implementation}" "${project}" "${empty_flag}" ||
-        failed                              \
+        fail                              \
             "Tried with ${empty_flag}.\n"   \
             "${debug_message}"
 
@@ -186,7 +186,7 @@ test_add_implementation_to_lastest_project() {
 
     # >>> Action ------------
     run_add "${implementation}" "${latest_flag}" ||
-        failed                                  \
+        fail                                  \
             "Tried to run with ${latest_flag}"  \
             "${debug_message}"
 
@@ -250,7 +250,7 @@ test_add_implementation_as() {
 
     # >>> Action ------------
     run_add "${implementation}" "${project}" "${as_flag}" "${as_value}" ||
-        failed                                          \
+        fail                                          \
             "Tried to run with ${as_flag} ${as_value}"  \
             "${debug_message}"
 
