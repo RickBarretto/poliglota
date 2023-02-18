@@ -1,0 +1,28 @@
+#! /usr/bin/env arturo
+
+usage: {:
+  COMMANDS:
+    new <project>
+
+  FUTURE?
+    new <project> --empty
+    add <template> <project>
+    add <template> <project> --as <new name>
+    fill <project>
+:}
+
+new: $[name :string][
+    copy.directory "templates/" ~"repository/|name|"
+]
+
+parser: $[arg][
+    case [arg\0]
+    when? [= "new"] [
+        ensure -> arg\1
+        new arg\1
+    ]
+    else -> panic usage
+]
+
+try? -> parser arg
+else -> panic usage
