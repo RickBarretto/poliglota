@@ -1,0 +1,13 @@
+parser: $[][
+
+    case [arg\0]
+    when? [= "project"][
+
+    ]
+    when? [= "template"][
+
+    ]
+    else -> panic usage
+
+
+]
