@@ -1,4 +1,0 @@
-- [ ] add confirm option to `templ rm` command
-- [ ] add unit-tests to templ command
-- [ ] add unit-tests to archive plugin
-- [ ] add `list` subcommand to `templ` e `proj` commands

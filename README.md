@@ -15,7 +15,7 @@ A minimalist tool to learn to programming
 
 > Poliglota is a new way to learn new programming languages
 > (or patterns/strategies/frameworks...) with already known.
-> This tool gives you *flexibility*, *agility* and *extensibility*
+> This tool gives you *flexibility* and *agility*
 > to implement new learning projects.
 
 ## Methodology
@@ -25,39 +25,11 @@ Then, take notes about what you learnt in `notes.md`,
 and finally, compare the difference between them
 and do different approachs to resolve the same problem/challenge.
 
-With *minimalist*, means that Poliglota is just a repository with
-a defined structure (you can change it)
-and a script called `poli`. (Really, just it!)
-
-Thus, without a philosopy or methodology behind,
-you can just change whatever you want, being *extensible*
-Feel free and have fun!
-
-> [!WARNING]
-> Please, read the complete documentation before start.
+## Installation
+Just clone this repository, and install [Arturo](https://github.com/arturo-lang/arturo#installation) on your global path.
 
 ## Basic
 
-### Add new languages support
-
-```shell
-$ ./poli templ add python
-$ ./poli templ add c
-$ ./poli templ add arturo
-$ ./poli templ list
-arturo
-c
-python
 ```
-
-### Create new projects
-
+./poli new <project>
 ```
-$ ./poli proj add 15_puzzle_game
-$ ./poli proj add todo_app
-$ ./poli proj list
-15_puzzle_game
-todo_app
-```
-
-## Documentation

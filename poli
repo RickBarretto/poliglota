@@ -1,47 +1,28 @@
-#! /bin/bash
+#! /usr/bin/env arturo
 
-commands=("proj" "templ")
-plugins=("archive.sh")
+usage: {:
+  COMMANDS:
+    new <project>
 
-usage() {
-    echo "Usage: poli COMMANDS ARGS [OPTIONS]                       "
-    echo "                                                          "
-    echo "COMMANDS                                                  "
-    echo "                                                          "
+  FUTURE?
+    new <project> --empty
+    add <template> <project>
+    add <template> <project> --as <new name>
+    fill <project>
+:}
 
-    for command in "${commands[@]}"; do
-        ".poliglota/scripts/${command}.sh" --description
-    done
+new: $[name :string][
+    copy.directory "templates/" ~"repository/|name|"
+]
 
-    for plugin in "${plugins[@]}"; do
-        ".poliglota/scripts/${plugin}" --description
-    done
+parser: $[arg][
+    case [arg\0]
+    when? [= "new"] [
+        ensure -> arg\1
+        new arg\1
+    ]
+    else -> panic usage
+]
 
-}
-
-## Parsing arguments
-case $1 in
-
-    ## Commands
-    "proj")
-        shift
-        .poliglota/scripts/proj.sh "$@"
-        exit
-    ;;
-    "templ")
-        shift
-        .poliglota/scripts/templ.sh "$@"
-        exit
-    ;;
-
-    ## Plugins
-    "archive")
-        shift
-        .plugins/archive.sh "$@"
-        exit
-    ;;
-    ## Errors
-    *)
-        usage
-
-esac
+try? -> parser arg
+else -> panic usage
