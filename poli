@@ -6,9 +6,9 @@ usage: {:
     new <project> --empty
     add <template> <project>
     add <template> <project> --as <implementation>
+    add <implementation> <project> --empty
 
   FUTURE?
-    add <implementation> <project> --empty
     fill <project>
 :}
 
