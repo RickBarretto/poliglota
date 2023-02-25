@@ -15,7 +15,7 @@ usage: {:
 
 ; -- COMMANDS:
 
-new: $[name :string][
+newProject: $[name :string][
     copy.directory "templates/" ~"repository/|name|"
     exit
 ]
