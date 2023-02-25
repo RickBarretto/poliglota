@@ -103,9 +103,13 @@ parser: $[args][
             -> newName
             -> template
 
-        ensure -> template != "--as"
-        ensure -> project != "--as"
-        ensure -> name != "--as"
+        try? [
+            ensure -> template != "--as"
+            ensure -> project != "--as"
+            ensure -> name != "--as"
+        ]
+        else -> ~"Your arguments: |arg|\n|usage|"
+
 
         addImplementation template project name
 
