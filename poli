@@ -17,13 +17,21 @@ usage: {:
 
 newProject: $[name :string][
 
+    if exists? .directory ~"repository/|name|" [
+        panic ~"|name| already exists"
+    ]
+
+
     if attr? 'empty [
-        execute ~"mkdir repository/|name|"
+        try? -> execute ~"mkdir repository/|name|/"
+        else -> panic ~"Can't create |name|"
         exit
     ]
 
-    copy.directory "templates/" ~"repository/|name|"
+    try? -> copy.directory ~"templates/" ~"repository/|name|/"
+    else -> panic ~"Can't create |name|"
     exit
+
 ]
 
 addImplementation: $[
@@ -56,32 +64,12 @@ parser: $[args][
 
         if some? ["--empty" "-e"] 'op -> in? op args [
             remove 'args ["--empty" "-e"]
-            name: (first args)
-
-            if exists? .directory ~"repository/|name|" [
-                panic "Project already exists"
-            ]
-
-            try? [
-                execute ~"mkdir repository/|name|/"
-                execute ~"touch repository/|name|/.gitkeep"
-            ]
-            else -> panic ~"Can't create |name|"
-            exit
-
+            ensure -> minimal args 1
+            newProject.empty (first args)
         ]
 
         minimal args 1
-        name: (first args)
-
-        if exists? .directory ~"repository/|name|" [
-            panic ~"|name| already exists"
-        ]
-
-        try? ->
-            copy.directory ~"templates/" ~"repository/|name|/"
-        else -> panic ~"Can't create |name|"
-        exit
+        newProject (first args)
 
     ]
 
