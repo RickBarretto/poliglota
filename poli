@@ -18,18 +18,18 @@ usage: {:
 newProject: $[name :string][
 
     if exists? .directory ~"repository/|name|" [
-        panic ~"|name| already exists"
+        panic ~"\"|name|\" already exists"
     ]
 
 
     if attr? 'empty [
         try? -> execute ~"mkdir repository/|name|/"
-        else -> panic ~"Can't create |name|"
+        else -> panic ~"Can't create \"|name|\""
         exit
     ]
 
     try? -> copy.directory ~"templates/" ~"repository/|name|/"
-    else -> panic ~"Can't create |name|"
+    else -> panic ~"Can't create \"|name|\""
     exit
 
 ]
@@ -40,13 +40,27 @@ addImplementation: $[
     implementation :string
 ][
 
+    if not? exists? .directory ~"repository/|project|" [
+        panic ~{
+            "|project|" doesn't exist. Please, use `new` command. See:
+
+            |usage|
+        }
+    ]
+
     if exists? .directory ~"repository/|project|/|implementation|" [
-        panic ~"|implementation| already exists within |project|."
+        panic ~"\"|implementation|\" already exists within \"|project|\"."
+    ]
+
+    if attr? 'empty [
+        try? -> execute ~"mkdir repository/|project|/|implementation|"
+        else -> panic ~"Can't create \"|implementation|\" within \"|project|\"."
+        exit
     ]
 
     try? -> copy.directory ~"templates/|template|/"
                 ~"repository/|project|/|implementation|"
-    else -> panic ~"Can't create |implementation| inside |project|."
+    else -> panic ~"Can't create \"|implementation|\" inside \"|project|\"."
     exit
 ]
 
@@ -97,6 +111,20 @@ parser: $[args][
             remove 'args newName
         ]
 
+        emptyFlag: false
+        if some? ["--empty" "-e"] 'op -> in? op args [
+            remove 'args ["--empty" "-e"]
+            ensure -> minimal args 2
+            emptyFlag: true
+        ]
+
+        if and? string? newName true? emptyFlag
+        -> panic ~{
+                You can't use `--as` and `--empty` at the same time.
+                Your arguments: |arg|
+                |usage|
+            }
+
         template: (get args 0)
         project: (get args 1)
         name: (string? newName)?
@@ -110,8 +138,10 @@ parser: $[args][
         ]
         else -> ~"Your arguments: |arg|\n|usage|"
 
-
-        addImplementation template project name
+        print emptyFlag
+        (true? emptyFlag)?
+        -> addImplementation.empty template project name
+        -> addImplementation template project name
 
     ]
 
