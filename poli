@@ -39,7 +39,7 @@ addImplementation: $[
     project :string
     implementation :string
 ][
-    copy.directory "templates/|template|/"
+    copy.directory ~"templates/|template|/"
         ~"repository/|project|/|implementation|"
     exit
 ]
@@ -82,20 +82,24 @@ parser: $[args][
             ; help.new
         ]
 
-        as: false
-        loop ["--as" "-a"] 'op
-        -> if in? op args [
-            as: get args (1 + (index args op))
+        newName: false
+        if in? "--as" args [
+            minimal args 4
+            i: index args "--as"
             remove 'args "--as"
-            remove 'args as
-            break
+            newName: (get args i)
+            remove 'args newName
         ]
 
         template: (get args 0)
         project: (get args 1)
-        name: (string? as)?
-            -> as
+        name: (string? newName)?
+            -> newName
             -> template
+
+        ensure -> template != "--as"
+        ensure -> project != "--as"
+        ensure -> name != "--as"
 
         addImplementation template project name
 
