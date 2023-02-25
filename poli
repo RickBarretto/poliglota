@@ -4,10 +4,10 @@ usage: {:
   COMMANDS:
     new <project>
     new <project> --empty
-
-  FUTURE?
     add <template> <project>
     add <template> <project> --as <new name>
+
+  FUTURE?
     fill <project>
 :}
 
@@ -19,6 +19,16 @@ newEmpty: $[name :string][
     write.directory ~"repository/|name|"
 ]
 
+addImplementation: $[
+    template :string
+    project :string
+    implementation :string
+][
+    copy.directory "templates/|template|/"
+        ~"repository/|project|/|implementation|"
+]
+
+
 parser: $[arg][
 
     case [arg\0]
@@ -29,6 +39,21 @@ parser: $[arg][
         (arg\1 = "--empty")?
         [ ensure -> arg\2, newEmpty arg\2 ]
         [ new arg\1 ]
+
+    ]
+
+    when? [= "add"] [
+
+        ensure -> arg\2
+        (size arg > 2)?
+        [
+            ensure -> arg\4
+            if arg\3 = "--as"
+            -> addImplementation arg\1 arg\2 arg\4
+        ]
+        [
+            addImplementation arg\1 arg\2 arg\1
+        ]
 
     ]
 
