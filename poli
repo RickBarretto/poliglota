@@ -118,5 +118,4 @@ parser: $[args][
 
 ]
 
-try? -> parser arg
-else -> panic ~"Your arguments: |arg|\n|usage|"
+parser arg
