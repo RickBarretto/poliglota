@@ -138,7 +138,6 @@ parser: $[args][
         ]
         else -> ~"Your arguments: |arg|\n|usage|"
 
-        print emptyFlag
         (true? emptyFlag)?
         -> addImplementation.empty template project name
         -> addImplementation template project name
