@@ -33,6 +33,6 @@ Just clone this repository, and install [Arturo](https://github.com/arturo-lang/
 ./poli new <project> --empty
 ./poli add <template> <project>
 ./poli add <template> <project> --as <new name>
-add <implementation> <project> --empty
-fill <project>
+./poli add <implementation> <project> --empty
+./poli fill <project>
 ```
