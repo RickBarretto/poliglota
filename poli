@@ -7,9 +7,10 @@ usage: {:
     add <template> <project>
     add <template> <project> --as <implementation>
     add <implementation> <project> --empty
+    fill <project>
 
   FUTURE?
-    fill <project>
+    -- 
 :}
 
 
