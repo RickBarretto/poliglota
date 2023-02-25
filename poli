@@ -10,7 +10,8 @@ usage: {:
     fill <project>
 
   FUTURE?
-    -- 
+    add <template> --last
+    add <template> --as <implementation> --last
 :}
 
 
@@ -136,6 +137,16 @@ parser: $[args][
             emptyFlag: true
         ]
 
+        lastFlag: false
+        if some? ["--last" "-l"] 'op -> in? op args [
+            remove 'args ["--last" "-l"]
+            ensure -> minimal args 1
+
+            information: read.json "info.json"
+            if information\last != ""
+                -> lastFlag: information\last
+        ]
+
         if and? string? newName true? emptyFlag
         -> panic ~{
                 You can't use `--as` and `--empty` at the same time.
@@ -144,7 +155,9 @@ parser: $[args][
             }
 
         template: (get args 0)
-        project: (get args 1)
+        project: (string? lastFlag)?
+            -> lastFlag
+            -> (get args 1)
         name: (string? newName)?
             -> newName
             -> template
