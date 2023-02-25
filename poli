@@ -14,6 +14,12 @@ usage: {:
     add <template> --as <implementation> --last
 :}
 
+saveLast: $[project :string][
+    file: read.json "info.json"
+    file\last: project
+    write.json "info.json" file
+]
+
 
 ; -- COMMANDS:
 
@@ -27,11 +33,13 @@ newProject: $[name :string][
     if attr? 'empty [
         try? -> execute ~"mkdir repository/|name|/"
         else -> panic ~"Can't create \"|name|\""
+        saveLast name
         exit
     ]
 
     try? -> copy.directory ~"templates/" ~"repository/|name|/"
     else -> panic ~"Can't create \"|name|\""
+    saveLast name
     exit
 
 ]
@@ -57,12 +65,14 @@ addImplementation: $[
     if attr? 'empty [
         try? -> execute ~"mkdir repository/|project|/|implementation|"
         else -> panic ~"Can't create \"|implementation|\" within \"|project|\"."
+        saveLast project
         exit
     ]
 
     try? -> copy.directory ~"templates/|template|/"
                 ~"repository/|project|/|implementation|"
     else -> panic ~"Can't create \"|implementation|\" inside \"|project|\"."
+    saveLast project
     exit
 ]
 
@@ -79,6 +89,7 @@ fillProject: $[project :string][
     try? -> execute
         ~"cp templates/** repository/|project| --recursive --no-preserve=timestamp --no-clobber"
     else -> panic ~"Can't fill \"|project|\"."
+    saveLast project
     exit
 
 ]
