@@ -4,10 +4,10 @@ usage: {:
   COMMANDS:
     new <project>
     new <project> --empty
-
-  FUTURE?
     add <template> <project>
     add <template> <project> --as <new name>
+
+  FUTURE?
     fill <project>
 :}
 
