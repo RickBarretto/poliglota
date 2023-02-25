@@ -44,8 +44,8 @@ minimal: [args number][
 
 parser: $[args][
 
-    case [first args]
-
+    f: first args
+    case [f]
     when? [= "new"] [
 
         drop 'args 1
