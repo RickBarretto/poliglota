@@ -64,6 +64,23 @@ addImplementation: $[
     exit
 ]
 
+fillProject: $[project :string][
+
+    if not? exists? .directory ~"repository/|project|" [
+        panic ~{
+            "|project|" doesn't exist. Please, use `new` command. See:
+
+            |usage|
+        }
+    ]
+
+    try? -> execute
+        ~"cp templates/** repository/|project| --recursive --no-preserve=timestamp --no-clobber"
+    else -> panic ~"Can't fill \"|project|\"."
+    exit
+
+]
+
 ; -- PARSER
 
 minimal: [args number][
@@ -142,6 +159,12 @@ parser: $[args][
         -> addImplementation.empty template project name
         -> addImplementation template project name
 
+    ]
+
+    when? [= "fill"] [
+        drop 'args 1
+        minimal args 1
+        fillProject (first args)
     ]
 
 
