@@ -12,6 +12,9 @@ usage: {:
     fill <project>
 :}
 
+
+; -- COMMANDS:
+
 new: $[name :string][
     copy.directory "templates/" ~"repository/|name|"
     exit
@@ -32,6 +35,7 @@ addImplementation: $[
     exit
 ]
 
+; -- PARSER
 
 parser: $[arg][
 
