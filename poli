@@ -3,9 +3,9 @@
 usage: {:
   COMMANDS:
     new <project>
+    new <project> --empty
 
   FUTURE?
-    new <project> --empty
     add <template> <project>
     add <template> <project> --as <new name>
     fill <project>
