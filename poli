@@ -37,7 +37,9 @@ addImplementation: $[
 
 ; -- PARSER
 
-parser: $[arg][
+minimal: [args number][
+    ensure -> args\[number]
+]
 
     case [arg\0]
 
