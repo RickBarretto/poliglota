@@ -56,11 +56,32 @@ parser: $[args][
 
         if some? ["--empty" "-e"] 'op -> in? op args [
             remove 'args ["--empty" "-e"]
-            newProject.empty (first args)
+            name: (first args)
+
+            if exists? .directory ~"repository/|name|" [
+                panic "Project already exists"
+            ]
+
+            try? [
+                execute ~"mkdir repository/|name|/"
+                execute ~"touch repository/|name|/.gitkeep"
+            ]
+            else -> panic ~"Can't create |name|"
+            exit
+
         ]
 
         minimal args 1
-        newProject (first args)
+        name: (first args)
+
+        if exists? .directory ~"repository/|name|" [
+            panic ~"|name| already exists"
+        ]
+
+        try? ->
+            copy.directory ~"templates/" ~"repository/|name|/"
+        else -> panic ~"Can't create |name|"
+        exit
 
     ]
 
@@ -82,8 +103,8 @@ parser: $[args][
             break
         ]
 
-        template: (get args 1)
-        project: (get args 2)
+        template: (get args 0)
+        project: (get args 1)
         name: (string? as)?
             -> as
             -> template
