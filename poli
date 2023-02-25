@@ -61,9 +61,9 @@ parser: $[arg][
     ]
 
 
-    else -> panic usage
+    else -> panic "Your arguments: |arg|\n|usage|"
 
 ]
 
 try? -> parser arg
-else -> panic usage
+else -> panic "Your arguments: |arg|\n|usage|"
