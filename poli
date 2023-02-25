@@ -41,14 +41,25 @@ minimal: [args number][
     ensure -> args\[number]
 ]
 
-    case [arg\0]
+parser: $[args][
+
+    case [first args]
 
     when? [= "new"] [
 
-        ensure -> arg\1
-        (arg\1 = "--empty")?
-        [ ensure -> arg\2, newEmpty arg\2 ]
-        [ new arg\1 ]
+        drop 'args 1
+
+        if some? ["--help" "-h"] => in? args [
+            ; help.new
+        ]
+
+        if some? ["--empty" "-e"] => in? args [
+            remove 'args ["--empty" "-e"]
+            newEmpty (first args)
+        ]
+
+        minimal args 1
+        newProject (first args)
 
     ]
 
