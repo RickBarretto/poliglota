@@ -13,10 +13,12 @@ usage: {:
 
 new: $[name :string][
     copy.directory "templates/" ~"repository/|name|"
+    exit
 ]
 
 newEmpty: $[name :string][
     write.directory ~"repository/|name|"
+    exit
 ]
 
 addImplementation: $[
@@ -26,6 +28,7 @@ addImplementation: $[
 ][
     copy.directory "templates/|template|/"
         ~"repository/|project|/|implementation|"
+    exit
 ]
 
 
