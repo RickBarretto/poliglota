@@ -50,11 +50,11 @@ parser: $[args][
 
         drop 'args 1
 
-        if some? ["--help" "-h"] => in? args [
+        if some? ["--help" "-h"] 'op -> in? op args [
             ; help.new
         ]
 
-        if some? ["--empty" "-e"] => in? args [
+        if some? ["--empty" "-e"] 'op -> in? op args [
             remove 'args ["--empty" "-e"]
             newProject.empty (first args)
         ]
@@ -69,7 +69,7 @@ parser: $[args][
         drop 'args 1
         minimal args 2
 
-        if some? ["--help" "-h"] => in? args [
+        if some? ["--help" "-h"] 'op' -> in? op args [
             ; help.new
         ]
 
