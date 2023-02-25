@@ -69,7 +69,7 @@ parser: $[args][
         drop 'args 1
         minimal args 2
 
-        if some? ["--help" "-h"] 'op' -> in? op args [
+        if some? ["--help" "-h"] 'op -> in? op args [
             ; help.new
         ]
 
@@ -93,9 +93,9 @@ parser: $[args][
     ]
 
 
-    else -> panic "Your arguments: |arg|\n|usage|"
+    else -> panic ~"Your arguments: |arg|\n|usage|"
 
 ]
 
 try? -> parser arg
-else -> panic "Your arguments: |arg|\n|usage|"
+else -> panic ~"Your arguments: |arg|\n|usage|"
