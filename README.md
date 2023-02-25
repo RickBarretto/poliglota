@@ -30,4 +30,5 @@ Just clone this repository, and install [Arturo](https://github.com/arturo-lang/
 
 ```
 ./poli new <project>
+./poli new <project> --empty
 ```
