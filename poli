@@ -154,7 +154,7 @@ parser: $[args][
             ensure -> minimal args 1
 
             information: read.json "info.json"
-            if information\last != ""
+            if information\last <> ""
                 -> lastFlag: information\last
         ]
 
