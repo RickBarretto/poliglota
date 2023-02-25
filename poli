@@ -39,8 +39,14 @@ addImplementation: $[
     project :string
     implementation :string
 ][
-    copy.directory ~"templates/|template|/"
-        ~"repository/|project|/|implementation|"
+
+    if exists? .directory ~"repository/|project|/|implementation|" [
+        panic ~"|implementation| already exists within |project|."
+    ]
+
+    try? -> copy.directory ~"templates/|template|/"
+                ~"repository/|project|/|implementation|"
+    else -> panic ~"Can't create |implementation| inside |project|."
     exit
 ]
 
