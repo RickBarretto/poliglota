@@ -165,10 +165,15 @@ parser: $[args][
                 |usage|
             }
 
+        if logical? lastFlag [
+            try? -> minimal args 2
+            else -> panic ~"You didn't interact with any project yet."
+        ]
+
         template: (get args 0)
         project: (string? lastFlag)?
             -> lastFlag
-            -> (get args 1)
+            ->(get args 1)
         name: (string? newName)?
             -> newName
             -> template
