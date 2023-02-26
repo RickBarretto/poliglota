@@ -5,13 +5,20 @@ usage: {:
     new <project>
     new <project> --empty
     add <template> <project>
+    add <template> --last
     add <template> <project> --as <implementation>
+    add <template> --as <implementation> --last
     add <implementation> <project> --empty
     fill <project>
 
   FUTURE?
-    -- 
 :}
+
+saveLast: $[project :string][
+    file: read.json "info.json"
+    file\last: project
+    write.json "info.json" file
+]
 
 
 ; -- COMMANDS:
@@ -26,11 +33,13 @@ newProject: $[name :string][
     if attr? 'empty [
         try? -> execute ~"mkdir repository/|name|/"
         else -> panic ~"Can't create \"|name|\""
+        saveLast name
         exit
     ]
 
     try? -> copy.directory ~"templates/" ~"repository/|name|/"
     else -> panic ~"Can't create \"|name|\""
+    saveLast name
     exit
 
 ]
@@ -56,12 +65,14 @@ addImplementation: $[
     if attr? 'empty [
         try? -> execute ~"mkdir repository/|project|/|implementation|"
         else -> panic ~"Can't create \"|implementation|\" within \"|project|\"."
+        saveLast project
         exit
     ]
 
     try? -> copy.directory ~"templates/|template|/"
                 ~"repository/|project|/|implementation|"
     else -> panic ~"Can't create \"|implementation|\" inside \"|project|\"."
+    saveLast project
     exit
 ]
 
@@ -78,6 +89,7 @@ fillProject: $[project :string][
     try? -> execute
         ~"cp templates/** repository/|project| --recursive --no-preserve=timestamp --no-clobber"
     else -> panic ~"Can't fill \"|project|\"."
+    saveLast project
     exit
 
 ]
@@ -136,6 +148,16 @@ parser: $[args][
             emptyFlag: true
         ]
 
+        lastFlag: false
+        if some? ["--last" "-l"] 'op -> in? op args [
+            remove 'args ["--last" "-l"]
+            ensure -> minimal args 1
+
+            information: read.json "info.json"
+            if information\last <> ""
+                -> lastFlag: information\last
+        ]
+
         if and? string? newName true? emptyFlag
         -> panic ~{
                 You can't use `--as` and `--empty` at the same time.
@@ -143,8 +165,15 @@ parser: $[args][
                 |usage|
             }
 
+        if logical? lastFlag [
+            try? -> minimal args 2
+            else -> panic ~"You didn't interact with any project yet."
+        ]
+
         template: (get args 0)
-        project: (get args 1)
+        project: (string? lastFlag)?
+            -> lastFlag
+            ->(get args 1)
         name: (string? newName)?
             -> newName
             -> template
