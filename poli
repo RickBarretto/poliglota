@@ -5,13 +5,13 @@ usage: {:
     new <project>
     new <project> --empty
     add <template> <project>
+    add <template> --last
     add <template> <project> --as <implementation>
+    add <template> --as <implementation> --last
     add <implementation> <project> --empty
     fill <project>
 
   FUTURE?
-    add <template> --last
-    add <template> --as <implementation> --last
 :}
 
 saveLast: $[project :string][
