@@ -1,13 +1,4 @@
-# Poliglota -- Purpose
-
-[ ⚠️WIP: Working in Progress]
-
----
-This is a purpose project yet.
-So, it's not a complete project
-and things may change until a stable version.
-
----
+# Poliglota
 
 A minimalist tool to learn to programming
 
@@ -24,17 +15,26 @@ and finally, compare the difference between them
 and do different approachs to resolve the same problem/challenge.
 
 ## Installation
-Just clone this repository, and install [Arturo](https://github.com/arturo-lang/arturo#installation) on your global path.
+- Clone this repository
+- Have bash on your global path
+- Install [Arturo](https://github.com/arturo-lang/arturo#installation)
+on your global path
 
-## Basic
+> Currently, you need bash since some functions are depending on it.
+> It can be changed on future
 
-```
-./poli new <project>
-./poli new <project> --empty
-./poli add <template> <project>
-./poli add <template> --last
-./poli add <template> <project> --as <new name>
-./poli add <implementation> <project> --empty
-./poli add <template> --as <implementation> --last
-./poli fill <project>
+## Basic Commands
+
+```bash
+# create a new project with every template available
+$ ./poli new <project>
+
+# add a specific implementation to a project
+$ ./poli add <template> <project>
+
+# fill a project with not implemented templates
+$ ./poli fill <project>
+
+# get a complete help
+$ ./poli --help
 ```
