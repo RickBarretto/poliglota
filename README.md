@@ -38,3 +38,40 @@ $ ./poli fill <project>
 # get a complete help
 $ ./poli --help
 ```
+
+## Usage
+
+```
+ USAGE: poli COMMAND [OPTIONS] [ARGS]...
+
+ Options:
+    -h, --help  Show this message and exit
+
+ Commands:
+    new      Create a new project
+    add      Add an implementation to a project
+    fill     Fill a project with missing implementations
+
+ ---------  --------------------
+
+ Usage: poli new [OPTIONS] <project>
+        poli new [OPTIONS] {-l|--last}
+
+ Options:
+    -e, --empty     project is empty
+    -l, --last      uses the last interacted project
+
+ ---------  --------------------
+
+ Usage: poli add [OPTIONS] <template> <project>
+        poli add [OPTIONS] <template> {-l|--last}
+
+ Options:
+    --as <name>     Create with a new name
+    -e, --empty     Implementation is empty
+    -l, --last      uses the last interacted project
+
+ ---------  --------------------
+
+ Usage: poli fill <project>
+```
