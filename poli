@@ -3,19 +3,41 @@
 ;; Script that empowers `poliglota`
 ;; please, read readme or type `./poli --help` to get aid
 
-
 usage: {:
-  COMMANDS:
-    new <project>
-    new <project> --empty
-    add <template> <project>
-    add <template> --last
-    add <template> <project> --as <implementation>
-    add <template> --as <implementation> --last
-    add <implementation> <project> --empty
-    fill <project>
 
-  FUTURE?
+ USAGE: poli COMMAND [OPTIONS] [ARGS]...
+
+ Options:
+    -h, --help  Show this message and exit
+
+ Commands:
+    new      Create a new project
+    add      Add an implementation to a project
+    fill     Fill a project with missing implementations
+
+ ---------  --------------------
+
+ Usage: poli new [OPTIONS] <project>
+        poli new [OPTIONS] {-l|--last}
+
+ Options:
+    -e, --empty     project is empty
+    -l, --last      uses the last interacted project
+
+ ---------  --------------------
+
+ Usage: poli add [OPTIONS] <template> <project>
+        poli add [OPTIONS] <template> {-l|--last}
+
+ Options:
+    --as <name>     Create with a new name
+    -e, --empty     Implementation is empty
+    -l, --last      uses the last interacted project
+
+ ---------  --------------------
+
+ Usage: poli fill <project>
+
 :}
 
 saveLast: $[project :string][
@@ -144,15 +166,16 @@ parser: $[args][
     ;;      'saveLast
     ;; ]
 
+    if some? ["--help" "-h"] 'op -> in? op args [
+        print usage
+        exit
+    ]
+
     f: first args
     case [f]
     when? [= "new"] [
 
         drop 'args 1
-
-        if some? ["--help" "-h"] 'op -> in? op args [
-            ; help.new
-        ]
 
         if some? ["--empty" "-e"] 'op -> in? op args [
             remove 'args ["--empty" "-e"]
@@ -169,10 +192,6 @@ parser: $[args][
 
         drop 'args 1
         minimal args 2
-
-        if some? ["--help" "-h"] 'op -> in? op args [
-            ; help.new
-        ]
 
         newName: false
         if in? "--as" args [
