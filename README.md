@@ -41,7 +41,7 @@ $ ./poli --help
 
 ## Usage
 
-```
+```abnf
  USAGE: poli COMMAND [OPTIONS] [ARGS]...
 
  Options:
