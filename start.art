@@ -1,0 +1,45 @@
+#! /usr/bin/env arturo
+
+getName: $[][
+    while -> true [
+        print ["\n",
+            color #blue "README.md", "will be renamed to",
+            color #blue "poli.md"
+        ]
+
+        permission: input "Do you want it? (y/n) "
+
+        if "Y" = upper permission -> break
+        if "N" = upper permission -> exit
+    ]
+
+    return input "Write your repository's name: "
+
+]
+
+create: $[name][
+
+    rename "README.md" "poli.md"
+    write "README.md" ~{
+
+        # |name|
+
+        ---
+
+        *This project is powered by [Poliglota][poli]
+        and [Arturo Programming Language][art].*
+
+        ---
+
+        [poli]: https://github.com/RickBarretto/poliglota
+        [art]: https://github.com/arturo-lang/arturo
+
+    }
+]
+
+name: null
+
+try? -> name: getName
+else -> panic "Something went wrong."
+
+if name <> null -> create name
