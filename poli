@@ -41,6 +41,8 @@ usage: {:
 
  Usage: poli fill <project>
 
+ ---------  --------------------
+ ✨ Powered by Arturo Programming Language ✨
 :}
 
 saveLast: $[project :string][

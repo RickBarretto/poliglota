@@ -7,6 +7,8 @@ A minimalist tool to learn to programming
 > This tool gives you *flexibility* and *agility*
 > to implement new learning projects.
 
+*✨ Powered by [Arturo Programming Language][art] ✨*
+
 ## Methodology
 The idea is quite simple,
 implement learning projects in different languages.
@@ -17,8 +19,7 @@ and do different approachs to resolve the same problem/challenge.
 ## Installation
 - Clone this repository
 - Have bash on your global path
-- Install [Arturo](https://github.com/arturo-lang/arturo#installation)
-on your global path
+- Install [Arturo][art] on your global path
 
 > Currently, you need bash since some functions are depending on it.
 > It can be changed on future
@@ -76,3 +77,5 @@ $ ./poli --help
 
  Usage: poli fill <project>
 ```
+
+[art]: https://arturo-lang.io/
