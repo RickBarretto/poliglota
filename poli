@@ -1,20 +1,56 @@
 #! /usr/bin/env arturo
 
-usage: {:
-  COMMANDS:
-    new <project>
-    new <project> --empty
-    add <template> <project>
-    add <template> --last
-    add <template> <project> --as <implementation>
-    add <template> --as <implementation> --last
-    add <implementation> <project> --empty
-    fill <project>
+;; Script that empowers `poliglota`
+;; please, read readme or type `./poli --help` to get aid
 
-  FUTURE?
+version: 1.0.0
+
+usage: {:
+
+ USAGE: poli COMMAND [OPTIONS] [ARGS]...
+
+ Options:
+    -h, --help      Show this message and exit
+    -v, --version   Show current version
+
+ Commands:
+    new      Create a new project
+    add      Add an implementation to a project
+    fill     Fill a project with missing implementations
+
+ ---------  --------------------
+
+ Usage: poli new [OPTIONS] <project>
+        poli new [OPTIONS] {-l|--last}
+
+ Options:
+    -e, --empty     project is empty
+    -l, --last      uses the last interacted project
+
+ ---------  --------------------
+
+ Usage: poli add [OPTIONS] <template> <project>
+        poli add [OPTIONS] <template> {-l|--last}
+
+ Options:
+    --as <name>     Create with a new name
+    -e, --empty     Implementation is empty
+    -l, --last      uses the last interacted project
+
+ ---------  --------------------
+
+ Usage: poli fill <project>
+
+ ---------  --------------------
+ ✨ Powered by Arturo Programming Language ✨
 :}
 
 saveLast: $[project :string][
+    ;; description: « save the last interacted repository to "info.json"
+    ;; example: {
+    ;;      saveLast "my-project"
+    ;; }
+
     file: read.json "info.json"
     file\last: project
     write.json "info.json" file
@@ -24,6 +60,14 @@ saveLast: $[project :string][
 ; -- COMMANDS:
 
 newProject: $[name :string][
+    ;; description: « creates a new project
+    ;; options: [
+    ;;      empty: :bool « new project is empty
+    ;; ]
+    ;; sideEffects: [
+    ;;      'exit
+    ;;      'saveLast
+    ;; ]
 
     if exists? .directory ~"repository/|name|" [
         panic ~"\"|name|\" already exists"
@@ -49,6 +93,14 @@ addImplementation: $[
     project :string
     implementation :string
 ][
+    ;; description: « add an implementation to a project
+    ;; options: [
+    ;;      empty: :bool « new implementation is empty
+    ;; ]
+    ;; sideEffects: [
+    ;;      'exit
+    ;;      'saveLast
+    ;; ]
 
     if not? exists? .directory ~"repository/|project|" [
         panic ~{
@@ -77,6 +129,11 @@ addImplementation: $[
 ]
 
 fillProject: $[project :string][
+    ;; description: « fill project with missing implementations
+    ;; sideEffects: [
+    ;;      'exit
+    ;;      'saveLast
+    ;; ]
 
     if not? exists? .directory ~"repository/|project|" [
         panic ~{
@@ -97,20 +154,38 @@ fillProject: $[project :string][
 ; -- PARSER
 
 minimal: [args number][
+    ;; description: « raises error if args were insufficient
+    ;; sideEffects: [
+    ;;      ensure
+    ;; ]
+
     ensure -> args\[number]
 ]
 
 parser: $[args][
+    ;; description: « parse command-line arguments
+    ;; sideEffects: [
+    ;;      'ensure
+    ;;      'exit
+    ;;      'panic
+    ;;      'saveLast
+    ;; ]
+
+    if some? ["--help" "-h"] 'op -> in? op args [
+        print usage
+        exit
+    ]
+
+    if some? ["--version" "-v"] 'op -> in? op args [
+        print version
+        exit
+    ]
 
     f: first args
     case [f]
     when? [= "new"] [
 
         drop 'args 1
-
-        if some? ["--help" "-h"] 'op -> in? op args [
-            ; help.new
-        ]
 
         if some? ["--empty" "-e"] 'op -> in? op args [
             remove 'args ["--empty" "-e"]
@@ -127,10 +202,6 @@ parser: $[args][
 
         drop 'args 1
         minimal args 2
-
-        if some? ["--help" "-h"] 'op -> in? op args [
-            ; help.new
-        ]
 
         newName: false
         if in? "--as" args [
