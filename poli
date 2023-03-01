@@ -3,12 +3,15 @@
 ;; Script that empowers `poliglota`
 ;; please, read readme or type `./poli --help` to get aid
 
+version: 1.0.0
+
 usage: {:
 
  USAGE: poli COMMAND [OPTIONS] [ARGS]...
 
  Options:
-    -h, --help  Show this message and exit
+    -h, --help      Show this message and exit
+    -v, --version   Show current version
 
  Commands:
     new      Create a new project
@@ -168,6 +171,11 @@ parser: $[args][
 
     if some? ["--help" "-h"] 'op -> in? op args [
         print usage
+        exit
+    ]
+
+    if some? ["--version" "-v"] 'op -> in? op args [
+        print version
         exit
     ]
 

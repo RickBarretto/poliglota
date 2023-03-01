@@ -46,6 +46,7 @@ $ ./poli --help
 
  Options:
     -h, --help  Show this message and exit
+    -v, --version   Show current version
 
  Commands:
     new      Create a new project
