@@ -24,7 +24,16 @@ and do different approachs to resolve the same problem/challenge.
 > Currently, you need bash since some functions are depending on it.
 > It can be changed on future
 
+## Starting and Updating
+```bash
+$ ./start.art
+
+$ ./update.art
+```
+
 ## Basic Commands
+
+> [ **!** ] Be sure your repository has already been started
 
 ```bash
 # create a new project with every template available
