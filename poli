@@ -3,7 +3,10 @@
 ;; Script that empowers `poliglota`
 ;; please, read readme or type `./poli --help` to get aid
 
+
+;; Global variables
 version: 1.0.0
+database: store "info.db"
 
 usage: {:
 
@@ -51,9 +54,8 @@ saveLast: $[project :string][
     ;;      saveLast "my-project"
     ;; }
 
-    file: read.json "info.json"
-    file\last: project
-    write.json "info.json" file
+    database\last: project
+
 ]
 
 
@@ -224,9 +226,8 @@ parser: $[args][
             remove 'args ["--last" "-l"]
             ensure -> minimal args 1
 
-            information: read.json "info.json"
-            if information\last <> ""
-                -> lastFlag: information\last
+            if database\last <> ""
+                -> lastFlag: database\last
         ]
 
         if and? string? newName true? emptyFlag
