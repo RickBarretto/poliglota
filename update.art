@@ -1,0 +1,30 @@
+#! /usr/bin/env arturo
+
+while -> true [
+    permission: input {
+        This script fetches https://github.com/RickBarretto/poliglota.
+        None of your information should be lost in this process.
+
+        In case of some problem run:
+        $ git tag
+        $ git reset --hard <tag-name>
+
+        Do you want to proceed? (y/n) >
+    }
+
+    if "Y" = upper permission -> break
+    if "N" = upper permission -> exit
+]
+
+
+try?
+    -> execute « git remote add origin "https://github.com/RickBarretto/poliglota"
+else
+    -> panic « Can't add repository as remote
+
+try? [
+    tags: read.lines execute « git pull --tags origin
+    lastTag: tags\[0]
+    execute ~« git checkout |lastTag|
+] else
+    -> panic « Can't pull remote repository
