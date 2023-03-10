@@ -23,7 +23,7 @@ create: $[name][
     write.directory ".github" null
     write.directory "templates" null
     write "templates/makefile" ""
-    write.directory "repository/.gitkeep" ""
+    write "repository/.gitkeep" ""
     write "templates/notes.md" {
         # Project
 
