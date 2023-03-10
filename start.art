@@ -32,7 +32,11 @@ create: $[name][
         ## What I learnt
     }
 
-    store "info.db"
+    write "info.json" {
+        {
+            "last": ""
+        }
+    }
 
     write ".github/README.md" ~{
 
