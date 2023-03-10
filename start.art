@@ -57,3 +57,5 @@ try? -> name: getName
 else -> panic "Something went wrong."
 
 if name <> null -> create name
+
+print "Your main Readme was added to `.github` folder."
