@@ -19,8 +19,21 @@ getName: $[][
 
 create: $[name][
 
-    rename "README.md" "poli.md"
-    write "README.md" ~{
+    write.directory "repository" null
+    write.directory ".github" null
+    write.directory "templates" null
+    write "templates/makefile" ""
+    write "templates/notes" {
+        # Project
+
+        ## Tender
+
+        ## What I learnt
+    }
+
+    store "info.db"
+
+    write ".github/README.md" ~{
 
         # |name|
 
@@ -35,6 +48,7 @@ create: $[name][
         [art]: https://github.com/arturo-lang/arturo
 
     }
+
 ]
 
 name: null
